@@ -348,6 +348,8 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 
 int main(int argc, char* args[])
 {
+	//SDL_Color c = { 0xff,0xff,0xff,0xff };
+	//word C("a", 28, c);
 	for (int j = 0; j < 6; j++)
 	{
 		for (int i = 0; i < 32; i++)
@@ -523,48 +525,16 @@ int main(int argc, char* args[])
 						if (towers[i][j] != NULL) {
 							//render tower
 							if (towers[i][j]->kind < 6) {
-								if (towers[i][j]->lock == false) {
-									for (int k = 0; k < enemies.size(); k++) {
-										if (towers[i][j]->inrange(enemies[k]) == 1)
-										{
-											//printf("%d\n", count);
-											towers[i][j]->rotate();
-											if (towers[i][j]->ableatk(SDL_GetTicks()) == 1) {
-												//make a bullet
-												bullet* x = new bullet(towers[i][j], towers[i][j]->locked_enemy);
-												
-												bullets.push_back(x);
-											}
-											break;
-										}
-									}
-								}
-								else {
-									if (towers[i][j]->inrange(towers[i][j]->locked_enemy) == 1) {
+								for (int k = 0; k < enemies.size(); k++) {
+									if (towers[i][j]->inrange(enemies[k]) == 1)
+									{
 										//printf("%d\n", count);
-										towers[i][j]->rotate();
-										if (towers[i][j]->ableatk(SDL_GetTicks())==1) {
+										towers[i][j]->rotate(enemies[k]);
+										if (towers[i][j]->ableatk(SDL_GetTicks()) == 1) {
 											//make a bullet
-											//printf("%d\n", towers[i][j]->cooltime);
-											bullet* x = new bullet(towers[i][j], towers[i][j]->locked_enemy);
+											bullet* x = new bullet(towers[i][j], enemies[k]);
 											bullets.push_back(x);
-										}
-									}
-									else {
-										towers[i][j]->lock = false;
-										for (int k = 0; k < enemies.size(); k++) {
-											if (towers[i][j]->inrange(enemies[k]) == 1) {
-												//printf("%d\n", count);
-												towers[i][j]->locked_enemy = enemies[k];
-												towers[i][j]->rotate();
-												//printf("hi");
-												if (towers[i][j]->ableatk(SDL_GetTicks()) == 1) {
-													//make a bullet
-													bullet* x = new bullet(towers[i][j], towers[i][j]->locked_enemy);
-													bullets.push_back(x);
-												}
-												break;
-											}
+											break;
 										}
 									}
 								}
@@ -578,7 +548,8 @@ int main(int argc, char* args[])
 									}
 								}
 								//printf("%d\n", count);
-								towers[i][j]->rotate();
+								towers[i][j]->theta += 1;
+								if (towers[i][j]->theta > 7)towers[i][j]->theta -= 8;
 								SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips2[towers[i][j]->kind - 6][towers[i][j]->theta], &towers[i][j]->quad);
 							}
 						}

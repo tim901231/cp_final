@@ -10,7 +10,7 @@
 class tower{
     public:
 	    friend class ENEMY;
-        tower(int num_x, int num_y, int type) :x(80+num_x*90), y(70+num_y*90), theta(0), lock(false), locked_enemy(NULL)
+        tower(int num_x, int num_y, int type) :x(80+num_x*90), y(70+num_y*90), theta(0)
         {
             kind = type;
             quad.x = x;
@@ -82,26 +82,23 @@ class tower{
         {
             if (pow((monster->rect.x - x), 2) + pow((monster->rect.y - y), 2) < pow(range, 2))
             {
-                lock = true;
-                locked_enemy = monster;
                 return true;
             }
             return false;
         }
-        void rotate(){
+        void rotate(ENEMY* locked_enemy){
             if(kind<6)
             {
-                if(lock){
-                        calculated_theta = (atan2(y-locked_enemy->rect.y,locked_enemy->rect.x-x))*180/3.1416;
-                        theta = int(calculated_theta/11.25);
-                        if (theta < 0) {
-                            theta += 16;
-                        }
-                        if (locked_enemy->rect.x < x) {
-                            theta += 16;
-                        }
-                }  
-                printf("%d", theta);
+                
+                calculated_theta = (atan2(y-locked_enemy->rect.y,locked_enemy->rect.x-x))*180/3.1416;
+                theta = int(calculated_theta/11.25);
+                if (theta < 0) {
+                    theta += 16;
+                }
+                if (locked_enemy->rect.x < x) {
+                    theta += 16;
+                }
+                  
             }
             else{
                 theta+= 1;
@@ -117,7 +114,8 @@ class tower{
     int t;
     double calculated_theta;
     int cooltime;
-    bool lock;
-    ENEMY* locked_enemy;
+    
+    
 };
 #endif
+
