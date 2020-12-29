@@ -39,27 +39,28 @@ SDL_Point mouse_position;
 TTF_Font* gFont = NULL;
 class word {
 	public:
-		word(string s, int size, SDL_Color color_) {
-			n = size;
-			color = color_;
-			gFont = TTF_OpenFont("lazy.ttf", size);
-			SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, s.c_str(), color_);
-			mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
-			SDL_FreeSurface(textSurface);
-		}
-		SDL_Texture* mTexture;
-		void changewords(string s) {
-			gFont = TTF_OpenFont("lazy.ttf", n);
-			SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, s.c_str(), color);
-			mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
-			SDL_FreeSurface(textSurface);
-		}
-		int n;
-		SDL_Color color;
-		SDL_Rect quad = { 0,0,0,0 };
-		void render() {
-			SDL_RenderCopy(gRenderer, mTexture, NULL, &quad);
-		}
+	int n;
+	SDL_Surface* textSurface = NULL;
+	SDL_Texture* mTexture = NULL;
+	SDL_Color color;
+	SDL_Rect quad = { 1720,80,80,80 };
+	word(string s, int size, SDL_Color color_) {
+		n = size;
+		color = color_;
+		gFont = TTF_OpenFont("lazy.ttf", size);
+		textSurface = TTF_RenderText_Solid(gFont, s.c_str(), color_);
+		mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
+		SDL_FreeSurface(textSurface);
+	}
+	void changeword(string s) {
+		textSurface = TTF_RenderText_Solid(gFont, s.c_str(), color);
+		mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
+		SDL_FreeSurface(textSurface);
+	}
+	void render() {
+		SDL_RenderCopy(gRenderer, this->mTexture, NULL, &quad);
+		return;
+	}
 };
 bool point_in_rect(SDL_Point p, const SDL_Rect r)
 {
@@ -89,7 +90,7 @@ vector<ENEMY*> enemies;
 ENEMY* DEFAULT = new ENEMY(0);
 SDL_Texture *EnemyTexture[10];  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
 SDL_Rect enemyClips[10][50];
-int TotalMoney = 0, cntdown = 0;
+int TotalMoney = 30, cntdown = 0;
 //bool **MAP = new bool *[18];
 //enemy
 
@@ -139,6 +140,11 @@ bool init()
 				if (!(IMG_Init(imgFlags) & imgFlags))
 				{
 					printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+					success = false;
+				}
+				if (TTF_Init() == -1)
+				{
+					printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 					success = false;
 				}
 			}
@@ -401,10 +407,15 @@ int main(int argc, char* args[])
 			//Event handler
 			SDL_Event e;
 			gamestatus status = play;
+			SDL_Color wordcolor = { 0000,0000,0000,0000 };
+			string money = to_string(TotalMoney); //convert int to string
+			word currmoney(money, 28, wordcolor);
 			int count = 0;
 			//While application is running
 			while (!quit) {
 				count += 1;
+				money = to_string(TotalMoney);
+				currmoney.changeword(money);
 				SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
 				SDL_SetTextureAlphaMod(light, 255);
 				SDL_SetTextureBlendMode(slow, SDL_BLENDMODE_BLEND);
@@ -558,6 +569,12 @@ int main(int argc, char* args[])
 				//bullets motion
 				for (int i = bullets.size() - 1; i >= 0; i--) {
 					bullets[i]->move();
+					if (bullets[i]->x > 1680 || bullets[i]->x < 40 || bullets[i]->y>1000 || bullets[i]->y < 0) {
+						delete bullets[i];
+						bullets[i] = NULL;
+						bullets.erase(bullets.begin() + i);
+						continue;
+					}
 					for (int j = 0; j < enemies.size(); j++) {
 						if (bullets[i]->touch(enemies[j])) {
 							enemies[j]->hp -= bullets[i]->atk;//
@@ -567,6 +584,7 @@ int main(int argc, char* args[])
 							break;
 						}
 					}
+					
 				}
 				for (int i = 0; i < bullets.size(); i++) {
 					SDL_RenderCopy(gRenderer, bullet_pic[bullets[i]->kind], NULL, &bullets[i]->quad);
@@ -620,6 +638,8 @@ int main(int argc, char* args[])
 					userrect.y = 90*tempy + 25;
 					SDL_RenderCopy(gRenderer, user, NULL, &userrect);
 				}
+				currmoney.render();
+
 				SDL_RenderPresent(gRenderer);
 			}
 		}
