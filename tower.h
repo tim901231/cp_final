@@ -18,46 +18,46 @@ class tower{
             t = SDL_GetTicks();
             switch (kind){
             case 0:
-                atk = 5;
-                cooltime = 1000;
-                range = 270;
+                atk = 1;
+                cooltime = 500;
+                range = 180;
                 break;
             case 1:
-                atk = 5;
-                cooltime = 200;
-                range = 1000;
+                atk = 2;
+                cooltime = 450;
+                range = 190;
                 break;
             case 2:
-                atk = 5;
-                cooltime = 200;
-                range = 1000;
+                atk = 3;
+                cooltime = 400;
+                range = 200;
                 break;
             case 3:
-                atk = 5;
-                cooltime = 200;
-                range = 1000;
+                atk = 2;
+                cooltime = 500;
+                range = 200;
                 break;
             case 4:
-                atk = 5;
-                cooltime = 200;
-                range = 1000;
+                atk = 3;
+                cooltime = 450;
+                range = 210;
                 break;
             case 5:
-                atk = 5;
-                cooltime = 200;
-                range = 1000;
+                atk = 4;
+                cooltime = 400;
+                range = 220;
                 break;
             case 6:
-                atk = 5;
-                range = 1000;
+                atk = 10;
+                range = 300;
                 break;
             case 7:
                 atk = 5;
-                range = 1000;
+                range = 300;
                 break;
             case 8:
                 atk = 5;
-                range = 1000;
+                range = 300;
                 break;
             default:
                 break;
@@ -105,6 +105,7 @@ class tower{
                 if(theta>7)theta-=8;
             }
         }
+    int money; 
 	int theta;
 	int kind=1;
 	SDL_Rect quad={0,0,90,90};
