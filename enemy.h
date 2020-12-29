@@ -46,7 +46,8 @@ class val{
 class ENEMY {
 public:
 	bool CanFly;
-	int TYPE, hp, speed, dir, money, freeze, period, current_phase;
+	int TYPE, hp, dir, money, freeze, period, current_phase;
+	double speed, nowx, nowy;
 	pii pos;
 	SDL_Texture *pic;
 	SDL_Rect rect;
@@ -57,6 +58,8 @@ public:
 		rect.h = 90;
 		rect.x = 0;
 		rect.y = 70 + 5 * 90;
+		nowx = rect.x;
+		nowy = rect.y;
 		CanFly = false;
 		dir = RIGHT;
 		current_phase = 0;
@@ -69,29 +72,29 @@ public:
 			break;
 		}
 		case 1: {  //Light_Soldier
-			hp = 750 * 1000;
-			speed = 5;
+			hp = 75;
+			speed = 1.25;
 			money = 2;
 			period = 12;
 			break;
 		}
 		case 2: {  //Heavy_Soldier
-			hp = 1000 * 1000;
-			speed = 2;
+			hp = 100;
+			speed = 1;
 			money = 1;
 			period = 10;
 			break;
 		}
 		case 3: {  //Light_Tank
-			hp = 2500 * 1000;
-			speed = 1;
+			hp = 250;
+			speed = 0.5;
 			money = 5;
 			period = 3;
 			break;
 		}
 		case 4: {  //Heavy_Tank
-			hp = 5000 * 1000;
-			speed = 1;
+			hp = 500;
+			speed = 0.25;
 			money = 10;
 			period = 10;
 			break;

@@ -281,7 +281,7 @@ void LoadEnemyMedia() {
 }
 
 ENEMY* Generate_Enemy() {
-	srand(time(NULL));
+//	srand(time(NULL));
 	int type = rand() % 4 + 1;
 	ENEMY* ret = new ENEMY(type);
 	ret->pic = EnemyTexture[type];
@@ -315,25 +315,22 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 	}
 	if (!exist_path)  return false;
 	else if (move) {
-		if (freeze) {
-			--freeze;
-		}
-		else  if (rect.x < 80)  rect.x += speed;
+		if (rect.x < 80)  nowx += speed;
 		else  if (path.shortest_path.size() > 1) {
 			if (path.shortest_path[1] - pos == DIR[RIGHT]) {
-				rect.x += speed;
+				nowx += speed;
 				dir = RIGHT;
 			}
 			if (path.shortest_path[1] - pos == DIR[UP]) {
-				rect.y -= speed;
+				nowy -= speed;
 				dir = UP;
 			}
 			if (path.shortest_path[1] - pos == DIR[LEFT]) {
-				rect.x -= speed;
+				nowx -= speed;
 				dir = LEFT;
 			}
 			if (path.shortest_path[1] - pos == DIR[DOWN]) {
-				rect.y += speed;
+				nowy += speed;
 				dir = DOWN;
 			}
 			if (abs(rect.x - 80 - pos.X * 90) >= 90 || abs(rect.y - 70 - pos.Y * 90) >= 90) {
@@ -341,13 +338,16 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 			}
 		}
 		else {
-			if (rect.x < 1800)  rect.x += speed;
+			dir = RIGHT;
+			if (rect.x < 1800)  nowx += speed;
 			else {
 				health -= 1;
 				money = 0;
 				hp = 0;
 			}
 		}
+		rect.x = int(nowx);
+		rect.y = int(nowy);
 	}
 	return true;
 }
@@ -430,11 +430,11 @@ int main(int argc, char* args[])
 				SDL_RenderCopy(gRenderer, rocket, NULL, &initialrocket);
 				//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
 				if (enemies.empty() && !cntdown) {
-					cntdown = 41;
+					cntdown = 201;
 				}
 
 				if (cntdown) {
-					if ((-- cntdown) % 10 == 0)  enemies.push_back(Generate_Enemy());
+					if ((-- cntdown) % 50 == 0)  enemies.push_back(Generate_Enemy());
 				//	cout << cntdown << ' ' << enemies.size() << '\n';
 				}
 
