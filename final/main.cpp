@@ -84,13 +84,24 @@ SDL_Texture* startturning1 = NULL;
 SDL_Texture* startturning2 = NULL;
 SDL_Texture* startturning3 = NULL;
 SDL_Texture* title = NULL;
-//menu
+
 //tower's thing
-tower*** towers = new tower * *[18];
+tower*** towers = new tower **[18];
+//tower's thing
+
 SDL_Texture* tower_pic[9];
 SDL_Rect towerClips[6][32];
-SDL_Rect towerbases = {0,0,70,70};
+SDL_Rect towerbases = { 0,0,70,70 };
 SDL_Rect towerClips2[3][8];
+/*
+SDL_Texture* tower_pic[9];
+SDL_Rect towerClips[6][32];
+SDL_Rect towerbases = { 0,0,70,70 };
+SDL_Rect towerClips2[3][8];*/
+//tower
+
+//menu
+
 const SDL_Rect turning1 = { 715,330,300,300 };
 const SDL_Rect turning2 = { 640,255,450,450 };
 const SDL_Rect turning3 = { 540,155,650,650 };
@@ -112,7 +123,7 @@ void loadmenumedia()
 	SDL_FreeSurface(loadedSurface);
 	//return true;
 }
-//tower
+
 
 //function's thing
 SDL_Rect option_bottom = {0,950,50,50};

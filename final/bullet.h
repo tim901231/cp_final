@@ -8,7 +8,8 @@ class bullet
 {
 public:
 	friend class tower;
-	bullet(tower* tower1, ENEMY* enemy1) {
+	bullet(tower* tower1, ENEMY* enemy1)
+	{
 		kind = tower1->kind % 3;
 		speed = 50;
 		atk = tower1->atk;
@@ -27,8 +28,8 @@ public:
 			quad.w = 90;
 			quad.h = 90;
 		}
-		v_x = (enemy1->rect.x - tower1->x)*1.0 / speed*speedy;
-		v_y = (enemy1->rect.y - tower1->y)*1.0 / speed*speedy;
+		v_x = (enemy1->rect.x - tower1->x) * 1.0 / speed * speedy;
+		v_y = (enemy1->rect.y - tower1->y) * 1.0 / speed * speedy;
 		x_e = x;
 		y_e = y;
 	}
@@ -57,6 +58,7 @@ public:
 			return false;
 		}
 	}
+	
 	SDL_Rect quad = { 0,0,80,80 };
 	int x, y, speed, atk, kind;
 	double x_e, y_e, v_x, v_y;
