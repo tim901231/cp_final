@@ -105,7 +105,7 @@ SDL_Texture* leavebottom_pic = NULL; // back to menu
 SDL_Texture* exitbottom_pic = NULL; //red x
 void loadbottommedia() {
 	SDL_Surface* surface;
-	surface = IMG_Load("pictures/Light_Soldier.png");
+	surface = IMG_Load("pictures/yellow.png");
 	option_list_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[0] = option_list_pic;
 	bottoms[0] = option_list;
@@ -129,12 +129,15 @@ void loadbottommedia() {
 	leavebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[5] = leavebottom_pic;
 	bottoms[5] = leavebottom;
-	surface = IMG_Load("pictures/Heavy_Tank.png");
+	surface = IMG_Load("pictures/Light_Gun_user.png");
 	exitbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[6] = exitbottom_pic;
 	bottoms[6] = exitbottom;
-	surface = IMG_Load("pictures/Heavy_Tank.png");
+	surface = IMG_Load("pictures/Light_Gun_user.png");
 	option_bottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+	if (option_bottom_pic == NULL) {
+		printf("hi");
+	}
 	SDL_FreeSurface(surface);
 }
 //function
@@ -456,6 +459,7 @@ int main(int argc, char* args[])
 	else {
 		//Load media
 		LoadEnemyMedia();
+		loadbottommedia();
 		if (!loadmedia()) {
 			printf("Failed to load media!\n");
 		}
@@ -677,6 +681,9 @@ int main(int argc, char* args[])
 											quit = true;
 											break;
 										}
+										if (e.type == SDL_QUIT) {
+											quit = true;
+										}
 										if (e.type == SDL_MOUSEBUTTONDOWN) {
 											SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
 											if (point_in_rect(mouse_position, startbottom)) {
@@ -832,6 +839,15 @@ int main(int argc, char* args[])
 				else if (TotalMoney >= 10 && TotalMoney < 100)
 				{
 					currmoney.quad.w = 100;
+				}
+				//render option things
+				
+				SDL_RenderCopy(gRenderer, option_bottom_pic, NULL, &option_bottom);
+
+				if (status == option) {
+					for (int i = 0; i < 7; i++) {
+						SDL_RenderCopy(gRenderer, bottoms_pic[i], NULL, &bottoms[i]);
+					}
 				}
 				currmoney.render();
 				currlife.render();
