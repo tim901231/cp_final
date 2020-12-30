@@ -46,8 +46,8 @@ class val{
 class ENEMY {
 public:
 	bool CanFly;
-	int TYPE, hp, dir, money, freeze, period;
-	double speed, nowx, nowy, current_phase;
+	int TYPE, hp, dir, money, period;
+	double speed, freeze, nowx, nowy, current_phase;
 	pii pos;
 	SDL_Texture *pic;
 	SDL_Rect rect;

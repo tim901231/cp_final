@@ -92,7 +92,8 @@ ENEMY* DEFAULT = new ENEMY(0);
 SDL_Texture* EnemyTexture[10];  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
 SDL_Rect enemyClips[10][50];
 int TotalMoney = 30, cntdown = 0;
-//bool **MAP = new bool *[18];
+bool canBuild;
+tower* test = new tower(0, 0, 0);
 //enemy
 
 //init
@@ -316,25 +317,22 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 	}
 	if (!exist_path)  return false;
 	else if (move) {
-		if (freeze) {
-			--freeze;
-		}
-		else  if (rect.x < 80)  rect.x += speed;
+		if (rect.x < 80)  nowx += speed;
 		else  if (path.shortest_path.size() > 1) {
 			if (path.shortest_path[1] - pos == DIR[RIGHT]) {
-				rect.x += speed;
+				nowx += speed;
 				dir = RIGHT;
 			}
 			if (path.shortest_path[1] - pos == DIR[UP]) {
-				rect.y -= speed;
+				nowy -= speed;
 				dir = UP;
 			}
 			if (path.shortest_path[1] - pos == DIR[LEFT]) {
-				rect.x -= speed;
+				nowx -= speed;
 				dir = LEFT;
 			}
 			if (path.shortest_path[1] - pos == DIR[DOWN]) {
-				rect.y += speed;
+				nowy += speed;
 				dir = DOWN;
 			}
 			if (abs(rect.x - 80 - pos.X * 90) >= 90 || abs(rect.y - 70 - pos.Y * 90) >= 90) {
@@ -342,13 +340,16 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 			}
 		}
 		else {
-			if (rect.x < 1800)  rect.x += speed;
+			dir = RIGHT;
+			if (rect.x < 1800)  nowx += speed;
 			else {
 				health -= 1;
 				money = 0;
 				hp = 0;
 			}
 		}
+		rect.x = int(nowx);
+		rect.y = int(nowy);
 	}
 	return true;
 }
@@ -445,11 +446,11 @@ int main(int argc, char* args[])
 				SDL_RenderCopy(gRenderer, rocket, NULL, &initialrocket);
 				//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
 				if (enemies.empty() && !cntdown) {
-					cntdown = 41;
+					cntdown = 401;
 				}
 
 				if (cntdown) {
-					if ((--cntdown) % 10 == 0)  enemies.push_back(Generate_Enemy());
+					if ((--cntdown) % 100 == 0)  enemies.push_back(Generate_Enemy());
 					//	cout << cntdown << ' ' << enemies.size() << '\n';
 				}
 
@@ -469,9 +470,17 @@ int main(int argc, char* args[])
 							q = (mouse_position.y - 70) / 90;
 							if ((lightflag == true || slowflag == true || rocketflag == true))//building mode
 							{
-								if (p < 18 && p >= 0 && q < 10 && q >= 0) {//check
-									if (lightflag == true) {
-										if (towers[p][q] == NULL && DEFAULT->FindPath(0))
+								if (check({p, q})) {//check
+									if (towers[p][q] == NULL) {
+										towers[p][q] = test;
+										canBuild = DEFAULT->FindPath(0);
+										for (auto enemy : enemies) {
+											canBuild &= enemy->FindPath(0);
+										}
+										towers[p][q] = NULL;
+									}
+									if (lightflag == true && canBuild) {
+										if (towers[p][q] == NULL)
 										{
 											TotalMoney -= 5;
 											towers[p][q] = new tower(p, q, 0);
@@ -479,15 +488,15 @@ int main(int argc, char* args[])
 										lightflag = false;
 									}
 									if (slowflag == true) {
-										if (towers[p][q] == NULL && DEFAULT->FindPath(0))
+										if (towers[p][q] == NULL && canBuild)
 										{
 											TotalMoney -= 10;
 											towers[p][q] = new tower(p, q, 6);
 										}
 										slowflag = false;
 									}
-									if (rocketflag == true) {
-										if (towers[p][q] == NULL && DEFAULT->FindPath(0))
+									if (rocketflag == true && canBuild) {
+										if (towers[p][q] == NULL)
 										{
 											TotalMoney -= 20;
 											towers[p][q] = new tower(p, q, 3);
@@ -654,8 +663,8 @@ int main(int argc, char* args[])
 
 				for (auto enemy : enemies) {
 					enemy->FindPath(1);
-					//					cout << enemy->rect.x << ' ' << enemy->rect.y << ' ' << enemy->FindPath(0) << '\n';
-					SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + ((enemy->current_phase++) % enemy->period)], &enemy->rect);
+					enemy->current_phase += 0.2;
+					SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + (int(enemy->current_phase) % enemy->period)], &enemy->rect);
 				}
 
 				//render buttom
