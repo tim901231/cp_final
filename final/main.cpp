@@ -537,7 +537,9 @@ int main(int argc, char* args[])
 			}
 			//While application is running
 			int count = 0;
+			//int time1, time2, time3, time4;
 			while (!quit) {
+				//time1 = SDL_GetTicks();
 				if (status == menu) {
 					count = 0;
 					TotalMoney = 30;
@@ -926,6 +928,7 @@ int main(int argc, char* args[])
 					SDL_RenderCopy(gRenderer, bullet_pic[bullets[i]->kind], NULL, &bullets[i]->quad);
 				}
 				//enemies motion
+				//time2 = SDL_GetTicks();
 				vector<ENEMY*> eliminate_dead_enemy = enemies;
 				enemies.clear();
 				for (auto enemy : eliminate_dead_enemy) {
@@ -940,7 +943,7 @@ int main(int argc, char* args[])
 					enemy->current_phase += 0.2;
 					SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + (int(enemy->current_phase) % enemy->period)], &enemy->rect);
 				}
-
+				//time3 = SDL_GetTicks();
 				//render buttom
 				if (lightflag == true)
 				{
@@ -998,11 +1001,12 @@ int main(int argc, char* args[])
 				currmoney.render();
 				currlife.render();
 				SDL_RenderPresent(gRenderer);
-				endtime = SDL_GetTicks();
-				//printf("%d\n", endtime - startime);
-				if (endtime - startime < period) {
-					SDL_Delay(period + startime - endtime);
-				}
+				//time4 = SDL_GetTicks();
+				//double b = (time3 - time2) * 1.0 / (time4 - time1);
+				//printf("%f\n", b);
+				//if (endtime - startime < period) {
+				//	SDL_Delay(period + startime - endtime);
+				//}
 			}
 		}
 	}
