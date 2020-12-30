@@ -70,30 +70,63 @@ public:
 		case 1: {  //Light_Soldier
 			hp = 15;
 			speed = 1;
-			money = 2;
+			money = 1;
 			period = 12;
 			break;
 		}
 		case 2: {  //Heavy_Soldier
 			hp = 30;
 			speed = 0.75;
-			money = 1;
-			period = 10;
+			money = 3;
+			period = 16;
 			break;
 		}
 		case 3: {  //Light_Tank
-			hp = 50;
+			hp = 100;
 			speed = 0.5;
 			money = 5;
 			period = 3;
 			break;
 		}
 		case 4: {  //Heavy_Tank
-			hp = 100;
+			hp = 220;
 			speed = 0.25;
 			money = 10;
 			period = 10;
 			break;
+		}
+		case 5:{  //Titan
+			hp = 700;
+			speed = 0.5;
+			money = 50;
+			period = 10;
+		}
+		case 6: {  //jet
+			hp = 250;
+			speed = 1.5;
+			money = 10;
+			period = 1;
+			CanFly = true;
+		}
+		case 7: {  //Helicopter
+			hp = 190;
+			speed = 0.75;
+			money = 8;
+			period = 6;
+			CanFly = true;
+		}
+		case 8: {  //Runner
+			hp = 20;
+			speed = 2;
+			money = 2;
+			period = 12;
+		}
+		case 9: {  //MotherShip
+			hp = 600;
+			speed = 0.5;
+			money = 30;
+			period = 1;
+			CanFly = true;
 		}
 		}
 	}
