@@ -52,11 +52,11 @@ class tower{
                 range = 300;
                 break;
             case 7:
-                atk = 5;
+                atk = 20;
                 range = 300;
                 break;
             case 8:
-                atk = 5;
+                atk = 30;
                 range = 300;
                 break;
             default:
