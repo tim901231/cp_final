@@ -23,7 +23,7 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Texture* words;
 //map's things
-enum gamestatus { play, upgrading };
+enum gamestatus { play, upgrading, option};
 SDL_Texture* background;
 SDL_Texture* light;
 SDL_Texture* slow;
@@ -85,40 +85,59 @@ SDL_Rect towerClips2[3][8];
 //tower
 
 //function's thing
-SDL_Texture* bottoms_pic[6];
-SDL_Rect option_list = {620,320,590,450};
-SDL_Rect pausebottom = {680,380,150,150};
-SDL_Rect startbottom = {850,380,150,150};
-SDL_Rect fastbottom = {1020,380,150,150};
+SDL_Rect option_bottom = {0,950,50,50};
+SDL_Texture* option_bottom_pic;
+SDL_Texture* bottoms_pic[7];
+SDL_Rect bottoms[7];
+SDL_Rect option_list = {605,310,590,380};
+SDL_Rect pausebottom = {680,380,120,120};
+SDL_Rect startbottom = {850,380,120,120};
+SDL_Rect fastbottom = {1020,380,120,120};
 SDL_Rect mutebottom = { 800,550,200,30 };
-SDL_Rect leavebottom = { 800,550,200,30 };
-SDL_Rect exitbottom = { 800,550,45,45 };
+SDL_Rect leavebottom = { 800,600,200,30 };// back to menu
+SDL_Rect exitbottom = { 1150,310,45,45 };//red x
 SDL_Texture* option_list_pic = NULL;
 SDL_Texture* pausebottom_pic = NULL;
 SDL_Texture* startbottom_pic = NULL;
 SDL_Texture* fastbottom_pic = NULL;
 SDL_Texture* mutebottom_pic = NULL;
-SDL_Texture* leavebottom_pic = NULL;
+SDL_Texture* leavebottom_pic = NULL; // back to menu
+SDL_Texture* exitbottom_pic = NULL; //red x
 void loadbottommedia() {
 	SDL_Surface* surface;
-	surface = IMG_Load("pictures/Light_Soldier.png");
+	surface = IMG_Load("pictures/option_pic.jpeg");
 	option_list_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[0] = option_list_pic;
-	surface = IMG_Load("pictures/Heavy_Soldier.png");
+	bottoms[0] = option_list;
+	surface = IMG_Load("pictures/pause.png");
 	pausebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[1] = pausebottom_pic;
-	surface = IMG_Load("pictures/Light_Tank.png");
+	bottoms[1] = pausebottom;
+	surface = IMG_Load("pictures/play.png");
 	startbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[2] = startbottom_pic;
-	surface = IMG_Load("pictures/Heavy_Tank.png");
+	bottoms[2] = startbottom;
+	surface = IMG_Load("pictures/expedite.png");
 	fastbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[3] = fastbottom_pic;
-	surface = IMG_Load("pictures/Heavy_Tank.png");
+	bottoms[3] = fastbottom;
+	surface = IMG_Load("pictures/yellow.png");
 	mutebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[4] = mutebottom_pic;
-	surface = IMG_Load("pictures/Heavy_Tank.png");
+	bottoms[4] = mutebottom;
+	surface = IMG_Load("pictures/yellow.png");
 	leavebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[5] = leavebottom_pic;
+	bottoms[5] = leavebottom;
+	surface = IMG_Load("pictures/Light_Gun_user.png");
+	exitbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+	bottoms_pic[6] = exitbottom_pic;
+	bottoms[6] = exitbottom;
+	surface = IMG_Load("pictures/Light_Gun_user.png");
+	option_bottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+	if (option_bottom_pic == NULL) {
+		printf("hi");
+	}
 	SDL_FreeSurface(surface);
 }
 //function
@@ -136,7 +155,7 @@ SDL_Rect enemyClips[10][50];
 int cntdown = 0;
 
 bool canBuild;
-tower* test = new tower(0, 0, 0);
+tower* test = new tower(0, 0, 0, 0);
 //enemy
 
 //init
@@ -270,12 +289,12 @@ void close()
 	IMG_Quit();
 	SDL_Quit();
 }
-void upgrade(int x, int y, tower* old)
+void upgrade(int x, int y, tower* old, int count)
 {
 	int c = old->kind + 1;
 	delete towers[x][y];
 	towers[x][y] = NULL;
-	towers[x][y] = new tower(x, y, c);
+	towers[x][y] = new tower(x, y, c, count);
 }
 //ENEMY
 void LoadEnemyMedia() {
@@ -440,6 +459,7 @@ int main(int argc, char* args[])
 	else {
 		//Load media
 		LoadEnemyMedia();
+		loadbottommedia();
 		if (!loadmedia()) {
 			printf("Failed to load media!\n");
 		}
@@ -450,6 +470,7 @@ int main(int argc, char* args[])
 			bool lightflag = false;
 			bool slowflag = false;
 			bool rocketflag = false;
+			bool functionmode = false;
 			//Event handler
 			SDL_Event e;
 			gamestatus status = play;
@@ -462,8 +483,14 @@ int main(int argc, char* args[])
 			int startime;
 			int endtime;
 			int period=20;
+			for (int i = 0; i < 7; i++) {
+				SDL_SetTextureBlendMode(bottoms_pic[i], SDL_BLENDMODE_BLEND);
+				SDL_SetTextureAlphaMod(bottoms_pic[i], 128);
+			}
 			//While application is running
+			int count = 0;
 			while (!quit) {
+				count += 1;
 				startime = SDL_GetTicks();
 				money = "$: " + to_string(TotalMoney);
 				life = "Life: " + to_string(TotalLife);
@@ -544,7 +571,7 @@ int main(int argc, char* args[])
 										if (towers[p][q] == NULL)
 										{
 											TotalMoney -= 5;
-											towers[p][q] = new tower(p, q, 0);
+											towers[p][q] = new tower(p, q, 0, count);
 										}
 										lightflag = false;
 									}
@@ -552,7 +579,7 @@ int main(int argc, char* args[])
 										if (towers[p][q] == NULL && canBuild)
 										{
 											TotalMoney -= 10;
-											towers[p][q] = new tower(p, q, 6);
+											towers[p][q] = new tower(p, q, 6, count);
 										}
 										slowflag = false;
 									}
@@ -560,7 +587,7 @@ int main(int argc, char* args[])
 										if (towers[p][q] == NULL)
 										{
 											TotalMoney -= 20;
-											towers[p][q] = new tower(p, q, 3);
+											towers[p][q] = new tower(p, q, 3, count);
 										}
 										rocketflag = false;
 									}
@@ -597,6 +624,9 @@ int main(int argc, char* args[])
 										status = upgrading;
 									}
 								}
+								else if (point_in_rect(mouse_position, option_bottom) == true) {
+									status = option;
+								}
 							}
 						}
 						else if (status == upgrading)
@@ -609,21 +639,21 @@ int main(int argc, char* args[])
 										if (TotalMoney >= 4)
 										{
 											TotalMoney -= 4;
-											upgrade(tempx, tempy, towers[tempx][tempy]);
+											upgrade(tempx, tempy, towers[tempx][tempy], count);
 											status = play;
 										}
 									}else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun upgrade
 										if (TotalMoney > 15) 
 										{
 											TotalMoney -= 15;
-											upgrade(tempx, tempy, towers[tempx][tempy]);
+											upgrade(tempx, tempy, towers[tempx][tempy], count);
 											status = play;
 										}
 									}else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket upgrade
 										if (TotalMoney > 30)
 										{
 											TotalMoney -= 30;
-											upgrade(tempx, tempy, towers[tempx][tempy]);
+											upgrade(tempx, tempy, towers[tempx][tempy], count);
 											status = play;
 										}
 									}
@@ -645,8 +675,45 @@ int main(int argc, char* args[])
 								}
 							}
 						}
+						else if (status == option) {
+							if (point_in_rect(mouse_position, pausebottom)) {
+								while (1) {
+									if (SDL_PollEvent(&e) != 0) {
+										if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
+											quit = true;
+											break;
+										}
+										if (e.type == SDL_QUIT) {
+											quit = true;
+										}
+										if (e.type == SDL_MOUSEBUTTONDOWN) {
+											SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+											if (point_in_rect(mouse_position, startbottom)) {
+												break;
+											}
+										}
+									}
+								}
+							}
+							if (point_in_rect(mouse_position, startbottom)) {
+								period = 20;
+							}
+							if (point_in_rect(mouse_position, fastbottom)) {
+								period = 0;
+							}
+							if (point_in_rect(mouse_position, mutebottom)) {
+								//mute music
+							}
+							if (point_in_rect(mouse_position, leavebottom)) {
+								//back to menu
+							}
+							if (point_in_rect(mouse_position, exitbottom)) {
+								status = play;
+							}
+						}
 					}
 				}
+				
 				/*unfreeze
 				for (int i = 0; i < enemies.size(); i++) {
 					enemies[i]->freeze = false;
@@ -664,7 +731,7 @@ int main(int argc, char* args[])
 									{
 										//printf("%d\n", count);
 										towers[i][j]->rotate(enemies[k]);
-										if (towers[i][j]->ableatk(SDL_GetTicks()) == 1) {
+										if (towers[i][j]->ableatk(count) == 1) {
 											//make a bullet
 											bullet* x = new bullet(towers[i][j], enemies[k]);
 											bullets.push_back(x);
@@ -774,6 +841,15 @@ int main(int argc, char* args[])
 				else if (TotalMoney >= 10 && TotalMoney < 100)
 				{
 					currmoney.quad.w = 100;
+				}
+				//render option things
+				
+				SDL_RenderCopy(gRenderer, option_bottom_pic, NULL, &option_bottom);
+
+				if (status == option) {
+					for (int i = 0; i < 7; i++) {
+						SDL_RenderCopy(gRenderer, bottoms_pic[i], NULL, &bottoms[i]);
+					}
 				}
 				currmoney.render();
 				currlife.render();
