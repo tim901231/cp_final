@@ -499,6 +499,7 @@ int main(int argc, char* args[])
 		//Load media
 		LoadEnemyMedia();
 		loadbottommedia();
+		loadmenumedia();
 		if (!loadmedia()) {
 			printf("Failed to load media!\n");
 		}
@@ -523,7 +524,8 @@ int main(int argc, char* args[])
 			int startime;
 			int endtime;
 			int period=20;
-
+			double degrees = 0;
+			SDL_RendererFlip flipType = SDL_FLIP_NONE;
 			for (int i = 0; i < 7; i++) {
 				SDL_SetTextureBlendMode(bottoms_pic[i], SDL_BLENDMODE_BLEND);
 				SDL_SetTextureAlphaMod(bottoms_pic[i], 128);
@@ -531,14 +533,12 @@ int main(int argc, char* args[])
 			//While application is running
 			int count = 0;
 			while (!quit) {
-				
 				while (status == menu) {
-					double degrees = 0;
-					SDL_RendererFlip flipType = SDL_FLIP_NONE;
 					while (SDL_PollEvent(&e) != 0) {
 						//User requests quit
 						if (e.type == SDL_QUIT) {
 							quit = true;
+							status = play;
 						}
 						if (e.type == SDL_MOUSEMOTION)
 						{
@@ -795,7 +795,7 @@ int main(int argc, char* args[])
 								//mute music
 							}
 							if (point_in_rect(mouse_position, leavebottom)) {
-								//back to menu
+								status = menu;
 							}
 							if (point_in_rect(mouse_position, exitbottom)) {
 								status = play;
