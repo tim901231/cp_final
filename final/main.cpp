@@ -23,7 +23,7 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Texture* words;
 //map's things
-enum gamestatus { play, upgrading, option};
+enum gamestatus { play, upgrading, option, menu};
 SDL_Texture* background;
 SDL_Texture* light;
 SDL_Texture* slow;
@@ -74,14 +74,41 @@ bool point_in_rect(SDL_Point p, const SDL_Rect r)
 	}
 }
 //map
-
+//menu's thing
+SDL_Texture* startbutton = NULL;
+SDL_Texture* startpage = NULL;
+SDL_Texture* startturning1 = NULL;
+SDL_Texture* startturning2 = NULL;
+SDL_Texture* startturning3 = NULL;
+SDL_Texture* title = NULL;
+//menu
 //tower's thing
 tower*** towers = new tower * *[18];
 SDL_Texture* tower_pic[9];
 SDL_Rect towerClips[6][32];
 SDL_Rect towerbases = {0,0,70,70};
 SDL_Rect towerClips2[3][8];
-
+const SDL_Rect turning1 = { 715,330,300,300 };
+const SDL_Rect turning2 = { 640,255,450,450 };
+const SDL_Rect turning3 = { 540,155,650,650 };
+const SDL_Rect titlerect = { 900,50,800,160 };
+void loadmenumedia()
+{
+	SDL_Surface* loadedSurface = IMG_Load("pictures/startbutton.png");
+	startbutton = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/startpage.png");
+	startpage = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/startturning1.png");
+	startturning1 = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/startturning2.png");
+	startturning2 = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/startturning3.png");
+	startturning3 = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/title.png");
+	title = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	SDL_FreeSurface(loadedSurface);
+	//return true;
+}
 //tower
 
 //function's thing
@@ -270,6 +297,18 @@ void close()
 		SDL_DestroyTexture(EnemyTexture[i]);
 		EnemyTexture[i] = NULL;
 	}
+	SDL_DestroyTexture(startbutton);
+	startbutton = NULL;
+	SDL_DestroyTexture(startpage);
+	startpage = NULL;
+	SDL_DestroyTexture(startturning1);
+	startturning1 = NULL;
+	SDL_DestroyTexture(startturning2);
+	startturning2 = NULL;
+	SDL_DestroyTexture(startturning3);
+	startturning2 = NULL;
+	SDL_DestroyTexture(title);
+	title = NULL;
 	SDL_DestroyTexture(light);
 	light = NULL;
 	SDL_DestroyTexture(slow);
@@ -471,9 +510,10 @@ int main(int argc, char* args[])
 			bool slowflag = false;
 			bool rocketflag = false;
 			bool functionmode = false;
+			bool startflag = false;
 			//Event handler
 			SDL_Event e;
-			gamestatus status = play;
+			gamestatus status = menu;
 			SDL_Color wordcolor = { 0000,0000,0000,0000 };
 			string money = "$: " + to_string(TotalMoney); //convert int to string
 			string life = "Life: " + to_string(TotalLife);
@@ -483,6 +523,7 @@ int main(int argc, char* args[])
 			int startime;
 			int endtime;
 			int period=20;
+
 			for (int i = 0; i < 7; i++) {
 				SDL_SetTextureBlendMode(bottoms_pic[i], SDL_BLENDMODE_BLEND);
 				SDL_SetTextureAlphaMod(bottoms_pic[i], 128);
@@ -490,6 +531,55 @@ int main(int argc, char* args[])
 			//While application is running
 			int count = 0;
 			while (!quit) {
+				
+				while (status == menu) {
+					double degrees = 0;
+					SDL_RendererFlip flipType = SDL_FLIP_NONE;
+					while (SDL_PollEvent(&e) != 0) {
+						//User requests quit
+						if (e.type == SDL_QUIT) {
+							quit = true;
+						}
+						if (e.type == SDL_MOUSEMOTION)
+						{
+							SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+							startflag = false;
+							if (point_in_rect(mouse_position, turning1))
+							{
+								startflag = true;
+							}
+						}
+						if (e.type == SDL_MOUSEBUTTONDOWN)
+						{
+							SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+							if (point_in_rect(mouse_position, turning1))
+							{
+								status = play;
+							}
+						}
+					}
+					SDL_RenderClear(gRenderer);
+					SDL_RenderCopy(gRenderer, startpage, NULL, NULL);
+
+					if (startflag == true)
+					{
+						SDL_RenderCopyEx(gRenderer, startturning3, NULL, &turning3, degrees, NULL, flipType);
+						SDL_RenderCopyEx(gRenderer, startturning1, NULL, &turning1, 1.3 * degrees, NULL, flipType);
+						SDL_RenderCopyEx(gRenderer, startturning2, NULL, &turning2, -1.6 * degrees, NULL, flipType);
+						degrees += 1;
+					}
+					else
+					{
+						SDL_RenderCopyEx(gRenderer, startturning3, NULL, &turning3, degrees, NULL, flipType);
+						SDL_RenderCopyEx(gRenderer, startturning1, NULL, &turning1, 1.3 * degrees, NULL, flipType);
+						SDL_RenderCopyEx(gRenderer, startturning2, NULL, &turning2, -1.6 * degrees, NULL, flipType);
+						degrees += 0.1;
+					}
+					SDL_RenderCopy(gRenderer, startbutton, NULL, &turning1);
+					SDL_RenderCopy(gRenderer, title, NULL, &titlerect);
+					SDL_RenderPresent(gRenderer);
+				}
+			
 				count += 1;
 				startime = SDL_GetTicks();
 				money = "$: " + to_string(TotalMoney);
