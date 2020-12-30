@@ -318,22 +318,22 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 	}
 	if (!exist_path)  return false;
 	else if (move) {
-		if (rect.x < 80)  nowx += speed;
+		if (rect.x < 80)  nowx += speed * (1 - freeze / 100);
 		else  if (path.shortest_path.size() > 1) {
 			if (path.shortest_path[1] - pos == DIR[RIGHT]) {
-				nowx += speed;
+				nowx += speed * (1 - freeze / 100);
 				dir = RIGHT;
 			}
 			if (path.shortest_path[1] - pos == DIR[UP]) {
-				nowy -= speed;
+				nowy -= speed * (1 - freeze/100);
 				dir = UP;
 			}
 			if (path.shortest_path[1] - pos == DIR[LEFT]) {
-				nowx -= speed;
+				nowx -= speed * (1 - freeze / 100);
 				dir = LEFT;
 			}
 			if (path.shortest_path[1] - pos == DIR[DOWN]) {
-				nowy += speed;
+				nowy += speed * (1 - freeze / 100);
 				dir = DOWN;
 			}
 			if (abs(rect.x - 80 - pos.X * 90) >= 90 || abs(rect.y - 70 - pos.Y * 90) >= 90) {
@@ -342,7 +342,7 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 		}
 		else {
 			dir = RIGHT;
-			if (rect.x < 1800)  nowx += speed;
+			if (rect.x < 1800)  nowx += speed * (1 - freeze / 100);
 			else {
 				health -= 1;
 				money = 0;
