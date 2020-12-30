@@ -89,13 +89,13 @@ SDL_Rect option_bottom = {0,950,50,50};
 SDL_Texture* option_bottom_pic;
 SDL_Texture* bottoms_pic[7];
 SDL_Rect bottoms[7];
-SDL_Rect option_list = {620,320,590,450};
-SDL_Rect pausebottom = {680,380,150,150};
-SDL_Rect startbottom = {850,380,150,150};
-SDL_Rect fastbottom = {1020,380,150,150};
+SDL_Rect option_list = {605,310,590,380};
+SDL_Rect pausebottom = {680,380,120,120};
+SDL_Rect startbottom = {850,380,120,120};
+SDL_Rect fastbottom = {1020,380,120,120};
 SDL_Rect mutebottom = { 800,550,200,30 };
-SDL_Rect leavebottom = { 800,550,200,30 };
-SDL_Rect exitbottom = { 1165,320,45,45 };
+SDL_Rect leavebottom = { 800,600,200,30 };// back to menu
+SDL_Rect exitbottom = { 1150,310,45,45 };//red x
 SDL_Texture* option_list_pic = NULL;
 SDL_Texture* pausebottom_pic = NULL;
 SDL_Texture* startbottom_pic = NULL;
@@ -105,7 +105,7 @@ SDL_Texture* leavebottom_pic = NULL; // back to menu
 SDL_Texture* exitbottom_pic = NULL; //red x
 void loadbottommedia() {
 	SDL_Surface* surface;
-	surface = IMG_Load("pictures/yellow.png");
+	surface = IMG_Load("pictures/option_pic.jpeg");
 	option_list_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[0] = option_list_pic;
 	bottoms[0] = option_list;
@@ -121,11 +121,11 @@ void loadbottommedia() {
 	fastbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[3] = fastbottom_pic;
 	bottoms[3] = fastbottom;
-	surface = IMG_Load("pictures/Heavy_Tank.png");
+	surface = IMG_Load("pictures/yellow.png");
 	mutebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[4] = mutebottom_pic;
 	bottoms[4] = mutebottom;
-	surface = IMG_Load("pictures/Heavy_Tank.png");
+	surface = IMG_Load("pictures/yellow.png");
 	leavebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[5] = leavebottom_pic;
 	bottoms[5] = leavebottom;

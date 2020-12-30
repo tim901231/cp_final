@@ -22,17 +22,17 @@ class tower{
             case 0:
                 atk = 1;
                 cooltime = 500;
-                range = 180;
+                range = 150;
                 break;
             case 1:
                 atk = 2;
-                cooltime = 450;
-                range = 190;
+                cooltime = 500;
+                range = 150;
                 break;
             case 2:
                 atk = 3;
-                cooltime = 400;
-                range = 200;
+                cooltime = 500;
+                range = 150;
                 break;
             case 3:
                 atk = 2;
