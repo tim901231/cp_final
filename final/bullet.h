@@ -2,6 +2,7 @@
 #define BULLET_H
 #include"tower.h"
 #include"enemy.h"
+#include"variable.h"
 #include<cmath>
 class bullet
 {
@@ -26,8 +27,8 @@ public:
 			quad.w = 90;
 			quad.h = 90;
 		}
-		v_x = (enemy1->rect.x - tower1->x)*1.0 / speed;
-		v_y = (enemy1->rect.y - tower1->y)*1.0 / speed;
+		v_x = (enemy1->rect.x - tower1->x)*1.0 / speed*speedy;
+		v_y = (enemy1->rect.y - tower1->y)*1.0 / speed*speedy;
 		x_e = x;
 		y_e = y;
 	}

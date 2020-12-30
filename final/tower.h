@@ -2,7 +2,7 @@
 #define TOWER_H
 #include"SDL.h"
 #include"ENEMY.h"
-//#include"final/const.h"
+#include"variable.h"
 #include<cmath>
 #define PI 3.14159265
 
@@ -71,7 +71,7 @@ class tower{
         bool ableatk(int t_c){
             //printf("t=%d\n", t);
             //printf("t_c=%d\n", t_c);
-            if (t_c-t>cooltime){
+            if (t_c-t>cooltime/speedy){
                
                 t = t_c;
                 //printf("hi\n");

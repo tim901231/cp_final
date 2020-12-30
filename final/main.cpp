@@ -10,6 +10,7 @@
 #include"enemy.h"
 #include"bullet.h"
 #include <iostream>
+#include"variable.h"
 
 using namespace std;
 
@@ -422,22 +423,22 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 	}
 	if (!exist_path)  return false;
 	else if (move) {
-		if (rect.x < 80)  nowx += speed * (1 - freeze / 100);
+		if (rect.x < 80)  nowx += speed * (1 - freeze / 100)*speedy;
 		else  if (path.shortest_path.size() > 1) {
 			if (path.shortest_path[1] - pos == DIR[RIGHT]) {
-				nowx += speed * (1 - freeze / 100);
+				nowx += speed * (1 - freeze / 100) * speedy;
 				dir = RIGHT;
 			}
 			if (path.shortest_path[1] - pos == DIR[UP]) {
-				nowy -= speed * (1 - freeze/100);
+				nowy -= speed * (1 - freeze/100) * speedy;
 				dir = UP;
 			}
 			if (path.shortest_path[1] - pos == DIR[LEFT]) {
-				nowx -= speed * (1 - freeze / 100);
+				nowx -= speed * (1 - freeze / 100) * speedy;
 				dir = LEFT;
 			}
 			if (path.shortest_path[1] - pos == DIR[DOWN]) {
-				nowy += speed * (1 - freeze / 100);
+				nowy += speed * (1 - freeze / 100) * speedy;
 				dir = DOWN;
 			}
 			if (abs(rect.x - 80 - pos.X * 90) >= 90 || abs(rect.y - 70 - pos.Y * 90) >= 90) {
@@ -446,7 +447,7 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 		}
 		else {
 			dir = RIGHT;
-			if (rect.x < 1800)  nowx += speed * (1 - freeze / 100);
+			if (rect.x < 1800)  nowx += speed * (1 - freeze / 100) * speedy;
 			else {
 				TotalLife -= 1;
 				money = 0;
@@ -527,7 +528,7 @@ int main(int argc, char* args[])
 			currlife.quad.y = 30; currlife.quad.w = 130;
 			int startime;
 			int endtime;
-			int period=20;
+			int period=10;
 			double degrees = 0;
 			SDL_RendererFlip flipType = SDL_FLIP_NONE;
 			for (int i = 0; i < 7; i++) {
@@ -829,6 +830,7 @@ int main(int argc, char* args[])
 										if (e.type == SDL_MOUSEBUTTONDOWN) {
 											SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
 											if (point_in_rect(mouse_position, startbottom)) {
+												speedy = 1;
 												break;
 											}
 										}
@@ -836,10 +838,12 @@ int main(int argc, char* args[])
 								}
 							}
 							if (point_in_rect(mouse_position, startbottom)) {
-								period = 20;
+								speedy = 1;
 							}
 							if (point_in_rect(mouse_position, fastbottom)) {
-								period = 0;
+								if (speedy <= 2) {
+									speedy += 1;
+								}
 							}
 							if (point_in_rect(mouse_position, mutebottom)) {
 								//mute music
