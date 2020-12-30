@@ -28,10 +28,12 @@ SDL_Texture* background;
 SDL_Texture* light;
 SDL_Texture* slow;
 SDL_Texture* rocket;
+SDL_Texture* cancel;
 SDL_Texture* user;
 const SDL_Rect initiallight = { 1720,910,90,90 };
 const SDL_Rect initialslow = { 1720,820,90,90 };
 const SDL_Rect initialrocket = { 1720,730,90,90 };
+const SDL_Rect cancel_rect = { 1720,640,90,90 };
 SDL_Rect userrect = { 100,100,400,300 };
 SDL_Rect lightrect = { 1720,910,80,80 };
 SDL_Rect slowrect = { 1720,820,80,80 };
@@ -281,6 +283,8 @@ bool loadmedia()
 	rocket = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	loadedSurface = IMG_Load("pictures/test_user.png"); // new include
 	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/red.png"); // new include
+	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	SDL_FreeSurface(loadedSurface);
 	return true;
 }
@@ -625,6 +629,7 @@ int main(int argc, char* args[])
 				SDL_RenderCopy(gRenderer, light, NULL, &initiallight);
 				SDL_RenderCopy(gRenderer, slow, NULL, &initialslow);
 				SDL_RenderCopy(gRenderer, rocket, NULL, &initialrocket);
+				SDL_RenderCopy(gRenderer, cancel, NULL, &cancel_rect);
 				//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
 				if (enemies.empty() && !cntdown) {
 					cntdown = 401;
@@ -661,6 +666,38 @@ int main(int argc, char* args[])
 							
 							if ((lightflag == true || slowflag == true || rocketflag == true))//building mode
 							{
+								if (point_in_rect(mouse_position, cancel_rect) == true) {
+									lightflag = false;
+									slowflag = false;
+									rocketflag = false;
+								}
+								if (point_in_rect(mouse_position, initiallight) == true)
+								{
+									if (TotalMoney >= 5)
+									{
+										lightflag = true;
+										slowflag = false;
+										rocketflag = false;
+									}
+								}
+								if (point_in_rect(mouse_position, initialslow) == true)
+								{
+									if (TotalMoney >= 10)
+									{
+										slowflag = true;
+										lightflag = false;
+										rocketflag = false;
+									}
+								}
+								if (point_in_rect(mouse_position, initialrocket) == true)
+								{
+									if (TotalMoney >= 20)
+									{
+										rocketflag = true;
+										lightflag = false;
+										slowflag = false;
+									}
+								}
 								if (check({p, q})) {//check
 									if (towers[p][q] == NULL) {
 										towers[p][q] = test;
