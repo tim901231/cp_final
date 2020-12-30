@@ -19,37 +19,37 @@ class tower{
             quad.y = y;
             t = count;
             switch (kind){
-            case 0:
-                atk = 1;
-                cooltime = 10;
+            case 0: //gun
+                atk = 10;
+                cooltime = 50;
                 range = 150;
                 break;
             case 1:
-                atk = 2;
-                cooltime = 500;
+                atk = 15;
+                cooltime = 50;
                 range = 150;
                 break;
             case 2:
-                atk = 3;
-                cooltime = 500;
+                atk = 25;
+                cooltime = 50;
                 range = 150;
                 break;
-            case 3:
-                atk = 2;
-                cooltime = 500;
-                range = 200;
-                break;
-            case 4:
-                atk = 3;
-                cooltime = 450;
-                range = 210;
-                break;
-            case 5:
-                atk = 4;
-                cooltime = 400;
+            case 3: //roc
+                atk = 60;
+                cooltime = 200;
                 range = 220;
                 break;
-            case 6:
+            case 4:
+                atk = 75;
+                cooltime = 200;
+                range = 220;
+                break;
+            case 5:
+                atk = 90;
+                cooltime = 200;
+                range = 220;
+                break;
+            case 6: //slow
                 atk = 10;
                 range = 300;
                 break;
