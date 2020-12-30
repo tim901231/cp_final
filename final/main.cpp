@@ -533,6 +533,19 @@ int main(int argc, char* args[])
 			//While application is running
 			int count = 0;
 			while (!quit) {
+				if (status == menu) {
+					count = 0;
+					TotalMoney = 30;
+					TotalLife = 24;
+					for (int i = 0; i < 18; i++) {
+						for (int j = 0; j < 10; j++) {
+							delete towers[i][j];
+							towers[i][j] = NULL;
+							enemies.clear();
+							//wave also need reset
+						}
+					}
+				}
 				while (status == menu) {
 					while (SDL_PollEvent(&e) != 0) {
 						//User requests quit
