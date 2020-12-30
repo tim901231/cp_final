@@ -9,7 +9,7 @@ public:
 	friend class tower;
 	bullet(tower* tower1, ENEMY* enemy1) {
 		kind = tower1->kind % 3;
-		speed = 100;
+		speed = 50;
 		atk = tower1->atk;
 		x = tower1->x;
 		y = tower1->y;

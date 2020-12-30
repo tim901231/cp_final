@@ -77,6 +77,7 @@ bool point_in_rect(SDL_Point p, const SDL_Rect r)
 tower*** towers = new tower * *[18];
 SDL_Texture* tower_pic[9];
 SDL_Rect towerClips[6][32];
+SDL_Rect towerbases = {0,0,70,70};
 SDL_Rect towerClips2[3][8];
 
 //tower
@@ -358,6 +359,7 @@ int main(int argc, char* args[])
 {
 	//SDL_Color c = { 0xff,0xff,0xff,0xff };
 	//word C("a", 28, c);
+	
 	for (int j = 0; j < 6; j++)
 	{
 		for (int i = 0; i < 32; i++)
@@ -611,6 +613,7 @@ int main(int argc, char* args[])
 										}
 									}
 								}
+								SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
 								SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
 							}
 							else if (towers[i][j]->kind >= 6) {//slow tower
@@ -623,6 +626,7 @@ int main(int argc, char* args[])
 								//printf("%d\n", count);
 								towers[i][j]->theta += 1;
 								if (towers[i][j]->theta > 7)towers[i][j]->theta -= 8;
+								SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
 								SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips2[towers[i][j]->kind - 6][towers[i][j]->theta], &towers[i][j]->quad);
 							}
 						}

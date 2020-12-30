@@ -13,6 +13,8 @@ class tower{
         tower(int num_x, int num_y, int type) :x(80+num_x*90), y(70+num_y*90), theta(0)
         {
             kind = type;
+            bquad.x = x;
+            bquad.y = y + 15;
             quad.x = x;
             quad.y = y;
             t = SDL_GetTicks();
@@ -120,6 +122,7 @@ class tower{
 	int theta;
 	int kind=1;
 	SDL_Rect quad={0,0,90,90};
+    SDL_Rect bquad = { 0,0,90,90 };
     int x,y;
     int atk;
     int range;
