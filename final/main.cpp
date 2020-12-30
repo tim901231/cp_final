@@ -414,10 +414,13 @@ int main(int argc, char* args[])
 			SDL_Color wordcolor = { 0000,0000,0000,0000 };
 			string money = to_string(TotalMoney); //convert int to string
 			word currmoney(money, 20, wordcolor);
-			int count = 0;
+			
+			int startime;
+			int endtime;
+			int period=20;
 			//While application is running
 			while (!quit) {
-				count += 1;
+				startime = SDL_GetTicks();
 				money = to_string(TotalMoney);
 				currmoney.changeword(money);
 				SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
@@ -719,6 +722,11 @@ int main(int argc, char* args[])
 				currmoney.render();
 
 				SDL_RenderPresent(gRenderer);
+				endtime = SDL_GetTicks();
+				//printf("%d\n", endtime - startime);
+				if (endtime - startime < period) {
+					SDL_Delay(period + startime - endtime);
+				}
 			}
 		}
 	}
