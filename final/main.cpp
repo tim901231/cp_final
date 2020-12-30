@@ -38,16 +38,16 @@ SDL_Rect rocketrect = { 1720,730,80,80 };
 SDL_Point mouse_position;
 TTF_Font* gFont = NULL;
 class word {
-	public:
+public:
 	int n;
 	SDL_Surface* textSurface = NULL;
 	SDL_Texture* mTexture = NULL;
 	SDL_Color color;
-	SDL_Rect quad = { 1720,80,80,80 };
+	SDL_Rect quad = { 1650,80,60,80 };
 	word(string s, int size, SDL_Color color_) {
 		n = size;
 		color = color_;
-		gFont = TTF_OpenFont("lazy.ttf", size);
+		gFont = TTF_OpenFont("Roboto-Black.ttf", size);
 		textSurface = TTF_RenderText_Solid(gFont, s.c_str(), color_);
 		mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
 		SDL_FreeSurface(textSurface);
@@ -64,9 +64,10 @@ class word {
 };
 bool point_in_rect(SDL_Point p, const SDL_Rect r)
 {
-	if ((p.x > r.x) && (p.x < r.x + r.w) && (p.y > r.y) && (p.y < r.y + r.h)){
+	if ((p.x > r.x) && (p.x < r.x + r.w) && (p.y > r.y) && (p.y < r.y + r.h)) {
 		return true;
-	}else{
+	}
+	else {
 		return false;
 	}
 }
@@ -88,7 +89,7 @@ vector<bullet*> bullets;
 //enemy's things
 vector<ENEMY*> enemies;
 ENEMY* DEFAULT = new ENEMY(0);
-SDL_Texture *EnemyTexture[10];  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
+SDL_Texture* EnemyTexture[10];  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
 SDL_Rect enemyClips[10][50];
 int TotalMoney = 30, cntdown = 0;
 //bool **MAP = new bool *[18];
@@ -281,7 +282,7 @@ void LoadEnemyMedia() {
 }
 
 ENEMY* Generate_Enemy() {
-//	srand(time(NULL));
+	srand(time(NULL));
 	int type = rand() % 4 + 1;
 	ENEMY* ret = new ENEMY(type);
 	ret->pic = EnemyTexture[type];
@@ -315,22 +316,25 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 	}
 	if (!exist_path)  return false;
 	else if (move) {
-		if (rect.x < 80)  nowx += speed;
+		if (freeze) {
+			--freeze;
+		}
+		else  if (rect.x < 80)  rect.x += speed;
 		else  if (path.shortest_path.size() > 1) {
 			if (path.shortest_path[1] - pos == DIR[RIGHT]) {
-				nowx += speed;
+				rect.x += speed;
 				dir = RIGHT;
 			}
 			if (path.shortest_path[1] - pos == DIR[UP]) {
-				nowy -= speed;
+				rect.y -= speed;
 				dir = UP;
 			}
 			if (path.shortest_path[1] - pos == DIR[LEFT]) {
-				nowx -= speed;
+				rect.x -= speed;
 				dir = LEFT;
 			}
 			if (path.shortest_path[1] - pos == DIR[DOWN]) {
-				nowy += speed;
+				rect.y += speed;
 				dir = DOWN;
 			}
 			if (abs(rect.x - 80 - pos.X * 90) >= 90 || abs(rect.y - 70 - pos.Y * 90) >= 90) {
@@ -338,16 +342,13 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 			}
 		}
 		else {
-			dir = RIGHT;
-			if (rect.x < 1800)  nowx += speed;
+			if (rect.x < 1800)  rect.x += speed;
 			else {
 				health -= 1;
 				money = 0;
 				hp = 0;
 			}
 		}
-		rect.x = int(nowx);
-		rect.y = int(nowy);
 	}
 	return true;
 }
@@ -409,7 +410,7 @@ int main(int argc, char* args[])
 			gamestatus status = play;
 			SDL_Color wordcolor = { 0000,0000,0000,0000 };
 			string money = to_string(TotalMoney); //convert int to string
-			word currmoney(money, 28, wordcolor);
+			word currmoney(money, 20, wordcolor);
 			int count = 0;
 			//While application is running
 			while (!quit) {
@@ -417,11 +418,25 @@ int main(int argc, char* args[])
 				money = to_string(TotalMoney);
 				currmoney.changeword(money);
 				SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
-				SDL_SetTextureAlphaMod(light, 255);
 				SDL_SetTextureBlendMode(slow, SDL_BLENDMODE_BLEND);
-				SDL_SetTextureAlphaMod(slow, 255);
 				SDL_SetTextureBlendMode(rocket, SDL_BLENDMODE_BLEND);
-				SDL_SetTextureAlphaMod(rocket, 255);
+				if (TotalMoney >= 5){
+					SDL_SetTextureAlphaMod(light, 255);
+				}else{
+					SDL_SetTextureAlphaMod(light, 128);
+				}
+				if (TotalMoney >= 10) {
+					SDL_SetTextureAlphaMod(slow, 255);
+				}
+				else {
+					SDL_SetTextureAlphaMod(slow, 128);
+				}
+				if (TotalMoney >= 20) {
+					SDL_SetTextureAlphaMod(rocket, 255);
+				}
+				else {
+					SDL_SetTextureAlphaMod(rocket, 128);
+				}
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear(gRenderer);
 				SDL_RenderCopy(gRenderer, background, NULL, NULL);
@@ -430,12 +445,12 @@ int main(int argc, char* args[])
 				SDL_RenderCopy(gRenderer, rocket, NULL, &initialrocket);
 				//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
 				if (enemies.empty() && !cntdown) {
-					cntdown = 401;
+					cntdown = 41;
 				}
 
 				if (cntdown) {
-					if ((-- cntdown) % 100 == 0)  enemies.push_back(Generate_Enemy());
-				//	cout << cntdown << ' ' << enemies.size() << '\n';
+					if ((--cntdown) % 10 == 0)  enemies.push_back(Generate_Enemy());
+					//	cout << cntdown << ' ' << enemies.size() << '\n';
 				}
 
 				//Handle events on queue
@@ -456,22 +471,25 @@ int main(int argc, char* args[])
 							{
 								if (p < 18 && p >= 0 && q < 10 && q >= 0) {//check
 									if (lightflag == true) {
-										if (towers[p][q] == NULL)
+										if (towers[p][q] == NULL && DEFAULT->FindPath(0))
 										{
+											TotalMoney -= 5;
 											towers[p][q] = new tower(p, q, 0);
 										}
 										lightflag = false;
 									}
 									if (slowflag == true) {
-										if (towers[p][q] == NULL)
+										if (towers[p][q] == NULL && DEFAULT->FindPath(0))
 										{
+											TotalMoney -= 10;
 											towers[p][q] = new tower(p, q, 6);
 										}
 										slowflag = false;
 									}
 									if (rocketflag == true) {
-										if (towers[p][q] == NULL)
+										if (towers[p][q] == NULL && DEFAULT->FindPath(0))
 										{
+											TotalMoney -= 20;
 											towers[p][q] = new tower(p, q, 3);
 										}
 										rocketflag = false;
@@ -481,15 +499,24 @@ int main(int argc, char* args[])
 							else {//mutiple funtion
 								if (point_in_rect(mouse_position, initiallight) == true)
 								{
-									lightflag = true;
+									if (TotalMoney >= 5)
+									{
+										lightflag = true;
+									}
 								}
 								else if (point_in_rect(mouse_position, initialslow) == true)
 								{
-									slowflag = true;
+									if (TotalMoney >= 10)
+									{
+										slowflag = true;
+									}
 								}
 								else if (point_in_rect(mouse_position, initialrocket) == true)
 								{
-									rocketflag = true;
+									if (TotalMoney >= 20)
+									{
+										rocketflag = true;
+									}
 								}
 								else if (p < 18 && p >= 0 && q < 10 && q >= 0)
 								{
@@ -508,14 +535,40 @@ int main(int argc, char* args[])
 							{
 								if (mouse_position.x < (userrect.x + 200)) //asking to upgrade
 								{
-									if (towers[tempx][tempy]->kind != 2 && towers[tempx][tempy]->kind != 5 && towers[tempx][tempy]->kind != 8) {
-										upgrade(tempx, tempy, towers[tempx][tempy]);
-										//printf("%d", towers[tempx][tempy]->kind);
-										status = play;
+									if (towers[tempx][tempy]->kind ==0|| towers[tempx][tempy]->kind == 1) { //Lightgun upgrade
+										if (TotalMoney >= 4)
+										{
+											TotalMoney -= 4;
+											upgrade(tempx, tempy, towers[tempx][tempy]);
+											status = play;
+										}
+									}else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun upgrade
+										if (TotalMoney > 15) 
+										{
+											TotalMoney -= 15;
+											upgrade(tempx, tempy, towers[tempx][tempy]);
+											status = play;
+										}
+									}else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket upgrade
+										if (TotalMoney > 30)
+										{
+											TotalMoney -= 30;
+											upgrade(tempx, tempy, towers[tempx][tempy]);
+											status = play;
+										}
 									}
 								}
 								else //sell
 								{
+									if (towers[tempx][tempy]->kind == 0 || towers[tempx][tempy]->kind == 1) { //Lightgun sell
+										TotalMoney += 3;
+									}
+									else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun sell
+										TotalMoney += 7;
+									}
+									else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket sell
+										TotalMoney += 12;
+									}
 									delete towers[tempx][tempy];
 									towers[tempx][tempy] = NULL;
 									status = play;
@@ -551,7 +604,7 @@ int main(int argc, char* args[])
 								}
 								SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
 							}
-							else if(towers[i][j]->kind>=6){//slow tower
+							else if (towers[i][j]->kind >= 6) {//slow tower
 								for (int k = 0; k < enemies.size(); k++) {
 									if (towers[i][j]->inrange(enemies[k]))
 									{
@@ -584,7 +637,7 @@ int main(int argc, char* args[])
 							break;
 						}
 					}
-					
+
 				}
 				for (int i = 0; i < bullets.size(); i++) {
 					SDL_RenderCopy(gRenderer, bullet_pic[bullets[i]->kind], NULL, &bullets[i]->quad);
@@ -601,9 +654,8 @@ int main(int argc, char* args[])
 
 				for (auto enemy : enemies) {
 					enemy->FindPath(1);
-					enemy->current_phase += 0.2;
-//					cout << enemy->rect.x << ' ' << enemy->rect.y << ' ' << enemy->FindPath(0) << '\n';
-					SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + ((int(enemy->current_phase)) % enemy->period)], &enemy->rect);
+					//					cout << enemy->rect.x << ' ' << enemy->rect.y << ' ' << enemy->FindPath(0) << '\n';
+					SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + ((enemy->current_phase++) % enemy->period)], &enemy->rect);
 				}
 
 				//render buttom
@@ -635,9 +687,21 @@ int main(int argc, char* args[])
 					SDL_RenderCopy(gRenderer, rocket, NULL, &rocketrect);
 				}
 				if (status == upgrading) {
-					userrect.x = 90*tempx + 35;
-					userrect.y = 90*tempy + 25;
+					userrect.x = 90 * tempx + 35;
+					userrect.y = 90 * tempy + 25;
 					SDL_RenderCopy(gRenderer, user, NULL, &userrect);
+				}
+				if (TotalMoney < 10) //Change font rectangle
+				{
+					currmoney.quad.w = 30;
+				}
+				else if (TotalMoney >= 100)
+				{
+					currmoney.quad.w = 90;
+				}
+				else if (TotalMoney >= 10 && TotalMoney < 100)
+				{
+					currmoney.quad.w = 60;
 				}
 				currmoney.render();
 
