@@ -17,6 +17,7 @@ using namespace std;
 const int SCREEN_WIDTH = 1800;
 const int SCREEN_HEIGHT = 1000;
 const int TOWER_WIDTH = 90;
+int TotalMoney = 30, TotalLife = 24;
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
@@ -36,6 +37,7 @@ SDL_Rect lightrect = { 1720,910,80,80 };
 SDL_Rect slowrect = { 1720,820,80,80 };
 SDL_Rect rocketrect = { 1720,730,80,80 };
 SDL_Point mouse_position;
+//SDL Rect pausebottom
 TTF_Font* gFont = NULL;
 class word {
 public:
@@ -82,6 +84,45 @@ SDL_Rect towerClips2[3][8];
 
 //tower
 
+//function's thing
+SDL_Texture* bottoms_pic[6];
+SDL_Rect option_list = {620,320,590,450};
+SDL_Rect pausebottom = {680,380,150,150};
+SDL_Rect startbottom = {850,380,150,150};
+SDL_Rect fastbottom = {1020,380,150,150};
+SDL_Rect mutebottom = { 800,550,200,30 };
+SDL_Rect leavebottom = { 800,550,200,30 };
+SDL_Rect exitbottom = { 800,550,45,45 };
+SDL_Texture* option_list_pic = NULL;
+SDL_Texture* pausebottom_pic = NULL;
+SDL_Texture* startbottom_pic = NULL;
+SDL_Texture* fastbottom_pic = NULL;
+SDL_Texture* mutebottom_pic = NULL;
+SDL_Texture* leavebottom_pic = NULL;
+void loadbottommedia() {
+	SDL_Surface* surface;
+	surface = IMG_Load("pictures/Light_Soldier.png");
+	option_list_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+	bottoms_pic[0] = option_list_pic;
+	surface = IMG_Load("pictures/Heavy_Soldier.png");
+	pausebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+	bottoms_pic[1] = pausebottom_pic;
+	surface = IMG_Load("pictures/Light_Tank.png");
+	startbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+	bottoms_pic[2] = startbottom_pic;
+	surface = IMG_Load("pictures/Heavy_Tank.png");
+	fastbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+	bottoms_pic[3] = fastbottom_pic;
+	surface = IMG_Load("pictures/Heavy_Tank.png");
+	mutebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+	bottoms_pic[4] = mutebottom_pic;
+	surface = IMG_Load("pictures/Heavy_Tank.png");
+	leavebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+	bottoms_pic[5] = leavebottom_pic;
+	SDL_FreeSurface(surface);
+}
+//function
+
 //bullet's thing
 SDL_Texture* bullet_pic[3];
 vector<bullet*> bullets;
@@ -92,7 +133,8 @@ vector<ENEMY*> enemies;
 ENEMY* DEFAULT = new ENEMY(0);
 SDL_Texture* EnemyTexture[10];  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
 SDL_Rect enemyClips[10][50];
-int TotalMoney = 30, cntdown = 0;
+int cntdown = 0;
+
 bool canBuild;
 tower* test = new tower(0, 0, 0);
 //enemy
@@ -344,7 +386,7 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 			dir = RIGHT;
 			if (rect.x < 1800)  nowx += speed * (1 - freeze / 100);
 			else {
-				health -= 1;
+				TotalLife -= 1;
 				money = 0;
 				hp = 0;
 			}
@@ -403,7 +445,7 @@ int main(int argc, char* args[])
 		}
 		else {
 			//Main loop flag
-			int p, q, tempx, tempy;
+			int p=0, q=0, tempx, tempy;
 			bool quit = false;
 			bool lightflag = false;
 			bool slowflag = false;
@@ -412,17 +454,21 @@ int main(int argc, char* args[])
 			SDL_Event e;
 			gamestatus status = play;
 			SDL_Color wordcolor = { 0000,0000,0000,0000 };
-			string money = to_string(TotalMoney); //convert int to string
-			word currmoney(money, 20, wordcolor);
-			
+			string money = "$: " + to_string(TotalMoney); //convert int to string
+			string life = "Life: " + to_string(TotalLife);
+			word currmoney(money, 18, wordcolor);
+			word currlife(life, 18, wordcolor);
+			currlife.quad.y = 30; currlife.quad.w = 130;
 			int startime;
 			int endtime;
 			int period=20;
 			//While application is running
 			while (!quit) {
 				startime = SDL_GetTicks();
-				money = to_string(TotalMoney);
+				money = "$: " + to_string(TotalMoney);
+				life = "Life: " + to_string(TotalLife);
 				currmoney.changeword(money);
+				currlife.changeword(life);
 				SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
 				SDL_SetTextureBlendMode(slow, SDL_BLENDMODE_BLEND);
 				SDL_SetTextureBlendMode(rocket, SDL_BLENDMODE_BLEND);
@@ -471,8 +517,18 @@ int main(int argc, char* args[])
 						SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
 						if (status == play)
 						{
-							p = (mouse_position.x - 80) / 90;
-							q = (mouse_position.y - 70) / 90;
+							if (mouse_position.x < 80) {
+								p = -1;
+							}
+							else if (mouse_position.y < 70) {
+								q = -1;
+							}
+							else {
+								p = (mouse_position.x - 80) / 90;
+
+								q = (mouse_position.y - 70) / 90;
+							}
+							
 							if ((lightflag == true || slowflag == true || rocketflag == true))//building mode
 							{
 								if (check({p, q})) {//check
@@ -709,18 +765,18 @@ int main(int argc, char* args[])
 				}
 				if (TotalMoney < 10) //Change font rectangle
 				{
-					currmoney.quad.w = 30;
+					currmoney.quad.w = 70;
 				}
 				else if (TotalMoney >= 100)
 				{
-					currmoney.quad.w = 90;
+					currmoney.quad.w = 130;
 				}
 				else if (TotalMoney >= 10 && TotalMoney < 100)
 				{
-					currmoney.quad.w = 60;
+					currmoney.quad.w = 100;
 				}
 				currmoney.render();
-
+				currlife.render();
 				SDL_RenderPresent(gRenderer);
 				endtime = SDL_GetTicks();
 				//printf("%d\n", endtime - startime);
