@@ -1,5 +1,7 @@
 #include"enemy.h"
-
+#include"SDL_image.h"
+#include"variable.h"
+#include<ctime>
 pii operator +(const pii& p1, const pii& p2) {
 	return { p1.X + p2.X, p1.Y + p2.Y };
 }
@@ -103,4 +105,120 @@ void ENEMY::calculate_hp() {
 	green.y = rect.y + 90;
 	red.x = green.x + green.w;
 	red.y = green.y;
+}
+void LoadEnemyMedia() {
+	SDL_Surface* surface;
+	surface = IMG_Load("pictures/Light_Soldier.png");
+	EnemyTexture[1] = SDL_CreateTextureFromSurface(gRenderer, surface);
+	surface = IMG_Load("pictures/Heavy_Soldier.png");
+	EnemyTexture[2] = SDL_CreateTextureFromSurface(gRenderer, surface);
+	surface = IMG_Load("pictures/Light_Tank.png");
+	EnemyTexture[3] = SDL_CreateTextureFromSurface(gRenderer, surface);
+	surface = IMG_Load("pictures/Heavy_Tank.png");
+	EnemyTexture[4] = SDL_CreateTextureFromSurface(gRenderer, surface);
+	SDL_FreeSurface(surface);
+	for (int i = 1; i <= 4; i++) {
+		if (i == 1) {
+			for (int j = 0; j < 48; j++) {
+				enemyClips[i][j].x = 70 * j;
+				enemyClips[i][j].y = 0;
+				enemyClips[i][j].w = 70;
+				enemyClips[i][j].h = 70;
+			}
+		}
+		else  if (i == 2) {
+			for (int j = 0; j < 40; j++) {
+				enemyClips[i][j].x = 70 * j;
+				enemyClips[i][j].y = 0;
+				enemyClips[i][j].w = 70;
+				enemyClips[i][j].h = 140;
+			}
+		}
+		else  if (i == 3) {
+			for (int j = 0; j < 12; j++) {
+				enemyClips[i][j].x = 70 * j;
+				enemyClips[i][j].y = 0;
+				enemyClips[i][j].w = 70;
+				enemyClips[i][j].h = 70;
+			}
+		}
+		else {
+			for (int j = 0; j < 40; j++) {
+				enemyClips[i][j].x = 70 * j;
+				enemyClips[i][j].y = 0;
+				enemyClips[i][j].w = 70;
+				enemyClips[i][j].h = 70;
+			}
+		}
+	}
+}
+ENEMY* Generate_Enemy() {
+	srand(time(NULL));
+	int type = rand() % 4 + 1;
+	ENEMY* ret = new ENEMY(type);
+	ret->pic = EnemyTexture[type];
+	return ret;
+}
+bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
+	queue<val> q;
+	bool visited[18][10] = {}, exist_path = false;
+	val start, path;
+	start.pos = pos;
+	start.shortest_path.push_back(pos);
+	q.push(start);
+	visited[pos.X][pos.Y] = true;
+	while (!q.empty()) {
+		path = q.front();
+		q.pop();
+		if (path.pos == make_pair(17, 5)) {
+			exist_path = true;
+			break;
+		}
+		for (int i = 0; i < 4; i++) {
+			if (check(path.pos + DIR[i]) && !visited[path.pos.X + DIR[i].X][path.pos.Y + DIR[i].Y] && !towers[path.pos.X + DIR[i].X][path.pos.Y + DIR[i].Y]) {
+				visited[path.pos.X + DIR[i].X][path.pos.Y + DIR[i].Y] = true;
+				val tmp = path;
+				tmp.pos = path.pos + DIR[i];
+				tmp.shortest_path.push_back(tmp.pos);
+				q.push(tmp);
+			}
+		}
+	}
+	if (!exist_path)  return false;
+	else if (move) {
+		if (rect.x < 80)  nowx += speed * (1 - freeze / 100) * speedy;
+		else  if (path.shortest_path.size() > 1) {
+			if (path.shortest_path[1] - pos == DIR[RIGHT]) {
+				nowx += speed * (1 - freeze / 100) * speedy;
+				dir = RIGHT;
+			}
+			if (path.shortest_path[1] - pos == DIR[UP]) {
+				nowy -= speed * (1 - freeze / 100) * speedy;
+				dir = UP;
+			}
+			if (path.shortest_path[1] - pos == DIR[LEFT]) {
+				nowx -= speed * (1 - freeze / 100) * speedy;
+				dir = LEFT;
+			}
+			if (path.shortest_path[1] - pos == DIR[DOWN]) {
+				nowy += speed * (1 - freeze / 100) * speedy;
+				dir = DOWN;
+			}
+			if (abs(rect.x - 80 - pos.X * 90) >= 90 || abs(rect.y - 70 - pos.Y * 90) >= 90) {
+				pos = path.shortest_path[1];
+			}
+		}
+		else {
+			dir = RIGHT;
+			if (rect.x < 1800)  nowx += speed * (1 - freeze / 100) * speedy;
+			else {
+				TotalLife -= 1;
+				money = 0;
+				hp = 0;
+			}
+		}
+		rect.x = int(nowx);
+		rect.y = int(nowy);
+	}
+	return true;
 }

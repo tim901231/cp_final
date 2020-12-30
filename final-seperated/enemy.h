@@ -45,5 +45,7 @@ public:
 	bool FindPath(bool move);
 	void calculate_hp();
 };
-
+void LoadEnemyMedia();
+ENEMY* Generate_Enemy();
+bool FindPath(bool move);
 #endif
