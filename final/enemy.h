@@ -14,15 +14,11 @@ const int RIGHT = 0;
 const int UP = 1;
 const int LEFT = 2;
 const int DOWN = 3;
-const char *Light_Soldier_path = "./pictures/Light_soldier.png";
-const char *Heavy_Soldier_path = "./pictures/Heavy_Soldier.png";
-const char *Light_Tank_path = "./pictures/Light_Tank.png";
-const char *Heavy_Tank_path = "./pictures/Heavy_Tank.png";
 
 #define X first
 #define Y second
 
-int health = 10;
+int health = 10, MAX_HEALTH[10] = {1000000, 15, 30, 50, 100, 0, 0, 0, 0, 0};
 pii DIR[4] = {{1,0}, {0, -1}, {-1, 0}, {0, 1}};
 
 pii operator +(const pii &p1, const pii &p2){
@@ -50,7 +46,7 @@ public:
 	double speed, freeze, nowx, nowy, current_phase;
 	pii pos;
 	SDL_Texture *pic;
-	SDL_Rect rect;
+	SDL_Rect rect, green, red;
 	ENEMY(int type) {
 		TYPE = type;
 		freeze = 0;
@@ -102,5 +98,15 @@ public:
 		}
 	}
 	bool FindPath(bool move);
+	void calculate_hp() {
+		green.w = hp / MAX_HEALTH[TYPE];
+		green.h = 10;
+		red.w = 90 - green.w;
+		red.h = 10;
+		green.x = rect.x;
+		green.y = rect.y + 90;
+		red.x = green.x + green.w;
+		red.y = green.y;
+	}
 };
 #endif
