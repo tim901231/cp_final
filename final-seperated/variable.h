@@ -8,6 +8,8 @@
 #include"SDL_ttf.h"
 #include<vector>
 #include"enemy.h"
+#include"word.h"
+#include<string>
 //windows setting
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
@@ -15,7 +17,6 @@ extern TTF_Font* gFont;
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
 extern const int TOWER_WIDTH;
-bool init();
 //variable
 extern int TotalMoney;
 extern int TotalLife;
@@ -57,5 +58,59 @@ extern SDL_Rect towerClips2[][8];
 extern SDL_Texture* bullet_pic[];
 extern vector<bullet*> bullets;
 //bullet
-
+//position
+extern int p, q, tempx, tempy;
+//positoin
+//flags
+extern bool quit;
+extern bool lightflag;
+extern bool slowflag;
+extern bool rocketflag;
+extern bool functionmode;
+extern bool startflag;
+extern int loop;
+//flags
+//Event handler
+extern SDL_Event e;
+extern gamestatus status;
+//Event handler
+//words
+extern SDL_Color wordcolor;
+//words
+//menu
+extern const SDL_Rect turning1;
+extern const SDL_Rect turning2;
+extern const SDL_Rect turning3;
+extern const SDL_Rect titlerect;
+extern double degrees;
+extern SDL_RendererFlip flipType;
+//menu
+//enemy's things
+extern vector<ENEMY*> enemies;
+extern ENEMY* DEFAULT;
+extern SDL_Texture* EnemyTexture[];  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
+extern SDL_Rect enemyClips[][50];
+extern int cntdown;
+extern bool canBuild;
+extern tower* test;
+//enemy
+//function's thing
+extern SDL_Rect option_bottom;
+extern SDL_Texture* option_bottom_pic;
+extern SDL_Texture* bottoms_pic[];
+extern SDL_Rect bottoms[];
+extern SDL_Rect option_list;
+extern SDL_Rect pausebottom;
+extern SDL_Rect startbottom;
+extern SDL_Rect fastbottom;
+extern SDL_Rect mutebottom;
+extern SDL_Rect leavebottom;// back to menu
+extern SDL_Rect exitbottom;//red x
+extern SDL_Texture* option_list_pic;
+extern SDL_Texture* pausebottom_pic;
+extern SDL_Texture* startbottom_pic;
+extern SDL_Texture* fastbottom_pic;
+extern SDL_Texture* mutebottom_pic;
+extern SDL_Texture* leavebottom_pic; // back to menu
+extern SDL_Texture* exitbottom_pic; //red x
 #endif

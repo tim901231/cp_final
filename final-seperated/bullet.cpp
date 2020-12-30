@@ -76,3 +76,26 @@ void loadbulletmedia() {
 	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	SDL_FreeSurface(loadedSurface);
 }
+void bullet_motion() {
+	for (int i = bullets.size() - 1; i >= 0; i--) {
+		bullets[i]->move();
+		if (bullets[i]->x > 1680 || bullets[i]->x < 40 || bullets[i]->y>1000 || bullets[i]->y < 0) {
+			delete bullets[i];
+			bullets[i] = NULL;
+			bullets.erase(bullets.begin() + i);
+			continue;
+		}
+		for (int j = 0; j < enemies.size(); j++) {
+			if (bullets[i]->touch(enemies[j])) {
+				enemies[j]->hp -= bullets[i]->atk;//
+				delete bullets[i];
+				bullets[i] = NULL;
+				bullets.erase(bullets.begin() + i);
+				break;
+			}
+		}
+	}
+	for (int i = 0; i < bullets.size(); i++) {
+		SDL_RenderCopy(gRenderer, bullet_pic[bullets[i]->kind], NULL, &bullets[i]->quad);
+	}
+}

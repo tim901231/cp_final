@@ -13,6 +13,9 @@
 #include <iostream>
 #include"variable.h"
 #include"word.h"
+#include"sys_act.h"
+#include"menu.h"
+#include"option_list.h"
 using namespace std;
 
 //variable
@@ -23,7 +26,7 @@ using namespace std;
 
 //SDL_Window* gWindow = NULL;
 //SDL_Renderer* gRenderer = NULL;
-SDL_Texture* words;
+//SDL_Texture* words;
 //map's things
 /*
 enum gamestatus { play, upgrading, option, menu};
@@ -69,7 +72,7 @@ public:
 		SDL_RenderCopy(gRenderer, this->mTexture, NULL, &quad);
 		return;
 	}
-};*/
+};
 bool point_in_rect(SDL_Point p, const SDL_Rect r)
 {
 	if ((p.x > r.x) && (p.x < r.x + r.w) && (p.y > r.y) && (p.y < r.y + r.h)) {
@@ -78,7 +81,7 @@ bool point_in_rect(SDL_Point p, const SDL_Rect r)
 	else {
 		return false;
 	}
-}
+}*/
 //map
 //menu's thing
 /*
@@ -104,87 +107,87 @@ SDL_Rect towerbases = { 0,0,70,70 };
 SDL_Rect towerClips2[3][8];*/
 //tower
 
-//menu
+////menu
+//
+//const SDL_Rect turning1 = { 715,330,300,300 };
+//const SDL_Rect turning2 = { 640,255,450,450 };
+//const SDL_Rect turning3 = { 540,155,650,650 };
+//const SDL_Rect titlerect = { 900,50,800,160 };
+//void loadmenumedia()
+//{
+//	SDL_Surface* loadedSurface = IMG_Load("pictures/startbutton.png");
+//	startbutton = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+//	loadedSurface = IMG_Load("pictures/startpage.png");
+//	startpage = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+//	loadedSurface = IMG_Load("pictures/startturning1.png");
+//	startturning1 = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+//	loadedSurface = IMG_Load("pictures/startturning2.png");
+//	startturning2 = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+//	loadedSurface = IMG_Load("pictures/startturning3.png");
+//	startturning3 = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+//	loadedSurface = IMG_Load("pictures/title.png");
+//	title = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+//	SDL_FreeSurface(loadedSurface);
+//	//return true;
+//}
 
-const SDL_Rect turning1 = { 715,330,300,300 };
-const SDL_Rect turning2 = { 640,255,450,450 };
-const SDL_Rect turning3 = { 540,155,650,650 };
-const SDL_Rect titlerect = { 900,50,800,160 };
-void loadmenumedia()
-{
-	SDL_Surface* loadedSurface = IMG_Load("pictures/startbutton.png");
-	startbutton = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/startpage.png");
-	startpage = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/startturning1.png");
-	startturning1 = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/startturning2.png");
-	startturning2 = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/startturning3.png");
-	startturning3 = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/title.png");
-	title = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	SDL_FreeSurface(loadedSurface);
-	//return true;
-}
 
-
-//function's thing
-SDL_Rect option_bottom = {0,950,50,50};
-SDL_Texture* option_bottom_pic;
-SDL_Texture* bottoms_pic[7];
-SDL_Rect bottoms[7];
-SDL_Rect option_list = {605,310,590,380};
-SDL_Rect pausebottom = {680,380,120,120};
-SDL_Rect startbottom = {850,380,120,120};
-SDL_Rect fastbottom = {1020,380,120,120};
-SDL_Rect mutebottom = { 800,550,200,30 };
-SDL_Rect leavebottom = { 800,600,200,30 };// back to menu
-SDL_Rect exitbottom = { 1150,310,45,45 };//red x
-SDL_Texture* option_list_pic = NULL;
-SDL_Texture* pausebottom_pic = NULL;
-SDL_Texture* startbottom_pic = NULL;
-SDL_Texture* fastbottom_pic = NULL;
-SDL_Texture* mutebottom_pic = NULL;
-SDL_Texture* leavebottom_pic = NULL; // back to menu
-SDL_Texture* exitbottom_pic = NULL; //red x
-void loadbottommedia() {
-	SDL_Surface* surface;
-	surface = IMG_Load("pictures/option_pic.jpeg");
-	option_list_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
-	bottoms_pic[0] = option_list_pic;
-	bottoms[0] = option_list;
-	surface = IMG_Load("pictures/pause.png");
-	pausebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
-	bottoms_pic[1] = pausebottom_pic;
-	bottoms[1] = pausebottom;
-	surface = IMG_Load("pictures/play.png");
-	startbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
-	bottoms_pic[2] = startbottom_pic;
-	bottoms[2] = startbottom;
-	surface = IMG_Load("pictures/expedite.png");
-	fastbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
-	bottoms_pic[3] = fastbottom_pic;
-	bottoms[3] = fastbottom;
-	surface = IMG_Load("pictures/yellow.png");
-	mutebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
-	bottoms_pic[4] = mutebottom_pic;
-	bottoms[4] = mutebottom;
-	surface = IMG_Load("pictures/yellow.png");
-	leavebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
-	bottoms_pic[5] = leavebottom_pic;
-	bottoms[5] = leavebottom;
-	surface = IMG_Load("pictures/Light_Gun_user.png");
-	exitbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
-	bottoms_pic[6] = exitbottom_pic;
-	bottoms[6] = exitbottom;
-	surface = IMG_Load("pictures/Light_Gun_user.png");
-	option_bottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
-	if (option_bottom_pic == NULL) {
-		printf("hi");
-	}
-	SDL_FreeSurface(surface);
-}
+////function's thing
+//SDL_Rect option_bottom = {0,950,50,50};
+//SDL_Texture* option_bottom_pic;
+//SDL_Texture* bottoms_pic[7];
+//SDL_Rect bottoms[7];
+//SDL_Rect option_list = {605,310,590,380};
+//SDL_Rect pausebottom = {680,380,120,120};
+//SDL_Rect startbottom = {850,380,120,120};
+//SDL_Rect fastbottom = {1020,380,120,120};
+//SDL_Rect mutebottom = { 800,550,200,30 };
+//SDL_Rect leavebottom = { 800,600,200,30 };// back to menu
+//SDL_Rect exitbottom = { 1150,310,45,45 };//red x
+//SDL_Texture* option_list_pic = NULL;
+//SDL_Texture* pausebottom_pic = NULL;
+//SDL_Texture* startbottom_pic = NULL;
+//SDL_Texture* fastbottom_pic = NULL;
+//SDL_Texture* mutebottom_pic = NULL;
+//SDL_Texture* leavebottom_pic = NULL; // back to menu
+//SDL_Texture* exitbottom_pic = NULL; //red x
+//void loadbottommedia() {
+//	SDL_Surface* surface;
+//	surface = IMG_Load("pictures/option_pic.jpeg");
+//	option_list_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+//	bottoms_pic[0] = option_list_pic;
+//	bottoms[0] = option_list;
+//	surface = IMG_Load("pictures/pause.png");
+//	pausebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+//	bottoms_pic[1] = pausebottom_pic;
+//	bottoms[1] = pausebottom;
+//	surface = IMG_Load("pictures/play.png");
+//	startbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+//	bottoms_pic[2] = startbottom_pic;
+//	bottoms[2] = startbottom;
+//	surface = IMG_Load("pictures/expedite.png");
+//	fastbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+//	bottoms_pic[3] = fastbottom_pic;
+//	bottoms[3] = fastbottom;
+//	surface = IMG_Load("pictures/yellow.png");
+//	mutebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+//	bottoms_pic[4] = mutebottom_pic;
+//	bottoms[4] = mutebottom;
+//	surface = IMG_Load("pictures/yellow.png");
+//	leavebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+//	bottoms_pic[5] = leavebottom_pic;
+//	bottoms[5] = leavebottom;
+//	surface = IMG_Load("pictures/Light_Gun_user.png");
+//	exitbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+//	bottoms_pic[6] = exitbottom_pic;
+//	bottoms[6] = exitbottom;
+//	surface = IMG_Load("pictures/Light_Gun_user.png");
+//	option_bottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+//	if (option_bottom_pic == NULL) {
+//		printf("hi");
+//	}
+//	SDL_FreeSurface(surface);
+//}
 //function
 
 //bullet's thing
@@ -193,14 +196,14 @@ void loadbottommedia() {
 //bullet
 
 //enemy's things
-vector<ENEMY*> enemies;
-ENEMY* DEFAULT = new ENEMY(0);
-SDL_Texture* EnemyTexture[10];  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
-SDL_Rect enemyClips[10][50];
-int cntdown = 0;
-
-bool canBuild;
-tower* test = new tower(0, 0, 0, 0);
+//vector<ENEMY*> enemies;
+//ENEMY* DEFAULT = new ENEMY(0);
+//SDL_Texture* EnemyTexture[10];  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
+//SDL_Rect enemyClips[10][50];
+//int cntdown = 0;
+////
+//bool canBuild;
+//tower* test = new tower(0, 0, 0, 0);
 //enemy
 
 //init
@@ -349,13 +352,13 @@ void close()
 	IMG_Quit();
 	SDL_Quit();
 }
-void upgrade(int x, int y, tower* old, int count)
-{
-	int c = old->kind + 1;
-	delete towers[x][y];
-	towers[x][y] = NULL;
-	towers[x][y] = new tower(x, y, c, count);
-}
+//void upgrade(int x, int y, tower* old, int t)
+//{
+//	int c = old->kind + 1;
+//	delete towers[x][y];
+//	towers[x][y] = NULL;
+//	towers[x][y] = new tower(x, y, c, t);
+//}
 //ENEMY
 void LoadEnemyMedia() {
 	SDL_Surface* surface;
@@ -481,7 +484,7 @@ int main(int argc, char* args[])
 	//SDL_Color c = { 0xff,0xff,0xff,0xff };
 	//word C("a", 28, c);
 	
-	for (int j = 0; j < 6; j++)
+	/*for (int j = 0; j < 6; j++)
 	{
 		for (int i = 0; i < 32; i++)
 		{
@@ -511,7 +514,8 @@ int main(int argc, char* args[])
 		{
 			towers[i][j] = NULL;
 		}
-	}
+	}*/
+	tower_init();
 	//Start up SDL and create window
 	if (!init()) {
 		printf("Failed to initialize!\n");
@@ -523,519 +527,522 @@ int main(int argc, char* args[])
 		loadmenumedia();
 		loadtowermedia();
 		loadbulletmedia();
-		if (false) {
-			printf("Failed to load media!\n");
+		
+		////Main loop flag
+		//int p=0, q=0, tempx, tempy;
+		//bool quit = false;
+		//bool lightflag = false;
+		//bool slowflag = false;
+		//bool rocketflag = false;
+		//bool functionmode = false;
+		//bool startflag = false;
+		////Event handler
+		//SDL_Event e;
+		//gamestatus status = menu;
+		//SDL_Color wordcolor = { 0000,0000,0000,0000 };
+		string money = "$: " + to_string(TotalMoney); //convert int to string
+		string life = "Life: " + to_string(TotalLife);
+		word currmoney(money, 18, wordcolor);
+		word currlife(life, 18, wordcolor);
+		currlife.quad.y = 30; currlife.quad.w = 130;
+		//int startime;
+		//int endtime;
+		//int period=10;
+	/*	double degrees = 0;
+		SDL_RendererFlip flipType = SDL_FLIP_NONE;*/
+		for (int i = 0; i < 7; i++) {
+			SDL_SetTextureBlendMode(bottoms_pic[i], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(bottoms_pic[i], 128);
 		}
-		else {
-			//Main loop flag
-			int p=0, q=0, tempx, tempy;
-			bool quit = false;
-			bool lightflag = false;
-			bool slowflag = false;
-			bool rocketflag = false;
-			bool functionmode = false;
-			bool startflag = false;
-			//Event handler
-			SDL_Event e;
-			gamestatus status = menu;
-			SDL_Color wordcolor = { 0000,0000,0000,0000 };
-			string money = "$: " + to_string(TotalMoney); //convert int to string
-			string life = "Life: " + to_string(TotalLife);
-			word currmoney(money, 18, wordcolor);
-			word currlife(life, 18, wordcolor);
-			currlife.quad.y = 30; currlife.quad.w = 130;
-			int startime;
-			int endtime;
-			int period=10;
-			double degrees = 0;
-			SDL_RendererFlip flipType = SDL_FLIP_NONE;
-			for (int i = 0; i < 7; i++) {
-				SDL_SetTextureBlendMode(bottoms_pic[i], SDL_BLENDMODE_BLEND);
-				SDL_SetTextureAlphaMod(bottoms_pic[i], 128);
+		//While application is running
+		//int count = 0;
+		//int time1, time2, time3, time4;
+		while (!quit) {
+			//time1 = SDL_GetTicks();
+			if (status == menu) {
+				loop = 0;
+				TotalMoney = 30;
+				TotalLife = 24;
+				for (int i = 0; i < 18; i++) {
+					for (int j = 0; j < 10; j++) {
+						delete towers[i][j];
+						towers[i][j] = NULL;
+						enemies.clear();
+						//wave also need reset
+					}
+				}
 			}
-			//While application is running
-			int count = 0;
-			//int time1, time2, time3, time4;
-			while (!quit) {
-				//time1 = SDL_GetTicks();
-				if (status == menu) {
-					count = 0;
-					TotalMoney = 30;
-					TotalLife = 24;
-					for (int i = 0; i < 18; i++) {
-						for (int j = 0; j < 10; j++) {
-							delete towers[i][j];
-							towers[i][j] = NULL;
-							enemies.clear();
-							//wave also need reset
-						}
-					}
-				}
-				while (status == menu) {
-					while (SDL_PollEvent(&e) != 0) {
-						//User requests quit
-						if (e.type == SDL_QUIT) {
-							quit = true;
-							status = play;
-						}
-						if (e.type == SDL_MOUSEMOTION)
-						{
-							SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-							startflag = false;
-							if (point_in_rect(mouse_position, turning1))
-							{
-								startflag = true;
-							}
-						}
-						if (e.type == SDL_MOUSEBUTTONDOWN)
-						{
-							SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-							if (point_in_rect(mouse_position, turning1))
-							{
-								status = play;
-							}
-						}
-					}
-					SDL_RenderClear(gRenderer);
-					SDL_RenderCopy(gRenderer, startpage, NULL, NULL);
+			if (status == menu) menu_act();
+			//while (status == menu) {
+			//	while (SDL_PollEvent(&e) != 0) {
+			//		//User requests quit
+			//		if (e.type == SDL_QUIT) {
+			//			quit = true;
+			//			status = play;
+			//		}
+			//		if (e.type == SDL_MOUSEMOTION)
+			//		{
+			//			SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+			//			startflag = false;
+			//			if (point_in_rect(mouse_position, turning1))
+			//			{
+			//				startflag = true;
+			//			}
+			//		}
+			//		if (e.type == SDL_MOUSEBUTTONDOWN)
+			//		{
+			//			SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+			//			if (point_in_rect(mouse_position, turning1))
+			//			{
+			//				status = play;
+			//			}
+			//		}
+			//	}
+			//	SDL_RenderClear(gRenderer);
+			//	SDL_RenderCopy(gRenderer, startpage, NULL, NULL);
 
-					if (startflag == true)
-					{
-						SDL_RenderCopyEx(gRenderer, startturning3, NULL, &turning3, degrees, NULL, flipType);
-						SDL_RenderCopyEx(gRenderer, startturning1, NULL, &turning1, 1.3 * degrees, NULL, flipType);
-						SDL_RenderCopyEx(gRenderer, startturning2, NULL, &turning2, -1.6 * degrees, NULL, flipType);
-						degrees += 1;
-					}
-					else
-					{
-						SDL_RenderCopyEx(gRenderer, startturning3, NULL, &turning3, degrees, NULL, flipType);
-						SDL_RenderCopyEx(gRenderer, startturning1, NULL, &turning1, 1.3 * degrees, NULL, flipType);
-						SDL_RenderCopyEx(gRenderer, startturning2, NULL, &turning2, -1.6 * degrees, NULL, flipType);
-						degrees += 0.1;
-					}
-					SDL_RenderCopy(gRenderer, startbutton, NULL, &turning1);
-					SDL_RenderCopy(gRenderer, title, NULL, &titlerect);
-					SDL_RenderPresent(gRenderer);
-				}
+			//	if (startflag == true)
+			//	{
+			//		SDL_RenderCopyEx(gRenderer, startturning3, NULL, &turning3, degrees, NULL, flipType);
+			//		SDL_RenderCopyEx(gRenderer, startturning1, NULL, &turning1, 1.3 * degrees, NULL, flipType);
+			//		SDL_RenderCopyEx(gRenderer, startturning2, NULL, &turning2, -1.6 * degrees, NULL, flipType);
+			//		degrees += 1;
+			//	}
+			//	else
+			//	{
+			//		SDL_RenderCopyEx(gRenderer, startturning3, NULL, &turning3, degrees, NULL, flipType);
+			//		SDL_RenderCopyEx(gRenderer, startturning1, NULL, &turning1, 1.3 * degrees, NULL, flipType);
+			//		SDL_RenderCopyEx(gRenderer, startturning2, NULL, &turning2, -1.6 * degrees, NULL, flipType);
+			//		degrees += 0.1;
+			//	}
+			//	SDL_RenderCopy(gRenderer, startbutton, NULL, &turning1);
+			//	SDL_RenderCopy(gRenderer, title, NULL, &titlerect);
+			//	SDL_RenderPresent(gRenderer);
+			//}
 			
-				count += 1;
-				startime = SDL_GetTicks();
-				money = "$: " + to_string(TotalMoney);
-				life = "Life: " + to_string(TotalLife);
-				currmoney.changeword(money);
-				currlife.changeword(life);
-				SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
-				SDL_SetTextureBlendMode(slow, SDL_BLENDMODE_BLEND);
-				SDL_SetTextureBlendMode(rocket, SDL_BLENDMODE_BLEND);
-				if (TotalMoney >= 5){
-					SDL_SetTextureAlphaMod(light, 255);
-				}else{
-					SDL_SetTextureAlphaMod(light, 128);
-				}
-				if (TotalMoney >= 10) {
-					SDL_SetTextureAlphaMod(slow, 255);
-				}
-				else {
-					SDL_SetTextureAlphaMod(slow, 128);
-				}
-				if (TotalMoney >= 20) {
-					SDL_SetTextureAlphaMod(rocket, 255);
-				}
-				else {
-					SDL_SetTextureAlphaMod(rocket, 128);
-				}
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				SDL_RenderClear(gRenderer);
-				SDL_RenderCopy(gRenderer, background, NULL, NULL);
-				SDL_RenderCopy(gRenderer, light, NULL, &initiallight);
-				SDL_RenderCopy(gRenderer, slow, NULL, &initialslow);
-				SDL_RenderCopy(gRenderer, rocket, NULL, &initialrocket);
-				SDL_RenderCopy(gRenderer, cancel, NULL, &cancel_rect);
-				//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
-				if (enemies.empty() && !cntdown) {
-					cntdown = 401;
-				}
+			loop += 1;
+			//startime = SDL_GetTicks();
+			money = "$: " + to_string(TotalMoney);
+			life = "Life: " + to_string(TotalLife);
+			currmoney.changeword(money);
+			currlife.changeword(life);
+			SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
+			SDL_SetTextureBlendMode(slow, SDL_BLENDMODE_BLEND);
+			SDL_SetTextureBlendMode(rocket, SDL_BLENDMODE_BLEND);
+			if (TotalMoney >= 5){
+				SDL_SetTextureAlphaMod(light, 255);
+			}else{
+				SDL_SetTextureAlphaMod(light, 128);
+			}
+			if (TotalMoney >= 10) {
+				SDL_SetTextureAlphaMod(slow, 255);
+			}
+			else {
+				SDL_SetTextureAlphaMod(slow, 128);
+			}
+			if (TotalMoney >= 20) {
+				SDL_SetTextureAlphaMod(rocket, 255);
+			}
+			else {
+				SDL_SetTextureAlphaMod(rocket, 128);
+			}
+			SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+			SDL_RenderClear(gRenderer);
+			SDL_RenderCopy(gRenderer, background, NULL, NULL);
+			SDL_RenderCopy(gRenderer, light, NULL, &initiallight);
+			SDL_RenderCopy(gRenderer, slow, NULL, &initialslow);
+			SDL_RenderCopy(gRenderer, rocket, NULL, &initialrocket);
+			SDL_RenderCopy(gRenderer, cancel, NULL, &cancel_rect);
+			//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
+			if (enemies.empty() && !cntdown) {
+				cntdown = 401;
+			}
 
-				if (cntdown) {
-					if ((--cntdown) % 100 == 0)  enemies.push_back(Generate_Enemy());
-					//	cout << cntdown << ' ' << enemies.size() << '\n';
-				}
+			if (cntdown) {
+				if ((--cntdown) % 100 == 0)  enemies.push_back(Generate_Enemy());
+				//	cout << cntdown << ' ' << enemies.size() << '\n';
+			}
 
-				//Handle events on queue
-				while (SDL_PollEvent(&e) != 0) {
-					//User requests quit
-					if (e.type == SDL_QUIT) {
-						quit = true;
-					}
-					if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)  quit = true;
-					if (e.type == SDL_MOUSEBUTTONDOWN)
+			//Handle events on queue
+			while (SDL_PollEvent(&e) != 0) {
+				//User requests quit
+				if (e.type == SDL_QUIT) {
+					quit = true;
+				}
+				if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)  quit = true;
+				if (e.type == SDL_MOUSEBUTTONDOWN)
+				{
+					SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+					if (status == play)
 					{
-						SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-						if (status == play)
-						{
-							if (mouse_position.x < 80) {
-								p = -1;
-							}
-							else if (mouse_position.y < 70) {
-								q = -1;
-							}
-							else {
-								p = (mouse_position.x - 80) / 90;
+						if (mouse_position.x < 80) {
+							p = -1;
+						}
+						else if (mouse_position.y < 70) {
+							q = -1;
+						}
+						else {
+							p = (mouse_position.x - 80) / 90;
 
-								q = (mouse_position.y - 70) / 90;
-							}
+							q = (mouse_position.y - 70) / 90;
+						}
 							
-							if ((lightflag == true || slowflag == true || rocketflag == true))//building mode
+						if ((lightflag == true || slowflag == true || rocketflag == true))//building mode
+						{
+							if (point_in_rect(mouse_position, cancel_rect) == true) {
+								lightflag = false;
+								slowflag = false;
+								rocketflag = false;
+							}
+							if (point_in_rect(mouse_position, initiallight) == true)
 							{
-								if (point_in_rect(mouse_position, cancel_rect) == true) {
-									lightflag = false;
+								if (TotalMoney >= 5)
+								{
+									lightflag = true;
 									slowflag = false;
 									rocketflag = false;
 								}
-								if (point_in_rect(mouse_position, initiallight) == true)
-								{
-									if (TotalMoney >= 5)
-									{
-										lightflag = true;
-										slowflag = false;
-										rocketflag = false;
-									}
-								}
-								if (point_in_rect(mouse_position, initialslow) == true)
-								{
-									if (TotalMoney >= 10)
-									{
-										slowflag = true;
-										lightflag = false;
-										rocketflag = false;
-									}
-								}
-								if (point_in_rect(mouse_position, initialrocket) == true)
-								{
-									if (TotalMoney >= 20)
-									{
-										rocketflag = true;
-										lightflag = false;
-										slowflag = false;
-									}
-								}
-								if (check({p, q})) {//check
-									if (towers[p][q] == NULL) {
-										towers[p][q] = test;
-										canBuild = DEFAULT->FindPath(0);
-										for (auto enemy : enemies) {
-											canBuild &= enemy->FindPath(0);
-										}
-										towers[p][q] = NULL;
-									}
-									if (lightflag == true && canBuild) {
-										if (towers[p][q] == NULL)
-										{
-											TotalMoney -= 5;
-											towers[p][q] = new tower(p, q, 0, count);
-										}
-										lightflag = false;
-									}
-									if (slowflag == true) {
-										if (towers[p][q] == NULL && canBuild)
-										{
-											TotalMoney -= 10;
-											towers[p][q] = new tower(p, q, 6, count);
-										}
-										slowflag = false;
-									}
-									if (rocketflag == true && canBuild) {
-										if (towers[p][q] == NULL)
-										{
-											TotalMoney -= 20;
-											towers[p][q] = new tower(p, q, 3, count);
-										}
-										rocketflag = false;
-									}
-								}
 							}
-							else {//mutiple funtion
-								if (point_in_rect(mouse_position, initiallight) == true)
-								{
-									if (TotalMoney >= 5)
-									{
-										lightflag = true;
-									}
-								}
-								else if (point_in_rect(mouse_position, initialslow) == true)
-								{
-									if (TotalMoney >= 10)
-									{
-										slowflag = true;
-									}
-								}
-								else if (point_in_rect(mouse_position, initialrocket) == true)
-								{
-									if (TotalMoney >= 20)
-									{
-										rocketflag = true;
-									}
-								}
-								else if (p < 18 && p >= 0 && q < 10 && q >= 0)
-								{
-									if (towers[p][q] != NULL) //trying to upgrade or remove
-									{
-										tempx = p;
-										tempy = q;
-										status = upgrading;
-									}
-								}
-								else if (point_in_rect(mouse_position, option_bottom) == true) {
-									status = option;
-								}
-							}
-						}
-						else if (status == upgrading)
-						{
-							if (point_in_rect(mouse_position, userrect))
+							if (point_in_rect(mouse_position, initialslow) == true)
 							{
-								if (mouse_position.x < (userrect.x + 200)) //asking to upgrade
+								if (TotalMoney >= 10)
 								{
-									if (towers[tempx][tempy]->kind ==0|| towers[tempx][tempy]->kind == 1) { //Lightgun upgrade
-										if (TotalMoney >= 4)
-										{
-											TotalMoney -= 4;
-											upgrade(tempx, tempy, towers[tempx][tempy], count);
-											status = play;
-										}
-									}else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun upgrade
-										if (TotalMoney > 15) 
-										{
-											TotalMoney -= 15;
-											upgrade(tempx, tempy, towers[tempx][tempy], count);
-											status = play;
-										}
-									}else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket upgrade
-										if (TotalMoney > 30)
-										{
-											TotalMoney -= 30;
-											upgrade(tempx, tempy, towers[tempx][tempy], count);
-											status = play;
-										}
-									}
+									slowflag = true;
+									lightflag = false;
+									rocketflag = false;
 								}
-								else //sell
+							}
+							if (point_in_rect(mouse_position, initialrocket) == true)
+							{
+								if (TotalMoney >= 20)
 								{
-									if (towers[tempx][tempy]->kind == 0 || towers[tempx][tempy]->kind == 1) { //Lightgun sell
-										TotalMoney += 3;
-									}
-									else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun sell
-										TotalMoney += 7;
-									}
-									else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket sell
-										TotalMoney += 12;
-									}
-									delete towers[tempx][tempy];
-									towers[tempx][tempy] = NULL;
-									status = play;
+									rocketflag = true;
+									lightflag = false;
+									slowflag = false;
 								}
 							}
-						}
-						else if (status == option) {
-							if (point_in_rect(mouse_position, pausebottom)) {
-								while (1) {
-									if (SDL_PollEvent(&e) != 0) {
-										if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
-											quit = true;
-											break;
-										}
-										if (e.type == SDL_QUIT) {
-											quit = true;
-										}
-										if (e.type == SDL_MOUSEBUTTONDOWN) {
-											SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-											if (point_in_rect(mouse_position, startbottom)) {
-												speedy = 1;
-												break;
-											}
-										}
+							if (check({p, q})) {//check
+								if (towers[p][q] == NULL) {
+									towers[p][q] = test;
+									canBuild = DEFAULT->FindPath(0);
+									for (auto enemy : enemies) {
+										canBuild &= enemy->FindPath(0);
 									}
+									towers[p][q] = NULL;
 								}
-							}
-							if (point_in_rect(mouse_position, startbottom)) {
-								speedy = 1;
-							}
-							if (point_in_rect(mouse_position, fastbottom)) {
-								if (speedy <= 2) {
-									speedy += 1;
-								}
-							}
-							if (point_in_rect(mouse_position, mutebottom)) {
-								//mute music
-							}
-							if (point_in_rect(mouse_position, leavebottom)) {
-								status = menu;
-							}
-							if (point_in_rect(mouse_position, exitbottom)) {
-								status = play;
-							}
-						}
-					}
-				}
-				
-				/*unfreeze
-				for (int i = 0; i < enemies.size(); i++) {
-					enemies[i]->freeze = false;
-				}
-				//this is handled in enemy.h
-				*/
-				//tower motion
-				for (int i = 0; i < 18; i++) {
-					for (int j = 0; j < 10; j++) {
-						if (towers[i][j] != NULL) {
-							//render tower
-							if (towers[i][j]->kind < 6) {
-								for (int k = 0; k < enemies.size(); k++) {
-									if (towers[i][j]->inrange(enemies[k]) == 1)
+								if (lightflag == true && canBuild) {
+									if (towers[p][q] == NULL)
 									{
-										//printf("%d\n", count);
-										towers[i][j]->rotate(enemies[k]);
-										if (towers[i][j]->ableatk(count) == 1) {
-											//make a bullet
-											bullet* x = new bullet(towers[i][j], enemies[k]);
-											bullets.push_back(x);
-											break;
-										}
+										TotalMoney -= 5;
+										towers[p][q] = new tower(p, q, 0, loop);
 									}
+									lightflag = false;
 								}
-								//SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &userrect);
-								SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
-								SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
-								//if(tower_pic[towers[i][j]->kind]!=NULL)printf("%d\n", towerClips[towers[i][j]->kind][towers[i][j]->theta].x);
-								//printf("%d\n", towers[i][j]->kind);
-								//printf("%d\n", towerClips[towers[i][j]->kind][towers[i][j]->theta].w);
-								//printf("%d\n", towerClips[towers[i][j]->kind][towers[i][j]->theta].h);
-								//SDL_RenderPresent(gRenderer);
-								//SDL_Delay(1000);
-								
-							}
-							else if (towers[i][j]->kind >= 6) {//slow tower
-								for (int k = 0; k < enemies.size(); k++) {
-									if (towers[i][j]->inrange(enemies[k]))
+								if (slowflag == true) {
+									if (towers[p][q] == NULL && canBuild)
 									{
-										enemies[k]->freeze = towers[i][j]->atk;
+										TotalMoney -= 10;
+										towers[p][q] = new tower(p, q, 6, loop);
 									}
+									slowflag = false;
 								}
-								//printf("%d\n", count);
-								towers[i][j]->theta += 1;
-								if (towers[i][j]->theta > 7)towers[i][j]->theta -= 8;
-								SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
-								SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips2[towers[i][j]->kind - 6][towers[i][j]->theta], &towers[i][j]->quad);
+								if (rocketflag == true && canBuild) {
+									if (towers[p][q] == NULL)
+									{
+										TotalMoney -= 20;
+										towers[p][q] = new tower(p, q, 3, loop);
+									}
+									rocketflag = false;
+								}
+							}
+						}
+						else {//mutiple funtion
+							if (point_in_rect(mouse_position, initiallight) == true)
+							{
+								if (TotalMoney >= 5)
+								{
+									lightflag = true;
+								}
+							}
+							else if (point_in_rect(mouse_position, initialslow) == true)
+							{
+								if (TotalMoney >= 10)
+								{
+									slowflag = true;
+								}
+							}
+							else if (point_in_rect(mouse_position, initialrocket) == true)
+							{
+								if (TotalMoney >= 20)
+								{
+									rocketflag = true;
+								}
+							}
+							else if (p < 18 && p >= 0 && q < 10 && q >= 0)
+							{
+								if (towers[p][q] != NULL) //trying to upgrade or remove
+								{
+									tempx = p;
+									tempy = q;
+									status = upgrading;
+								}
+							}
+							else if (point_in_rect(mouse_position, option_bottom) == true) {
+								status = option;
 							}
 						}
 					}
-				}
-				//bullets motion
-				for (int i = bullets.size() - 1; i >= 0; i--) {
-					bullets[i]->move();
-					if (bullets[i]->x > 1680 || bullets[i]->x < 40 || bullets[i]->y>1000 || bullets[i]->y < 0) {
-						delete bullets[i];
-						bullets[i] = NULL;
-						bullets.erase(bullets.begin() + i);
-						continue;
+					else if (status == upgrading)
+					{
+						upgrade_act();
+						//if (point_in_rect(mouse_position, userrect))
+						//{
+						//	if (mouse_position.x < (userrect.x + 200)) //asking to upgrade
+						//	{
+						//		if (towers[tempx][tempy]->kind ==0|| towers[tempx][tempy]->kind == 1) { //Lightgun upgrade
+						//			if (TotalMoney >= 4)
+						//			{
+						//				TotalMoney -= 4;
+						//				upgrade(tempx, tempy, towers[tempx][tempy], loop);
+						//				status = play;
+						//			}
+						//		}else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun upgrade
+						//			if (TotalMoney > 15) 
+						//			{
+						//				TotalMoney -= 15;
+						//				upgrade(tempx, tempy, towers[tempx][tempy], loop);
+						//				status = play;
+						//			}
+						//		}else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket upgrade
+						//			if (TotalMoney > 30)
+						//			{
+						//				TotalMoney -= 30;
+						//				upgrade(tempx, tempy, towers[tempx][tempy], loop);
+						//				status = play;
+						//			}
+						//		}
+						//	}
+						//	else //sell
+						//	{
+						//		if (towers[tempx][tempy]->kind == 0 || towers[tempx][tempy]->kind == 1) { //Lightgun sell
+						//			TotalMoney += 3;
+						//		}
+						//		else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun sell
+						//			TotalMoney += 7;
+						//		}
+						//		else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket sell
+						//			TotalMoney += 12;
+						//		}
+						//		delete towers[tempx][tempy];
+						//		towers[tempx][tempy] = NULL;
+						//		status = play;
+						//	}
+						//}
 					}
-					for (int j = 0; j < enemies.size(); j++) {
-						if (bullets[i]->touch(enemies[j])) {
-							enemies[j]->hp -= bullets[i]->atk;//
-							delete bullets[i];
-							bullets[i] = NULL;
-							bullets.erase(bullets.begin() + i);
-							break;
-						}
-					}
-
-				}
-				for (int i = 0; i < bullets.size(); i++) {
-					SDL_RenderCopy(gRenderer, bullet_pic[bullets[i]->kind], NULL, &bullets[i]->quad);
-				}
-				//enemies motion
-				//time2 = SDL_GetTicks();
-				vector<ENEMY*> eliminate_dead_enemy = enemies;
-				enemies.clear();
-				for (auto enemy : eliminate_dead_enemy) {
-					if (enemy->hp > 0) {
-						enemies.push_back(enemy);
-					}
-					else  TotalMoney += enemy->money;  //earn money when an enemy is killed
-				}
-
-				for (auto enemy : enemies) {
-					enemy->FindPath(1);
-					enemy->current_phase += 0.2;
-					SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + (int(enemy->current_phase) % enemy->period)], &enemy->rect);
-				}
-				//time3 = SDL_GetTicks();
-				//render buttom
-				if (lightflag == true)
-				{
-					SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-					lightrect.x = mouse_position.x - 45;//
-					lightrect.y = mouse_position.y - 45;
-					SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
-					SDL_SetTextureAlphaMod(light, 192); //3/4 transparent
-					SDL_RenderCopy(gRenderer, light, NULL, &lightrect);
-				}
-				if (slowflag == true)
-				{
-					SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-					slowrect.x = mouse_position.x - 45;
-					slowrect.y = mouse_position.y - 45;
-					SDL_SetTextureBlendMode(slow, SDL_BLENDMODE_BLEND);
-					SDL_SetTextureAlphaMod(slow, 192);
-					SDL_RenderCopy(gRenderer, slow, NULL, &slowrect);
-				}
-				if (rocketflag == true)
-				{
-					SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
-					rocketrect.x = mouse_position.x - 45;
-					rocketrect.y = mouse_position.y - 45;
-					SDL_SetTextureBlendMode(rocket, SDL_BLENDMODE_BLEND);
-					SDL_SetTextureAlphaMod(rocket, 192);
-					SDL_RenderCopy(gRenderer, rocket, NULL, &rocketrect);
-				}
-				if (status == upgrading) {
-					userrect.x = 90 * tempx + 35;
-					userrect.y = 90 * tempy + 25;
-					SDL_RenderCopy(gRenderer, user, NULL, &userrect);
-				}
-				if (TotalMoney < 10) //Change font rectangle
-				{
-					currmoney.quad.w = 70;
-				}
-				else if (TotalMoney >= 100)
-				{
-					currmoney.quad.w = 130;
-				}
-				else if (TotalMoney >= 10 && TotalMoney < 100)
-				{
-					currmoney.quad.w = 100;
-				}
-				//render option things
-				
-				SDL_RenderCopy(gRenderer, option_bottom_pic, NULL, &option_bottom);
-
-				if (status == option) {
-					for (int i = 0; i < 7; i++) {
-						SDL_RenderCopy(gRenderer, bottoms_pic[i], NULL, &bottoms[i]);
+					else if (status == option) {
+						option_act();
+					//	if (point_in_rect(mouse_position, pausebottom)) {
+					//		while (1) {
+					//			if (SDL_PollEvent(&e) != 0) {
+					//				if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
+					//					quit = true;
+					//					break;
+					//				}
+					//				if (e.type == SDL_QUIT) {
+					//					quit = true;
+					//				}
+					//				if (e.type == SDL_MOUSEBUTTONDOWN) {
+					//					SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+					//					if (point_in_rect(mouse_position, startbottom)) {
+					//						speedy = 1;
+					//						break;
+					//					}
+					//				}
+					//			}
+					//		}
+					//	}
+					//	if (point_in_rect(mouse_position, startbottom)) {
+					//		speedy = 1;
+					//	}
+					//	if (point_in_rect(mouse_position, fastbottom)) {
+					//		if (speedy <= 2) {
+					//			speedy += 1;
+					//		}
+					//	}
+					//	if (point_in_rect(mouse_position, mutebottom)) {
+					//		//mute music
+					//	}
+					//	if (point_in_rect(mouse_position, leavebottom)) {
+					//		status = menu;
+					//	}
+					//	if (point_in_rect(mouse_position, exitbottom)) {
+					//		status = play;
+					//	}
 					}
 				}
-				currmoney.render();
-				currlife.render();
-				SDL_RenderPresent(gRenderer);
-				//time4 = SDL_GetTicks();
-				//double b = (time3 - time2) * 1.0 / (time4 - time1);
-				//printf("%f\n", b);
-				//if (endtime - startime < period) {
-				//	SDL_Delay(period + startime - endtime);
-				//}
 			}
+				
+			/*unfreeze
+			for (int i = 0; i < enemies.size(); i++) {
+				enemies[i]->freeze = false;
+			}
+			//this is handled in enemy.h
+			*/
+			//tower motion
+			//for (int i = 0; i < 18; i++) {
+			//	for (int j = 0; j < 10; j++) {
+			//		if (towers[i][j] != NULL) {
+			//			//render tower
+			//			if (towers[i][j]->kind < 6) {
+			//				for (int k = 0; k < enemies.size(); k++) {
+			//					if (towers[i][j]->inrange(enemies[k]) == 1)
+			//					{
+			//						//printf("%d\n", count);
+			//						towers[i][j]->rotate(enemies[k]);
+			//						if (towers[i][j]->ableatk(count) == 1) {
+			//							//make a bullet
+			//							bullet* x = new bullet(towers[i][j], enemies[k]);
+			//							bullets.push_back(x);
+			//							break;
+			//						}
+			//					}
+			//				}
+			//				//SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &userrect);
+			//				SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
+			//				SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
+			//				//if(tower_pic[towers[i][j]->kind]!=NULL)printf("%d\n", towerClips[towers[i][j]->kind][towers[i][j]->theta].x);
+			//				//printf("%d\n", towers[i][j]->kind);
+			//				//printf("%d\n", towerClips[towers[i][j]->kind][towers[i][j]->theta].w);
+			//				//printf("%d\n", towerClips[towers[i][j]->kind][towers[i][j]->theta].h);
+			//				//SDL_RenderPresent(gRenderer);
+			//				//SDL_Delay(1000);
+			//					
+			//			}
+			//			else if (towers[i][j]->kind >= 6) {//slow tower
+			//				for (int k = 0; k < enemies.size(); k++) {
+			//					if (towers[i][j]->inrange(enemies[k]))
+			//					{
+			//						enemies[k]->freeze = towers[i][j]->atk;
+			//					}
+			//				}
+			//				//printf("%d\n", count);
+			//				towers[i][j]->theta += 1;
+			//				if (towers[i][j]->theta > 7)towers[i][j]->theta -= 8;
+			//				SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
+			//				SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips2[towers[i][j]->kind - 6][towers[i][j]->theta], &towers[i][j]->quad);
+			//			}
+			//		}
+			//	}
+			//}
+			tower_motion();
+			//bullets motion
+			bullet_motion();
+			//for (int i = bullets.size() - 1; i >= 0; i--) {
+			//	bullets[i]->move();
+			//	if (bullets[i]->x > 1680 || bullets[i]->x < 40 || bullets[i]->y>1000 || bullets[i]->y < 0) {
+			//		delete bullets[i];
+			//		bullets[i] = NULL;
+			//		bullets.erase(bullets.begin() + i);
+			//		continue;
+			//	}
+			//	for (int j = 0; j < enemies.size(); j++) {
+			//		if (bullets[i]->touch(enemies[j])) {
+			//			enemies[j]->hp -= bullets[i]->atk;//
+			//			delete bullets[i];
+			//			bullets[i] = NULL;
+			//			bullets.erase(bullets.begin() + i);
+			//			break;
+			//		}
+			//	}
+
+			//}
+			/*for (int i = 0; i < bullets.size(); i++) {
+				SDL_RenderCopy(gRenderer, bullet_pic[bullets[i]->kind], NULL, &bullets[i]->quad);
+			}*/
+			//enemies motion
+			//time2 = SDL_GetTicks();
+			vector<ENEMY*> eliminate_dead_enemy = enemies;
+			enemies.clear();
+			for (auto enemy : eliminate_dead_enemy) {
+				if (enemy->hp > 0) {
+					enemies.push_back(enemy);
+				}
+				else  TotalMoney += enemy->money;  //earn money when an enemy is killed
+			}
+
+			for (auto enemy : enemies) {
+				enemy->FindPath(1);
+				enemy->current_phase += 0.2;
+				SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + (int(enemy->current_phase) % enemy->period)], &enemy->rect);
+			}
+			//time3 = SDL_GetTicks();
+			//render buttom
+			show_building();
+			//if (lightflag == true)
+			//{
+			//	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+			//	lightrect.x = mouse_position.x - 45;//
+			//	lightrect.y = mouse_position.y - 45;
+			//	SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
+			//	SDL_SetTextureAlphaMod(light, 192); //3/4 transparent
+			//	SDL_RenderCopy(gRenderer, light, NULL, &lightrect);
+			//}
+			//if (slowflag == true)
+			//{
+			//	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+			//	slowrect.x = mouse_position.x - 45;
+			//	slowrect.y = mouse_position.y - 45;
+			//	SDL_SetTextureBlendMode(slow, SDL_BLENDMODE_BLEND);
+			//	SDL_SetTextureAlphaMod(slow, 192);
+			//	SDL_RenderCopy(gRenderer, slow, NULL, &slowrect);
+			//}
+			//if (rocketflag == true)
+			//{
+			//	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+			//	rocketrect.x = mouse_position.x - 45;
+			//	rocketrect.y = mouse_position.y - 45;
+			//	SDL_SetTextureBlendMode(rocket, SDL_BLENDMODE_BLEND);
+			//	SDL_SetTextureAlphaMod(rocket, 192);
+			//	SDL_RenderCopy(gRenderer, rocket, NULL, &rocketrect);
+			//}
+			/*if (status == upgrading) {
+				userrect.x = 90 * tempx + 35;
+				userrect.y = 90 * tempy + 25;
+				SDL_RenderCopy(gRenderer, user, NULL, &userrect);
+			}*/
+			if (TotalMoney < 10) //Change font rectangle
+			{
+				currmoney.quad.w = 70;
+			}
+			else if (TotalMoney >= 100)
+			{
+				currmoney.quad.w = 130;
+			}
+			else if (TotalMoney >= 10 && TotalMoney < 100)
+			{
+				currmoney.quad.w = 100;
+			}
+			//render option things
+				
+			SDL_RenderCopy(gRenderer, option_bottom_pic, NULL, &option_bottom);
+			show_option_list();
+			/*if (status == option) {
+				for (int i = 0; i < 7; i++) {
+					SDL_RenderCopy(gRenderer, bottoms_pic[i], NULL, &bottoms[i]);
+				}
+			}*/
+			currmoney.render();
+			currlife.render();
+			SDL_RenderPresent(gRenderer);
+			//time4 = SDL_GetTicks();
+			//double b = (time3 - time2) * 1.0 / (time4 - time1);
+			//printf("%f\n", b);
+			//if (endtime - startime < period) {
+			//	SDL_Delay(period + startime - endtime);
+			//}
 		}
 	}
+	
 	return 0;
 }
 

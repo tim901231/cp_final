@@ -145,6 +145,9 @@
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="option_list.cpp" />
+    <ClCompile Include="sys_act.cpp" />
     <ClCompile Include="tower.cpp" />
     <ClCompile Include="variable.cpp" />
     <ClCompile Include="word.cpp" />
@@ -152,6 +155,9 @@
   <ItemGroup>
     <ClInclude Include="bullet.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="menu.h" />
+    <ClInclude Include="option_list.h" />
+    <ClInclude Include="sys_act.h" />
     <ClInclude Include="tower.h" />
     <ClInclude Include="variable.h" />
     <ClInclude Include="wave.h" />

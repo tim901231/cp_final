@@ -7,64 +7,7 @@ TTF_Font* gFont=NULL;
 const int SCREEN_WIDTH = 1800;
 const int SCREEN_HEIGHT = 1000;
 const int TOWER_WIDTH = 90;
-bool init()
-{
-	//Initialization flag
-	bool success = true;
 
-	//Initialize SDL
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-	{
-		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
-		success = false;
-	}
-	else
-	{
-		//Set texture filtering to linear
-		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-		{
-			printf("Warning: Linear texture filtering not enabled!");
-		}
-
-		//Create window
-		gWindow = SDL_CreateWindow("Robo Defense", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (gWindow == NULL)
-		{
-			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
-			success = false;
-		}
-		else
-		{
-			//Create renderer for window
-			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-			if (gRenderer == NULL)
-			{
-				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
-				success = false;
-			}
-			else
-			{
-				//Initialize renderer color
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-				//Initialize PNG loading
-				int imgFlags = IMG_INIT_PNG;
-				if (!(IMG_Init(imgFlags) & imgFlags))
-				{
-					printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-					success = false;
-				}
-				if (TTF_Init() == -1)
-				{
-					printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
-					success = false;
-				}
-			}
-		}
-	}
-
-	return success;
-}
 //variable
 int TotalMoney = 30;
 int TotalLife = 24;
@@ -107,3 +50,59 @@ SDL_Rect towerClips2[3][8];
 SDL_Texture* bullet_pic[3];
 vector<bullet*> bullets;
 //bullet
+//position
+int p = 0, q = 0, tempx, tempy;
+//positoin
+//flags
+bool quit = false;
+bool lightflag = false;
+bool slowflag = false;
+bool rocketflag = false;
+bool functionmode = false;
+bool startflag = false;
+int loop = 0;
+//flags
+//Event handler
+SDL_Event e;
+gamestatus status = menu;
+//Event handler
+//words
+SDL_Color wordcolor = { 0000,0000,0000,0000 };
+//words
+//menu
+const SDL_Rect turning1 = { 715,330,300,300 };
+const SDL_Rect turning2 = { 640,255,450,450 };
+const SDL_Rect turning3 = { 540,155,650,650 };
+const SDL_Rect titlerect = { 900,50,800,160 };
+double degrees = 0;
+SDL_RendererFlip flipType = SDL_FLIP_NONE;
+//menu
+//enemy's things
+vector<ENEMY*> enemies;
+ENEMY* DEFAULT = new ENEMY(0);
+SDL_Texture* EnemyTexture[10];  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
+SDL_Rect enemyClips[10][50];
+int cntdown = 0;
+//
+bool canBuild;
+tower* test = new tower(0, 0, 0, 0);
+//enemy
+//function's thing
+SDL_Rect option_bottom = { 0,950,50,50 };
+SDL_Texture* option_bottom_pic;
+SDL_Texture* bottoms_pic[7];
+SDL_Rect bottoms[7];
+SDL_Rect option_list = { 605,310,590,380 };
+SDL_Rect pausebottom = { 680,380,120,120 };
+SDL_Rect startbottom = { 850,380,120,120 };
+SDL_Rect fastbottom = { 1020,380,120,120 };
+SDL_Rect mutebottom = { 800,550,200,30 };
+SDL_Rect leavebottom = { 800,600,200,30 };// back to menu
+SDL_Rect exitbottom = { 1150,310,45,45 };//red x
+SDL_Texture* option_list_pic = NULL;
+SDL_Texture* pausebottom_pic = NULL;
+SDL_Texture* startbottom_pic = NULL;
+SDL_Texture* fastbottom_pic = NULL;
+SDL_Texture* mutebottom_pic = NULL;
+SDL_Texture* leavebottom_pic = NULL; // back to menu
+SDL_Texture* exitbottom_pic = NULL; //red x

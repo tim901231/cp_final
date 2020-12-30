@@ -6,7 +6,7 @@
 #include"SDL_image.h"
 #define PI 3.14159265
 
-tower::tower(int num_x, int num_y, int type, int count) :x(80 + num_x * 90), y(70 + num_y * 90), theta(0)
+tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70 + num_y * 90), theta(0)
 {
     kind = type;
     bquad.x = x;
@@ -17,7 +17,7 @@ tower::tower(int num_x, int num_y, int type, int count) :x(80 + num_x * 90), y(7
     quad.y = y;
     quad.w = 90;
     quad.h = 90;
-    t = count;
+    t = time;
     switch (kind) {
     case 0: //gun
         atk = 1;
@@ -136,4 +136,82 @@ void loadtowermedia() {
     loadedSurface = IMG_Load("pictures/Advanced_Slow_Tower3.png");
     tower_pic[8] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
     SDL_FreeSurface(loadedSurface);
+}
+void tower_init() {
+    for (int j = 0; j < 6; j++)
+    {
+        for (int i = 0; i < 32; i++)
+        {
+            towerClips[j][i].x = 70 * (i + 1);
+            towerClips[j][i].y = 0;
+            towerClips[j][i].w = 70;
+            towerClips[j][i].h = 70;
+        }
+    }
+    for (int j = 0; j < 3; j++)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            towerClips2[j][i].x = 70 * (i + 1);
+            towerClips2[j][i].y = 0;
+            towerClips2[j][i].w = 70;
+            towerClips2[j][i].h = 70;
+        }
+    }
+    for (int i = 0; i < 18; i++)
+    {
+        towers[i] = new tower * [10];
+    }
+    for (int i = 0; i < 18; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            towers[i][j] = NULL;
+        }
+    }
+}
+void tower_motion() {
+    for (int i = 0; i < 18; i++) {
+        for (int j = 0; j < 10; j++) {
+            if (towers[i][j] != NULL) {
+                //render tower
+                if (towers[i][j]->kind < 6) {
+                    for (int k = 0; k < enemies.size(); k++) {
+                        if (towers[i][j]->inrange(enemies[k]) == 1)
+                        {
+                            towers[i][j]->rotate(enemies[k]);
+                            if (towers[i][j]->ableatk(loop) == 1) {
+                                //make a bullet
+                                bullet* x = new bullet(towers[i][j], enemies[k]);
+                                bullets.push_back(x);
+                                break;
+                            }
+                        }
+                    }
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
+                }
+                else if (towers[i][j]->kind >= 6) {//slow tower
+                    for (int k = 0; k < enemies.size(); k++) {
+                        if (towers[i][j]->inrange(enemies[k]))
+                        {
+                            enemies[k]->freeze = towers[i][j]->atk;
+                        }
+                    }
+                    //printf("%d\n", count);
+                    towers[i][j]->theta += 1;
+                    if (towers[i][j]->theta > 7)towers[i][j]->theta -= 8;
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips2[towers[i][j]->kind - 6][towers[i][j]->theta], &towers[i][j]->quad);
+                }
+            }
+        }
+    }
+}
+void upgrade(int x, int y, tower* old, int t)
+{
+    int c = old->kind + 1;
+    delete towers[x][y];
+    towers[x][y] = NULL;
+    towers[x][y] = new tower(x, y, c, t);
 }

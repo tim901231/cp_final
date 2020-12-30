@@ -14,5 +14,6 @@ public:
 	double x_e, y_e, v_x, v_y;
 };
 void loadbulletmedia();
+void bullet_motion();
 #endif
 		

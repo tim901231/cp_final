@@ -3,11 +3,11 @@
 
 #define PI 3.14159265
 #include<SDL.h>
-
+#include"enemy.h"
 class tower{
     public:
 	    friend class ENEMY;
-        tower(int num_x, int num_y, int type, int count);
+        tower(int num_x, int num_y, int type, int time);
         bool ableatk(int t_c);
         bool inrange(ENEMY* monster);
         void rotate(ENEMY* locked_enemy);
@@ -25,5 +25,8 @@ class tower{
         int cooltime;
 };
 void loadtowermedia();
+void tower_init();
+void tower_motion();
+void upgrade(int x, int y, tower* old, int t);
 #endif
 

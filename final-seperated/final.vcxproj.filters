@@ -33,6 +33,15 @@
     <ClCompile Include="word.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="sys_act.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="option_list.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h">
@@ -51,6 +60,15 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="word.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="sys_act.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="option_list.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>
