@@ -10,29 +10,29 @@
 class tower{
     public:
 	    friend class ENEMY;
-        tower(int num_x, int num_y, int type) :x(80+num_x*90), y(70+num_y*90), theta(0)
+        tower(int num_x, int num_y, int type, int count) :x(80+num_x*90), y(70+num_y*90), theta(0)
         {
             kind = type;
             bquad.x = x;
             bquad.y = y + 15;
             quad.x = x;
             quad.y = y;
-            t = SDL_GetTicks();
+            t = count;
             switch (kind){
             case 0:
                 atk = 1;
-                cooltime = 500;
-                range = 180;
+                cooltime = 10;
+                range = 150;
                 break;
             case 1:
                 atk = 2;
-                cooltime = 450;
-                range = 190;
+                cooltime = 500;
+                range = 150;
                 break;
             case 2:
                 atk = 3;
-                cooltime = 400;
-                range = 200;
+                cooltime = 500;
+                range = 150;
                 break;
             case 3:
                 atk = 2;
