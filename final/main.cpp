@@ -281,7 +281,7 @@ void LoadEnemyMedia() {
 }
 
 ENEMY* Generate_Enemy() {
-	srand(time(NULL));
+//	srand(time(NULL));
 	int type = rand() % 4 + 1;
 	ENEMY* ret = new ENEMY(type);
 	ret->pic = EnemyTexture[type];
@@ -315,25 +315,22 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 	}
 	if (!exist_path)  return false;
 	else if (move) {
-		if (freeze) {
-			--freeze;
-		}
-		else  if (rect.x < 80)  rect.x += speed;
+		if (rect.x < 80)  nowx += speed;
 		else  if (path.shortest_path.size() > 1) {
 			if (path.shortest_path[1] - pos == DIR[RIGHT]) {
-				rect.x += speed;
+				nowx += speed;
 				dir = RIGHT;
 			}
 			if (path.shortest_path[1] - pos == DIR[UP]) {
-				rect.y -= speed;
+				nowy -= speed;
 				dir = UP;
 			}
 			if (path.shortest_path[1] - pos == DIR[LEFT]) {
-				rect.x -= speed;
+				nowx -= speed;
 				dir = LEFT;
 			}
 			if (path.shortest_path[1] - pos == DIR[DOWN]) {
-				rect.y += speed;
+				nowy += speed;
 				dir = DOWN;
 			}
 			if (abs(rect.x - 80 - pos.X * 90) >= 90 || abs(rect.y - 70 - pos.Y * 90) >= 90) {
@@ -341,13 +338,16 @@ bool ENEMY::FindPath(bool move) {  //return false if there isn't any path
 			}
 		}
 		else {
-			if (rect.x < 1800)  rect.x += speed;
+			dir = RIGHT;
+			if (rect.x < 1800)  nowx += speed;
 			else {
 				health -= 1;
 				money = 0;
 				hp = 0;
 			}
 		}
+		rect.x = int(nowx);
+		rect.y = int(nowy);
 	}
 	return true;
 }
@@ -430,11 +430,11 @@ int main(int argc, char* args[])
 				SDL_RenderCopy(gRenderer, rocket, NULL, &initialrocket);
 				//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
 				if (enemies.empty() && !cntdown) {
-					cntdown = 41;
+					cntdown = 401;
 				}
 
 				if (cntdown) {
-					if ((-- cntdown) % 10 == 0)  enemies.push_back(Generate_Enemy());
+					if ((-- cntdown) % 100 == 0)  enemies.push_back(Generate_Enemy());
 				//	cout << cntdown << ' ' << enemies.size() << '\n';
 				}
 
@@ -456,21 +456,21 @@ int main(int argc, char* args[])
 							{
 								if (p < 18 && p >= 0 && q < 10 && q >= 0) {//check
 									if (lightflag == true) {
-										if (towers[p][q] == NULL && DEFAULT->FindPath(0))
+										if (towers[p][q] == NULL)
 										{
 											towers[p][q] = new tower(p, q, 0);
 										}
 										lightflag = false;
 									}
 									if (slowflag == true) {
-										if (towers[p][q] == NULL && DEFAULT->FindPath(0))
+										if (towers[p][q] == NULL)
 										{
 											towers[p][q] = new tower(p, q, 6);
 										}
 										slowflag = false;
 									}
 									if (rocketflag == true) {
-										if (towers[p][q] == NULL && DEFAULT->FindPath(0))
+										if (towers[p][q] == NULL)
 										{
 											towers[p][q] = new tower(p, q, 3);
 										}
@@ -601,8 +601,9 @@ int main(int argc, char* args[])
 
 				for (auto enemy : enemies) {
 					enemy->FindPath(1);
+					enemy->current_phase += 0.2;
 //					cout << enemy->rect.x << ' ' << enemy->rect.y << ' ' << enemy->FindPath(0) << '\n';
-					SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + ((enemy->current_phase ++) % enemy->period)], &enemy->rect);
+					SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + ((int(enemy->current_phase)) % enemy->period)], &enemy->rect);
 				}
 
 				//render buttom
