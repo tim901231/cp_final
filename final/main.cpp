@@ -23,7 +23,7 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Texture* words;
 //map's things
-enum gamestatus { play, upgrading };
+enum gamestatus { play, upgrading, option};
 SDL_Texture* background;
 SDL_Texture* light;
 SDL_Texture* slow;
@@ -85,40 +85,56 @@ SDL_Rect towerClips2[3][8];
 //tower
 
 //function's thing
-SDL_Texture* bottoms_pic[6];
+SDL_Rect option_bottom = {0,950,50,50};
+SDL_Texture* option_bottom_pic;
+SDL_Texture* bottoms_pic[7];
+SDL_Rect bottoms[7];
 SDL_Rect option_list = {620,320,590,450};
 SDL_Rect pausebottom = {680,380,150,150};
 SDL_Rect startbottom = {850,380,150,150};
 SDL_Rect fastbottom = {1020,380,150,150};
 SDL_Rect mutebottom = { 800,550,200,30 };
 SDL_Rect leavebottom = { 800,550,200,30 };
-SDL_Rect exitbottom = { 800,550,45,45 };
+SDL_Rect exitbottom = { 1165,320,45,45 };
 SDL_Texture* option_list_pic = NULL;
 SDL_Texture* pausebottom_pic = NULL;
 SDL_Texture* startbottom_pic = NULL;
 SDL_Texture* fastbottom_pic = NULL;
 SDL_Texture* mutebottom_pic = NULL;
-SDL_Texture* leavebottom_pic = NULL;
+SDL_Texture* leavebottom_pic = NULL; // back to menu
+SDL_Texture* exitbottom_pic = NULL; //red x
 void loadbottommedia() {
 	SDL_Surface* surface;
 	surface = IMG_Load("pictures/Light_Soldier.png");
 	option_list_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[0] = option_list_pic;
-	surface = IMG_Load("pictures/Heavy_Soldier.png");
+	bottoms[0] = option_list;
+	surface = IMG_Load("pictures/pause.png");
 	pausebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[1] = pausebottom_pic;
-	surface = IMG_Load("pictures/Light_Tank.png");
+	bottoms[1] = pausebottom;
+	surface = IMG_Load("pictures/play.png");
 	startbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[2] = startbottom_pic;
-	surface = IMG_Load("pictures/Heavy_Tank.png");
+	bottoms[2] = startbottom;
+	surface = IMG_Load("pictures/expedite.png");
 	fastbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[3] = fastbottom_pic;
+	bottoms[3] = fastbottom;
 	surface = IMG_Load("pictures/Heavy_Tank.png");
 	mutebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[4] = mutebottom_pic;
+	bottoms[4] = mutebottom;
 	surface = IMG_Load("pictures/Heavy_Tank.png");
 	leavebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[5] = leavebottom_pic;
+	bottoms[5] = leavebottom;
+	surface = IMG_Load("pictures/Heavy_Tank.png");
+	exitbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
+	bottoms_pic[6] = exitbottom_pic;
+	bottoms[6] = exitbottom;
+	surface = IMG_Load("pictures/Heavy_Tank.png");
+	option_bottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	SDL_FreeSurface(surface);
 }
 //function
@@ -450,6 +466,7 @@ int main(int argc, char* args[])
 			bool lightflag = false;
 			bool slowflag = false;
 			bool rocketflag = false;
+			bool functionmode = false;
 			//Event handler
 			SDL_Event e;
 			gamestatus status = play;
@@ -462,6 +479,10 @@ int main(int argc, char* args[])
 			int startime;
 			int endtime;
 			int period=20;
+			for (int i = 0; i < 7; i++) {
+				SDL_SetTextureBlendMode(bottoms_pic[i], SDL_BLENDMODE_BLEND);
+				SDL_SetTextureAlphaMod(bottoms_pic[i], 128);
+			}
 			//While application is running
 			while (!quit) {
 				startime = SDL_GetTicks();
@@ -597,6 +618,9 @@ int main(int argc, char* args[])
 										status = upgrading;
 									}
 								}
+								else if (point_in_rect(mouse_position, option_bottom) == true) {
+									status == option;
+								}
 							}
 						}
 						else if (status == upgrading)
@@ -645,8 +669,24 @@ int main(int argc, char* args[])
 								}
 							}
 						}
+						else if (status == option) {
+							if (point_in_rect(mouse_position, pausebottom)) {
+								while (1) {
+									if (SDL_PollEvent(&e) != 0) {
+										if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)  quit = true;
+										if (e.type == SDL_MOUSEBUTTONDOWN)
+										SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+									}
+									
+								}
+							}
+							if (point_in_rect(mouse_position, startbottom)) {
+
+							}
+						}
 					}
 				}
+				
 				/*unfreeze
 				for (int i = 0; i < enemies.size(); i++) {
 					enemies[i]->freeze = false;
