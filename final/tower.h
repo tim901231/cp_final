@@ -94,7 +94,7 @@ class tower{
                 //calculated_theta = 0;
                 calculated_theta = atan2(locked_enemy->rect.x - x,y-locked_enemy->rect.y)*180/PI;
                 //calculated_theta = atan2(x,y);
-                printf("%f\n", calculated_theta);
+                //printf("%f\n", calculated_theta);
                 if (calculated_theta<0) {
                     calculated_theta += 360;
                 }
