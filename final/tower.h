@@ -89,15 +89,26 @@ class tower{
         void rotate(ENEMY* locked_enemy){
             if(kind<6)
             {
+                //double y = 1.0;
+                //double x = 1.0;
+                //calculated_theta = 0;
+                calculated_theta = atan2(locked_enemy->rect.x - x,y-locked_enemy->rect.y)*180/PI;
+                //calculated_theta = atan2(x,y);
+                printf("%f\n", calculated_theta);
+                if (calculated_theta<0) {
+                    calculated_theta += 360;
+                }
                 
-                calculated_theta = (atan2(y-locked_enemy->rect.y,locked_enemy->rect.x-x))*180/3.1416;
-                theta = int(calculated_theta/11.25);
-                if (theta < 0) {
-                    theta += 16;
+                if (calculated_theta < 354.375) {
+                    calculated_theta += 5.625;
+                    theta = int(calculated_theta / 11.25);
                 }
-                if (locked_enemy->rect.x < x) {
-                    theta += 16;
+                else {
+                   
+                    theta = 0;
                 }
+                
+                
                   
             }
             else{
