@@ -619,7 +619,7 @@ int main(int argc, char* args[])
 									}
 								}
 								else if (point_in_rect(mouse_position, option_bottom) == true) {
-									status == option;
+									status = option;
 								}
 							}
 						}
@@ -673,15 +673,33 @@ int main(int argc, char* args[])
 							if (point_in_rect(mouse_position, pausebottom)) {
 								while (1) {
 									if (SDL_PollEvent(&e) != 0) {
-										if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)  quit = true;
-										if (e.type == SDL_MOUSEBUTTONDOWN)
-										SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+										if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
+											quit = true;
+											break;
+										}
+										if (e.type == SDL_MOUSEBUTTONDOWN) {
+											SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+											if (point_in_rect(mouse_position, startbottom)) {
+												break;
+											}
+										}
 									}
-									
 								}
 							}
 							if (point_in_rect(mouse_position, startbottom)) {
-
+								period = 20;
+							}
+							if (point_in_rect(mouse_position, fastbottom)) {
+								period = 0;
+							}
+							if (point_in_rect(mouse_position, mutebottom)) {
+								//mute music
+							}
+							if (point_in_rect(mouse_position, leavebottom)) {
+								//back to menu
+							}
+							if (point_in_rect(mouse_position, exitbottom)) {
+								status = play;
 							}
 						}
 					}
