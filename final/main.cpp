@@ -155,7 +155,7 @@ SDL_Rect enemyClips[10][50];
 int cntdown = 0;
 
 bool canBuild;
-tower* test = new tower(0, 0, 0);
+tower* test = new tower(0, 0, 0, 0);
 //enemy
 
 //init
@@ -289,12 +289,12 @@ void close()
 	IMG_Quit();
 	SDL_Quit();
 }
-void upgrade(int x, int y, tower* old)
+void upgrade(int x, int y, tower* old, int count)
 {
 	int c = old->kind + 1;
 	delete towers[x][y];
 	towers[x][y] = NULL;
-	towers[x][y] = new tower(x, y, c);
+	towers[x][y] = new tower(x, y, c, count);
 }
 //ENEMY
 void LoadEnemyMedia() {
@@ -488,7 +488,9 @@ int main(int argc, char* args[])
 				SDL_SetTextureAlphaMod(bottoms_pic[i], 128);
 			}
 			//While application is running
+			int count = 0;
 			while (!quit) {
+				count += 1;
 				startime = SDL_GetTicks();
 				money = "$: " + to_string(TotalMoney);
 				life = "Life: " + to_string(TotalLife);
@@ -569,7 +571,7 @@ int main(int argc, char* args[])
 										if (towers[p][q] == NULL)
 										{
 											TotalMoney -= 5;
-											towers[p][q] = new tower(p, q, 0);
+											towers[p][q] = new tower(p, q, 0, count);
 										}
 										lightflag = false;
 									}
@@ -577,7 +579,7 @@ int main(int argc, char* args[])
 										if (towers[p][q] == NULL && canBuild)
 										{
 											TotalMoney -= 10;
-											towers[p][q] = new tower(p, q, 6);
+											towers[p][q] = new tower(p, q, 6, count);
 										}
 										slowflag = false;
 									}
@@ -585,7 +587,7 @@ int main(int argc, char* args[])
 										if (towers[p][q] == NULL)
 										{
 											TotalMoney -= 20;
-											towers[p][q] = new tower(p, q, 3);
+											towers[p][q] = new tower(p, q, 3, count);
 										}
 										rocketflag = false;
 									}
@@ -637,21 +639,21 @@ int main(int argc, char* args[])
 										if (TotalMoney >= 4)
 										{
 											TotalMoney -= 4;
-											upgrade(tempx, tempy, towers[tempx][tempy]);
+											upgrade(tempx, tempy, towers[tempx][tempy], count);
 											status = play;
 										}
 									}else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun upgrade
 										if (TotalMoney > 15) 
 										{
 											TotalMoney -= 15;
-											upgrade(tempx, tempy, towers[tempx][tempy]);
+											upgrade(tempx, tempy, towers[tempx][tempy], count);
 											status = play;
 										}
 									}else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket upgrade
 										if (TotalMoney > 30)
 										{
 											TotalMoney -= 30;
-											upgrade(tempx, tempy, towers[tempx][tempy]);
+											upgrade(tempx, tempy, towers[tempx][tempy], count);
 											status = play;
 										}
 									}
@@ -729,7 +731,7 @@ int main(int argc, char* args[])
 									{
 										//printf("%d\n", count);
 										towers[i][j]->rotate(enemies[k]);
-										if (towers[i][j]->ableatk(SDL_GetTicks()) == 1) {
+										if (towers[i][j]->ableatk(count) == 1) {
 											//make a bullet
 											bullet* x = new bullet(towers[i][j], enemies[k]);
 											bullets.push_back(x);
