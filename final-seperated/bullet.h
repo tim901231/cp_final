@@ -13,5 +13,6 @@ public:
 	int x, y, speed, atk, kind;
 	double x_e, y_e, v_x, v_y;
 };
+void loadbulletmedia();
 #endif
 		

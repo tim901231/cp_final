@@ -30,6 +30,9 @@
     <ClCompile Include="variable.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="word.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h">
@@ -45,6 +48,9 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="variable.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="word.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>

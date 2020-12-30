@@ -1,6 +1,7 @@
 #include"tower.h"
 //#include"enemy.h"
 #include"variable.h"
+#include"SDL_image.h"
 #include<cmath>
 #include"bullet.h"
 
@@ -53,4 +54,25 @@ bool bullet::touch(ENEMY* enemy1)
 	else {
 		return false;
 	}
+}
+void loadbulletmedia() {
+	SDL_Surface* loadedSurface = IMG_Load("pictures/Bullet_Small.png");
+	bullet_pic[0] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/Bullet_Large.png");
+	bullet_pic[1] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/Uranium_Bullet.png");
+	bullet_pic[2] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/Basic_Level_Classic.jpg");
+	background = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/Light_Gun_user.png");
+	light = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/Slow_Tower_user.png");
+	slow = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/Light_Rocket_Launcher_user.png");
+	rocket = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/test_user.png"); // new include
+	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/red.png"); // new include
+	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	SDL_FreeSurface(loadedSurface);
 }

@@ -4,6 +4,7 @@
 #include <queue>
 #include <utility>
 #include<SDL.h>
+#include<vector>
 
 using namespace std;
 typedef pair<int,int> pii;
@@ -44,4 +45,5 @@ public:
 	bool FindPath(bool move);
 	void calculate_hp();
 };
+
 #endif

@@ -147,6 +147,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tower.cpp" />
     <ClCompile Include="variable.cpp" />
+    <ClCompile Include="word.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h" />
@@ -154,6 +155,7 @@
     <ClInclude Include="tower.h" />
     <ClInclude Include="variable.h" />
     <ClInclude Include="wave.h" />
+    <ClInclude Include="word.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

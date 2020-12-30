@@ -1,4 +1,5 @@
 #include"enemy.h"
+
 pii operator +(const pii& p1, const pii& p2) {
 	return { p1.X + p2.X, p1.Y + p2.Y };
 }

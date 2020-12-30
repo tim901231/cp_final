@@ -24,5 +24,6 @@ class tower{
         double calculated_theta;
         int cooltime;
 };
+void loadtowermedia();
 #endif
 

@@ -3,9 +3,8 @@
 #include"variable.h"
 #include<cmath>
 #include"tower.h"
+#include"SDL_image.h"
 #define PI 3.14159265
-
-
 
 tower::tower(int num_x, int num_y, int type, int count) :x(80 + num_x * 90), y(70 + num_y * 90), theta(0)
 {
@@ -116,4 +115,25 @@ void tower::rotate(ENEMY* locked_enemy) {
         theta += 1;
         if (theta > 7)theta -= 8;
     }
+}
+void loadtowermedia() {
+    SDL_Surface* loadedSurface = IMG_Load("pictures/Light_Gun.png");
+    tower_pic[0] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+    loadedSurface = IMG_Load("pictures/Medium_Gun.png");
+    tower_pic[1] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+    loadedSurface = IMG_Load("pictures/Heavy_Gun.png");
+    tower_pic[2] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+    loadedSurface = IMG_Load("pictures/Light_Rocket_Launcher.png");
+    tower_pic[3] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+    loadedSurface = IMG_Load("pictures/Medium_Rocket_Launcher.png");
+    tower_pic[4] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+    loadedSurface = IMG_Load("pictures/Heavy_Rocket_Launcher.png");
+    tower_pic[5] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+    loadedSurface = IMG_Load("pictures/Basic_Slow_Tower.png");
+    tower_pic[6] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+    loadedSurface = IMG_Load("pictures/Upgraded_Slow_Tower.png");
+    tower_pic[7] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+    loadedSurface = IMG_Load("pictures/Advanced_Slow_Tower3.png");
+    tower_pic[8] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+    SDL_FreeSurface(loadedSurface);
 }

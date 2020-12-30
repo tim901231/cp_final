@@ -12,14 +12,14 @@
 #include"bullet.h"
 #include <iostream>
 #include"variable.h"
-
+#include"word.h"
 using namespace std;
 
 //variable
-const int SCREEN_WIDTH = 1800;
-const int SCREEN_HEIGHT = 1000;
-const int TOWER_WIDTH = 90;
-int TotalMoney = 30, TotalLife = 24;
+//const int SCREEN_WIDTH = 1800;
+//const int SCREEN_HEIGHT = 1000;
+//const int TOWER_WIDTH = 90;
+//int TotalMoney = 30, TotalLife = 24;
 
 //SDL_Window* gWindow = NULL;
 //SDL_Renderer* gRenderer = NULL;
@@ -45,7 +45,7 @@ SDL_Point mouse_position;
 */
 //SDL Rect pausebottom
 //TTF_Font* gFont = NULL;
-class word {
+/*class word {
 public:
 	int n;
 	SDL_Surface* textSurface = NULL;
@@ -69,7 +69,7 @@ public:
 		SDL_RenderCopy(gRenderer, this->mTexture, NULL, &quad);
 		return;
 	}
-};
+};*/
 bool point_in_rect(SDL_Point p, const SDL_Rect r)
 {
 	if ((p.x > r.x) && (p.x < r.x + r.w) && (p.y > r.y) && (p.y < r.y + r.h)) {
@@ -81,22 +81,23 @@ bool point_in_rect(SDL_Point p, const SDL_Rect r)
 }
 //map
 //menu's thing
+/*
 SDL_Texture* startbutton = NULL;
 SDL_Texture* startpage = NULL;
 SDL_Texture* startturning1 = NULL;
 SDL_Texture* startturning2 = NULL;
 SDL_Texture* startturning3 = NULL;
 SDL_Texture* title = NULL;
-
+*/
 //tower's thing
-tower*** towers = new tower **[18];
+//tower*** towers = new tower **[18];
 //tower's thing
-
+/*
 SDL_Texture* tower_pic[9];
 SDL_Rect towerClips[6][32];
 SDL_Rect towerbases = { 0,0,70,70 };
 SDL_Rect towerClips2[3][8];
-/*
+*//*
 SDL_Texture* tower_pic[9];
 SDL_Rect towerClips[6][32];
 SDL_Rect towerbases = { 0,0,70,70 };
@@ -187,8 +188,8 @@ void loadbottommedia() {
 //function
 
 //bullet's thing
-SDL_Texture* bullet_pic[3];
-vector<bullet*> bullets;
+//SDL_Texture* bullet_pic[3];
+//vector<bullet*> bullets;
 //bullet
 
 //enemy's things
@@ -203,6 +204,7 @@ tower* test = new tower(0, 0, 0, 0);
 //enemy
 
 //init
+/*
 bool init()
 {
 	//Initialization flag
@@ -261,7 +263,7 @@ bool init()
 
 	return success;
 }
-
+*//*
 bool loadmedia()
 {
 	SDL_Surface* loadedSurface = IMG_Load("pictures/Light_Gun.png");
@@ -281,8 +283,8 @@ bool loadmedia()
 	loadedSurface = IMG_Load("pictures/Upgraded_Slow_Tower.png");
 	tower_pic[7] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	loadedSurface = IMG_Load("pictures/Advanced_Slow_Tower3.png");
-	tower_pic[8] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/Bullet_Small.png");
+	tower_pic[8] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);*
+	SDL_Surface* loadedSurface = IMG_Load("pictures/Bullet_Small.png");
 	bullet_pic[0] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	loadedSurface = IMG_Load("pictures/Bullet_Large.png");
 	bullet_pic[1] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
@@ -302,7 +304,7 @@ bool loadmedia()
 	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	SDL_FreeSurface(loadedSurface);
 	return true;
-}
+}*/
 
 void close()
 {
@@ -519,7 +521,9 @@ int main(int argc, char* args[])
 		LoadEnemyMedia();
 		loadbottommedia();
 		loadmenumedia();
-		if (!loadmedia()) {
+		loadtowermedia();
+		loadbulletmedia();
+		if (false) {
 			printf("Failed to load media!\n");
 		}
 		else {
