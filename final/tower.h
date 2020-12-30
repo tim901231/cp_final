@@ -20,19 +20,22 @@ class tower{
             t = count;
             switch (kind){
             case 0: //gun
-                atk = 10;
+                atk = 1;
                 cooltime = 50;
                 range = 150;
+                sellprice = 3;
                 break;
             case 1:
                 atk = 15;
                 cooltime = 50;
                 range = 150;
+                sellprice = 4;
                 break;
             case 2:
                 atk = 25;
                 cooltime = 50;
                 range = 150;
+                sellprice = 8;
                 break;
             case 3: //roc
                 atk = 60;
@@ -127,6 +130,7 @@ class tower{
     int atk;
     int range;
     int t;
+    int sellprice;
     double calculated_theta;
     int cooltime;
     
