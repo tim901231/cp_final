@@ -545,9 +545,9 @@ int main(int argc, char* args[])
 		word currmoney(money, 18, wordcolor);
 		word currlife(life, 18, wordcolor);
 		currlife.quad.y = 30; currlife.quad.w = 130;
-		//int startime;
-		//int endtime;
-		//int period=10;
+		int startime;
+		int endtime;
+		int period=10;
 	/*	double degrees = 0;
 		SDL_RendererFlip flipType = SDL_FLIP_NONE;*/
 		for (int i = 0; i < 7; i++) {
@@ -558,7 +558,7 @@ int main(int argc, char* args[])
 		//int count = 0;
 		//int time1, time2, time3, time4;
 		while (!quit) {
-			//time1 = SDL_GetTicks();
+			startime = SDL_GetTicks();
 			if (status == menu) {
 				loop = 0;
 				TotalMoney = 30;
@@ -1034,12 +1034,12 @@ int main(int argc, char* args[])
 			currmoney.render();
 			currlife.render();
 			SDL_RenderPresent(gRenderer);
-			//time4 = SDL_GetTicks();
+			endtime = SDL_GetTicks();
 			//double b = (time3 - time2) * 1.0 / (time4 - time1);
 			//printf("%f\n", b);
-			//if (endtime - startime < period) {
-			//	SDL_Delay(period + startime - endtime);
-			//}
+			if (endtime - startime < period) {
+				SDL_Delay(period + startime - endtime);
+			}
 		}
 	}
 	
