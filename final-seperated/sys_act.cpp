@@ -75,7 +75,7 @@ void upgrade_act() {
 				if (TotalMoney >= 4)
 				{
 					TotalMoney -= 4;
-					upgrade(tempx, tempy, towers[tempx][tempy], loop);
+					upgrade(tempx, tempy, 2, loop);
 					status = play;
 				}
 			}
@@ -83,7 +83,7 @@ void upgrade_act() {
 				if (TotalMoney > 15)
 				{
 					TotalMoney -= 15;
-					upgrade(tempx, tempy, towers[tempx][tempy], loop);
+					upgrade(tempx, tempy, 8, loop);
 					status = play;
 				}
 			}
@@ -91,7 +91,7 @@ void upgrade_act() {
 				if (TotalMoney > 30)
 				{
 					TotalMoney -= 30;
-					upgrade(tempx, tempy, towers[tempx][tempy], loop);
+					upgrade(tempx, tempy, 5, loop);
 					status = play;
 				}
 			}

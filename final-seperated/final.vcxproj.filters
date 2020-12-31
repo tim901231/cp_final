@@ -15,13 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
     <ClCompile Include="bullet.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="enemy.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="option_list.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="sys_act.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="tower.cpp">
@@ -33,15 +42,6 @@
     <ClCompile Include="word.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
-    <ClCompile Include="sys_act.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
-    <ClCompile Include="menu.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
-    <ClCompile Include="option_list.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h">
@@ -50,25 +50,25 @@
     <ClInclude Include="enemy.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
-    <ClInclude Include="tower.h">
+    <ClInclude Include="menu.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
-    <ClInclude Include="wave.h">
+    <ClInclude Include="new_tower.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="option_list.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="sys_act.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="tower.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="variable.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="word.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="sys_act.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="menu.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="option_list.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>

@@ -41,10 +41,9 @@ SDL_Texture* title = NULL;
 //menu
 //tower's things
 tower*** towers = new tower **[18];
-SDL_Texture* tower_pic[9];
-SDL_Rect towerClips[6][32];
+SDL_Texture* tower_pic[15];
+SDL_Rect towerClips[15][32];
 SDL_Rect towerbases = { 0,0,70,70 };
-SDL_Rect towerClips2[3][8];
 //tower
 //bullet's thing
 SDL_Texture* bullet_pic[3];

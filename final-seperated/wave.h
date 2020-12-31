@@ -1,3 +1,6 @@
+#ifndef WAVE_H
+#define WAVE_H
+
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -46,3 +49,4 @@ void Enemy_Queue_INIT() {
 	waves.push_back("416528");
 	waves.push_back("7779");
 }
+#endif
