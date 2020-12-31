@@ -137,7 +137,7 @@ bool tower::inrange(ENEMY* monster)//check if enemy is in tower range
     return false;
 }
 void tower::rotate(ENEMY* locked_enemy) {
-    if (kind < 6)
+    if (kind < 8)
     {
         //double y = 1.0;
         //double x = 1.0;
@@ -157,13 +157,14 @@ void tower::rotate(ENEMY* locked_enemy) {
 
             theta = 0;
         }
-
-
-
     }
-    else {
+    else if(kind>=10&&kind<13){
         theta += 1;
         if (theta > 7)theta -= 8;
+    }
+    else if (kind == 14) {
+        theta += 1;
+        if (theta > 15)theta -= 16;
     }
 }
 void loadtowermedia() {
@@ -210,6 +211,16 @@ void tower_init() {
             towerClips[j][i].h = 70;
         }
     }
+    for (int j = 8; j < 10; j++)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            towerClips[j][i].x = 70 * i;
+            towerClips[j][i].y = 0;
+            towerClips[j][i].w = 70;
+            towerClips[j][i].h = 70;
+        }
+    }
     for (int j = 10; j < 13; j++)
     {
         for (int i = 0; i < 8; i++)
@@ -220,7 +231,7 @@ void tower_init() {
             towerClips[j][i].h = 70;
         }
     }
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 16; i++)
     {
         towerClips[14][i].x = 70 * (i + 1);
         towerClips[14][i].y = 0;
@@ -244,7 +255,7 @@ void tower_motion() {
         for (int j = 0; j < 10; j++) {
             if (towers[i][j] != NULL) {
                 //render tower
-                if (towers[i][j]->kind < 10) {
+                if (towers[i][j]->kind < 8) {
                     for (int k = 0; k < enemies.size(); k++) {
                         if (towers[i][j]->inrange(enemies[k]) == 1)
                         {
@@ -260,18 +271,39 @@ void tower_motion() {
                     SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
                     SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
                 }
-                else if (towers[i][j]->kind >= 6) {//slow tower
+                else if (tower[i][j]->kind == 8 || tower[i][j]->kind == 9) {
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][0], &towers[i][j]->quad);
+                    towers[i][j]->y -= 30;
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][0], &towers[i][j]->quad);
+                    towers[i][j]->y += 30;
+                }
+                else if (towers[i][j]->kind>=10&&towers[i][j]->kind <= 12) {//slow tower
                     for (int k = 0; k < enemies.size(); k++) {
                         if (towers[i][j]->inrange(enemies[k]))
                         {
                             enemies[k]->freeze = towers[i][j]->atk;
                         }
                     }
-                    //printf("%d\n", count);
-                    towers[i][j]->theta += 1;
-                    if (towers[i][j]->theta > 7)towers[i][j]->theta -= 8;
+                    towers[i][j]->rotate;
                     SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
-                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips2[towers[i][j]->kind - 6][towers[i][j]->theta], &towers[i][j]->quad);
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
+                }
+                else if (tower[i][j] == 13) {
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], NULL, &towers[i][j]->quad);
+                }
+                else if (tower[i][j] == 14) {
+                    for (int k = 0; k < enemies.size(); k++) {
+                        if (towers[i][j]->inrange(enemies[k]) == 1)
+                        {
+                            towers[i][j]->rotate(enemies[k]);
+                            if (towers[i][j]->ableatk(loop) == 1) {
+                                //teleport
+                                break;
+                            }
+                        }
+                    }
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
                 }
             }
         }
