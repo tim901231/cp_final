@@ -529,7 +529,10 @@ int main(int argc, char* args[])
 		loadtowermedia();
 		loadbulletmedia();
 		loadothermedia();
+<<<<<<< HEAD
 		Enemy_Queue_INIT();
+=======
+>>>>>>> 9fa287b925354545a83785f54f22ecfae1926299
 		////Main loop flag
 		//int p=0, q=0, tempx, tempy;
 		//bool quit = false;
@@ -546,7 +549,7 @@ int main(int argc, char* args[])
 		string life = "Life: " + to_string(TotalLife);
 		word currmoney(money, 18, wordcolor);
 		word currlife(life, 18, wordcolor);
-		currlife.quad.y = 30; currlife.quad.w = 130;
+		currlife.quad.y = 30; currlife.quad.w = 140;
 		int startime;
 		int endtime;
 		int period=10;
@@ -672,6 +675,68 @@ int main(int argc, char* args[])
 					quit = true;
 				}
 				if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)  quit = true;
+				if (e.type == SDL_MOUSEMOTION) 
+				{
+					SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+					if (status == play)
+					{
+						if (point_in_rect(mouse_position, option_bottom) == true) {
+							option_bottom.x = 0;
+							option_bottom.y = 940;
+							option_bottom.w = 70;
+							option_bottom.h = 70;
+						}
+						else {
+							option_bottom.x = 10;
+							option_bottom.y = 950;
+							option_bottom.w = 50;
+							option_bottom.h = 50;
+						}
+					}
+					else if (status == option) {
+						if (point_in_rect(mouse_position, bottoms[1]) == true) { //pause
+							bottoms[1].x = 680;
+							bottoms[1].y = 380;
+							bottoms[1].w = 120;
+							bottoms[1].h = 120;
+						}
+						else {
+							bottoms[1].x = 690;
+							bottoms[1].y = 390;
+							bottoms[1].w = 100;
+							bottoms[1].h = 100;
+						}
+
+						if (point_in_rect(mouse_position, bottoms[2]) == true) { //start
+							bottoms[2].x = 850;
+							bottoms[2].y = 380;
+							bottoms[2].w = 120;
+							bottoms[2].h = 120;
+						}
+						else {
+							bottoms[2].x = 860;
+							bottoms[2].y = 390;
+							bottoms[2].w = 100;
+							bottoms[2].h = 100;
+						}
+						if (point_in_rect(mouse_position, bottoms[3]) == true) {
+							bottoms[3].x = 1020;
+							bottoms[3].y = 380;
+							bottoms[3].w = 120;
+							bottoms[3].h = 120;
+						}
+						else {
+							bottoms[3].x = 1030;
+							bottoms[3].y = 390;
+							bottoms[3].w = 100;
+							bottoms[3].h = 100;
+						}
+						//mute=4
+						//back5
+						//exit 6
+
+					}
+				}
 				if (e.type == SDL_MOUSEBUTTONDOWN)
 				{
 					SDL_GetMouseState(&mouse_position.x, &mouse_position.y);

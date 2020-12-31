@@ -53,6 +53,7 @@ extern SDL_Texture* tower_pic[];
 extern SDL_Rect towerClips[][32];
 extern SDL_Rect towerbases;
 extern SDL_Rect towerClips2[][8];
+
 //tower
 //bullet's thing
 extern SDL_Texture* bullet_pic[];
