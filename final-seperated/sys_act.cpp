@@ -147,3 +147,9 @@ void show_building() {
 		SDL_RenderCopy(gRenderer, user, NULL, &userrect);
 	}
 }
+void loadothermedia() {
+	SDL_Surface* loadedSurface = IMG_Load("pictures/test_user.png"); // new include
+	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/red.png"); // new include
+	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+}

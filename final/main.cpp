@@ -378,7 +378,7 @@ void LoadEnemyMedia() {
 	surface = IMG_Load("pictures/red.png");
 	Red = SDL_CreateTextureFromSurface(gRenderer, surface);
 	SDL_FreeSurface(surface);
-	for (int i = 1; i <= 4; i++) {
+	for (int i = 1; i < 10; i++) {
 		if (i == 1) {
 			for (int j = 0; j < 48; j++) {
 				enemyClips[i][j].x = 70 * j;
