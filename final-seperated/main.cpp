@@ -529,10 +529,7 @@ int main(int argc, char* args[])
 		loadtowermedia();
 		loadbulletmedia();
 		loadothermedia();
-<<<<<<< HEAD
 		Enemy_Queue_INIT();
-=======
->>>>>>> 9fa287b925354545a83785f54f22ecfae1926299
 		////Main loop flag
 		//int p=0, q=0, tempx, tempy;
 		//bool quit = false;
