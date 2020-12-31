@@ -1,5 +1,7 @@
 #include "wave.h"
 
+vector<string> waves;
+
 void Enemy_Queue_INIT() {
 	waves.push_back("111");  //1
 	waves.push_back("111");

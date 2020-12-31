@@ -11,6 +11,7 @@
 #include"enemy.h"
 #include"bullet.h"
 #include <iostream>
+#include "wave.h"
 #include"variable.h"
 #include"word.h"
 #include"sys_act.h"
@@ -528,7 +529,7 @@ int main(int argc, char* args[])
 		loadtowermedia();
 		loadbulletmedia();
 		loadothermedia();
-		
+		Enemy_Queue_INIT();
 		////Main loop flag
 		//int p=0, q=0, tempx, tempy;
 		//bool quit = false;
@@ -656,11 +657,11 @@ int main(int argc, char* args[])
 			SDL_RenderCopy(gRenderer, cancel, NULL, &cancel_rect);
 			//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
 			if (enemies.empty() && !cntdown) {
-				cntdown = 401;
+				cntdown = (waves[num].size() - 1) * 50 + 1;
 			}
 
 			if (cntdown) {
-				if ((--cntdown) % 100 == 0)  enemies.push_back(Generate_Enemy());
+				if ((--cntdown) % 50 == 0)  enemies.push_back(Generate_Enemy());
 				//	cout << cntdown << ' ' << enemies.size() << '\n';
 			}
 
@@ -725,9 +726,9 @@ int main(int argc, char* args[])
 							if (check({p, q})) {//check
 								if (towers[p][q] == NULL) {
 									towers[p][q] = test;
-									canBuild = DEFAULT->FindPath(0);
+									canBuild = DEFAULT->FindPath();
 									for (auto enemy : enemies) {
-										canBuild &= enemy->FindPath(0);
+										if(!enemy->CanFly)  canBuild &= enemy->FindPath();
 									}
 									towers[p][q] = NULL;
 								}
@@ -970,11 +971,18 @@ int main(int argc, char* args[])
 				}
 				else  TotalMoney += enemy->money;  //earn money when an enemy is killed
 			}
-
+			eliminate_dead_enemy.clear();
 			for (auto enemy : enemies) {
-				enemy->FindPath(1);
+				enemy->GoPath();
+				if (enemy->freeze)  --enemy->freeze;
 				enemy->current_phase += 0.2;
 				SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + (int(enemy->current_phase) % enemy->period)], &enemy->rect);
+				SDL_RenderCopy(gRenderer, Green, NULL, &enemy->green);
+				SDL_RenderCopy(gRenderer, Red, NULL, &enemy->red);
+			}
+			if (add) {
+				enemies.push_back(add);
+				add = NULL;
 			}
 			//time3 = SDL_GetTicks();
 			//render buttom

@@ -150,6 +150,7 @@
     <ClCompile Include="sys_act.cpp" />
     <ClCompile Include="tower.cpp" />
     <ClCompile Include="variable.cpp" />
+    <ClCompile Include="wave.cpp" />
     <ClCompile Include="word.cpp" />
   </ItemGroup>
   <ItemGroup>

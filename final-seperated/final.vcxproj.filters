@@ -42,6 +42,9 @@
     <ClCompile Include="option_list.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="wave.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h">

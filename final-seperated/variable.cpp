@@ -79,10 +79,10 @@ SDL_RendererFlip flipType = SDL_FLIP_NONE;
 //menu
 //enemy's things
 vector<ENEMY*> enemies;
-ENEMY* DEFAULT = new ENEMY(0);
-SDL_Texture* EnemyTexture[10];  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
+ENEMY* DEFAULT = new ENEMY(0), *add = NULL;
+SDL_Texture* EnemyTexture[10], *Green, *Red;  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
 SDL_Rect enemyClips[10][50];
-int cntdown = 0;
+int cntdown = 0, currentwave = 0, num = 0;
 //
 bool canBuild;
 tower* test = new tower(0, 0, 0, 0);

@@ -18,7 +18,7 @@ const int DOWN = 3;
 #define Y second
 
 //extern int health;
-const int MAX_HEALTH[10] = {1000000, 15, 30, 50, 100, 0, 0, 0, 0, 0};
+const int MAX_HEALTH[10] = {1000000, 30, 120, 700, 2000, 6000, 500, 1000, 500, 4000};
 const pii DIR[4] = {{1,0}, {0, -1}, {-1, 0}, {0, 1}};
 
 pii operator +(const pii& p1, const pii& p2);
@@ -35,17 +35,18 @@ class val{
 
 class ENEMY {
 public:
-	bool CanFly;
-	int TYPE, hp, dir, money, period;
+	bool CanFly, wtflag;
+	int TYPE, hp, pos, dir, money, period;
 	double speed, freeze, nowx, nowy, current_phase;
-	pii pos;
+	vector<pii> PATH;
 	SDL_Texture *pic;
 	SDL_Rect rect, green, red;
 	ENEMY(int type);
-	bool FindPath(bool move);
+	bool FindPath();
+	void GoPath();
 	void calculate_hp();
 };
 void LoadEnemyMedia();
 ENEMY* Generate_Enemy();
-bool FindPath(bool move);
+ENEMY* Generate_Enemy(pii pos);
 #endif
