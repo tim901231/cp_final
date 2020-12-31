@@ -42,7 +42,7 @@ public:
 	SDL_Texture *pic;
 	SDL_Rect rect, green, red;
 	ENEMY(int type);
-	bool FindPath();
+	bool FindPath(bool isair);
 	void GoPath();
 	void calculate_hp();
 };

@@ -90,9 +90,9 @@ extern SDL_RendererFlip flipType;
 extern vector<ENEMY*> enemies;
 extern ENEMY* DEFAULT, *add;
 extern SDL_Texture* EnemyTexture[], *Green, *Red;  //stands for (L)Light (H)Heavy (S)Soldier (T)Tank
-extern SDL_Rect enemyClips[][50];
-extern int cntdown, num, currentwave;
-extern bool canBuild;
+extern SDL_Rect enemyClips[][50], StartButton;
+extern int cntdown, num, currentwave, rate;
+extern bool canBuild, StartButtonPressed;
 extern tower* test;
 //enemy
 //function's thing
