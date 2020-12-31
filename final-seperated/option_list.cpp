@@ -56,7 +56,7 @@ void loadbottommedia() {
 	fastbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[3] = fastbottom_pic;
 	bottoms[3] = fastbottom;
-	surface = IMG_Load("pictures/yellow.png");
+	surface = IMG_Load("pictures/mute.png");
 	mutebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[4] = mutebottom_pic;
 	bottoms[4] = mutebottom;
@@ -64,11 +64,11 @@ void loadbottommedia() {
 	leavebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[5] = leavebottom_pic;
 	bottoms[5] = leavebottom;
-	surface = IMG_Load("pictures/Light_Gun_user.png");
+	surface = IMG_Load("pictures/exit_bottom.png");
 	exitbottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[6] = exitbottom_pic;
 	bottoms[6] = exitbottom;
-	surface = IMG_Load("pictures/Light_Gun_user.png");
+	surface = IMG_Load("pictures/option_bottom_pic.png");
 	option_bottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	surface = IMG_Load("pictures/red.png"); // new include
 	cancel = SDL_CreateTextureFromSurface(gRenderer, surface);

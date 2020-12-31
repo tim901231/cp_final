@@ -88,16 +88,16 @@ bool canBuild;
 tower* test = new tower(0, 0, 0, 0);
 //enemy
 //function's thing
-SDL_Rect option_bottom = { 0,950,50,50 };
+SDL_Rect option_bottom = { 10,950,50,50 };
 SDL_Texture* option_bottom_pic;
 SDL_Texture* bottoms_pic[7];
 SDL_Rect bottoms[7];
 SDL_Rect option_list = { 605,310,590,380 };
-SDL_Rect pausebottom = { 680,380,120,120 };
-SDL_Rect startbottom = { 850,380,120,120 };
-SDL_Rect fastbottom = { 1020,380,120,120 };
-SDL_Rect mutebottom = { 800,550,200,30 };
-SDL_Rect leavebottom = { 800,600,200,30 };// back to menu
+SDL_Rect pausebottom = { 690,390,100,100 };
+SDL_Rect startbottom = { 860,390,100,100 };
+SDL_Rect fastbottom = { 1030,390,100,100 };
+SDL_Rect mutebottom = { 800,550,80,80 };
+SDL_Rect leavebottom = { 920,550,80,80 };// back to menu
 SDL_Rect exitbottom = { 1150,310,45,45 };//red x
 SDL_Texture* option_list_pic = NULL;
 SDL_Texture* pausebottom_pic = NULL;
