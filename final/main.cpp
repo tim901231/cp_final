@@ -642,6 +642,7 @@ int main(int argc, char* args[])
 			//int time1, time2, time3, time4;
 			while (!quit) {
 				//time1 = SDL_GetTicks();
+				startime = SDL_GetTicks();
 				if (status == menu) {
 					count = 0;
 					TotalMoney = 30;
@@ -1118,10 +1119,11 @@ int main(int argc, char* args[])
 				SDL_RenderPresent(gRenderer);
 				//time4 = SDL_GetTicks();
 				//double b = (time3 - time2) * 1.0 / (time4 - time1);
+				endtime = SDL_GetTicks();
 				//printf("%f\n", b);
-				//if (endtime - startime < period) {
-				//	SDL_Delay(period + startime - endtime);
-				//}
+				if (endtime - startime < period) {
+					SDL_Delay(period + startime - endtime);
+				}
 			}
 		}
 	}
