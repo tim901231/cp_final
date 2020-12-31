@@ -18,7 +18,7 @@ const int DOWN = 3;
 #define X first
 #define Y second
 
-int health = 10, MAX_HEALTH[10] = {1000000, 15, 30, 50, 100, 0, 0, 0, 0, 0};
+int health = 10, MAX_HEALTH[10] = {1000000, 30, 120, 700, 2000, 6000, 500, 380, 80, 1000};
 pii DIR[4] = {{1,0}, {0, -1}, {-1, 0}, {0, 1}};
 
 pii operator +(const pii &p1, const pii &p2){
@@ -41,10 +41,10 @@ class val{
 
 class ENEMY {
 public:
-	bool CanFly;
-	int TYPE, hp, dir, money, period;
+	bool CanFly, wtflag;
+	int TYPE, hp, dir, money, period, pos;
 	double speed, freeze, nowx, nowy, current_phase;
-	pii pos;
+	vector<pii> PATH;
 	SDL_Texture *pic;
 	SDL_Rect rect, green, red;
 	ENEMY(int type) {
@@ -57,9 +57,11 @@ public:
 		nowx = rect.x;
 		nowy = rect.y;
 		CanFly = false;
+		wtflag = false;
 		dir = RIGHT;
 		current_phase = 0;
-		pos = { 0,5 };
+		pos = 0;
+		PATH.push_back({ 0,5 });
 		switch (type) {
 		case 0: {
 			hp = 1000000;
@@ -100,6 +102,7 @@ public:
 			speed = 0.5;
 			money = 50;
 			period = 10;
+			break;
 		}
 		case 6: {  //jet
 			hp = 500;
@@ -107,6 +110,7 @@ public:
 			money = 10;
 			period = 1;
 			CanFly = true;
+			break;
 		}
 		case 7: {  //Helicopter
 			hp = 380;
@@ -114,12 +118,14 @@ public:
 			money = 8;
 			period = 6;
 			CanFly = true;
+			break;
 		}
 		case 8: {  //Runner
 			hp = 80;
 			speed = 2;
 			money = 2;
 			period = 12;
+			break;
 		}
 		case 9: {  //MotherShip
 			hp = 1000;
@@ -127,12 +133,15 @@ public:
 			money = 30;
 			period = 1;
 			CanFly = true;
+			wtflag = true;
+			break;
 		}
 		}
 	}
-	bool FindPath(bool move);
+	bool FindPath();
+	void GoPath();
 	void calculate_hp() {
-		green.w = hp / MAX_HEALTH[TYPE];
+		green.w = hp * 90 / MAX_HEALTH[TYPE];
 		green.h = 10;
 		red.w = 90 - green.w;
 		red.h = 10;
