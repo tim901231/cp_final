@@ -223,9 +223,7 @@ ENEMY* Generate_Enemy() {
 	if (num == waves[currentwave].size()) {
 		num = 0;
 		++currentwave;
-		if (currentwave == 65 || currentwave == 81) {
-			for (int k = 1; k < 10; k++)  rate *= 2;
-		}
+		if (currentwave == 65 || currentwave == 81)  rate *= 2;
 	}
 	ret->FindPath(ret->CanFly);
 	return ret;
