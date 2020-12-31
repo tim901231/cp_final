@@ -326,3 +326,41 @@ void ENEMY::GoPath() {
 	calculate_hp();
 //	cout << PATH.size() << ' ' << pos << ' ' << nowx << ' ' << nowy << '\n';
 }
+
+void enemy_motion(){
+	if (enemies.empty() && !cntdown) {
+		if (currentwave == 100) {
+			quit = true;
+			return ;
+		}
+		cntdown = (waves[currentwave].size() - 1) * 50 + 1;
+	}
+
+	if (cntdown) {
+		if ((--cntdown) % 50 == 0)  enemies.push_back(Generate_Enemy());
+		//	cout << cntdown << ' ' << enemies.size() << '\n';
+	}
+	vector<ENEMY*> eliminate_dead_enemy = enemies;
+	enemies.clear();
+	for (auto enemy : eliminate_dead_enemy) {
+		if (enemy->hp > 0) {
+			enemies.push_back(enemy);
+		}
+		else {
+			TotalMoney += enemy->money;  //earn money when an enemy is killed
+		}
+	}
+	eliminate_dead_enemy.clear();
+	for (auto enemy : enemies) {
+		enemy->GoPath();
+		if (enemy->freeze)  --enemy->freeze;
+		enemy->current_phase += 0.2;
+		SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + (int(enemy->current_phase) % enemy->period)], &enemy->rect);
+		SDL_RenderCopy(gRenderer, Green, NULL, &enemy->green);
+		SDL_RenderCopy(gRenderer, Red, NULL, &enemy->red);
+	}
+	if (add) {
+		enemies.push_back(add);
+		add = NULL;
+	}
+}

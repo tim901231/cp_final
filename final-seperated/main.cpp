@@ -542,12 +542,12 @@ int main(int argc, char* args[])
 		//SDL_Event e;
 		//gamestatus status = menu;
 		//SDL_Color wordcolor = { 0000,0000,0000,0000 };
-		string money = "$: " + to_string(TotalMoney); //convert int to string
-		string life = "Life: " + to_string(TotalLife);
-		string wave = "Wave: " + to_string(currentwave);
-		word currmoney(money, 18, wordcolor);
-		word currlife(life, 18, wordcolor);
-		word currwave(wave, 18, wordcolor);
+		//string money = "$: " + to_string(TotalMoney); //convert int to string
+		//string life = "Life: " + to_string(TotalLife);
+		//string wave = "Wave: " + to_string(currentwave);
+		word currmoney("$: " + to_string(TotalMoney), 18, wordcolor);
+		word currlife("Life: " + to_string(TotalLife), 18, wordcolor);
+		word currwave("Wave: " + to_string(currentwave), 18, wordcolor);
 		currlife.quad.y = 30; 
 		currlife.quad.w = 140;
 		currwave.quad.y = 130;
@@ -568,7 +568,7 @@ int main(int argc, char* args[])
 			startime = SDL_GetTicks();
 			if (status == menu) {
 				loop = 0;
-				TotalMoney = 1000;
+				TotalMoney = 30;
 				TotalLife = 24;
 				for (int i = 0; i < 18; i++) {
 					for (int j = 0; j < 10; j++) {
@@ -629,10 +629,11 @@ int main(int argc, char* args[])
 			
 			loop += 1;
 			//startime = SDL_GetTicks();
-			money = "$: " + to_string(TotalMoney);
-			life = "Life: " + to_string(TotalLife);
-			currmoney.changeword(money);
-			currlife.changeword(life);
+		//	money = "$: " + to_string(TotalMoney);
+		//	life = "Life: " + to_string(TotalLife);
+			currmoney.changeword("$: " + to_string(TotalMoney));
+			currlife.changeword("Life: " + to_string(TotalLife));
+			currwave.changeword("Wave: " + to_string(currentwave + 1));
 			SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
 			SDL_SetTextureBlendMode(slow, SDL_BLENDMODE_BLEND);
 			SDL_SetTextureBlendMode(rocket, SDL_BLENDMODE_BLEND);
@@ -1005,14 +1006,13 @@ int main(int argc, char* args[])
 			//bullets motion
 			bullet_motion();
 			if (StartButtonPressed) {
-				//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
+				/*If there is no enemy in vector, generate five everytime cntdown is divisible by 10
 				if (enemies.empty() && !cntdown) {
 					if (currentwave == 100) {
 						quit = true;
 						continue;
 					}
 					cntdown = (waves[currentwave].size() - 1) * 50 + 1;
-					currwave.changeword("Wave: " + to_string(currentwave + 1));
 				}
 
 				if (cntdown) {
@@ -1040,7 +1040,7 @@ int main(int argc, char* args[])
 				//}
 				/*for (int i = 0; i < bullets.size(); i++) {
 					SDL_RenderCopy(gRenderer, bullet_pic[bullets[i]->kind], NULL, &bullets[i]->quad);
-				}*/
+				}
 				//enemies motion
 				//time2 = SDL_GetTicks();
 				vector<ENEMY*> eliminate_dead_enemy = enemies;
@@ -1065,7 +1065,8 @@ int main(int argc, char* args[])
 				if (add) {
 					enemies.push_back(add);
 					add = NULL;
-				}
+				}*/
+				enemy_motion();
 			}
 			//time3 = SDL_GetTicks();
 			//render buttom

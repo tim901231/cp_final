@@ -26,6 +26,7 @@ pii operator +(const pii& p1, const pii& p2);
 pii operator -(const pii& p1, const pii& p2);
 
 bool check(pii p);
+void enemy_motion();
 
 class val{
 	public:
