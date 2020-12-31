@@ -527,6 +527,7 @@ int main(int argc, char* args[])
 		loadmenumedia();
 		loadtowermedia();
 		loadbulletmedia();
+		loadothermedia();
 		
 		////Main loop flag
 		//int p=0, q=0, tempx, tempy;

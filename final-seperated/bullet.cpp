@@ -70,10 +70,7 @@ void loadbulletmedia() {
 	slow = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	loadedSurface = IMG_Load("pictures/Light_Rocket_Launcher_user.png");
 	rocket = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/test_user.png"); // new include
-	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/red.png"); // new include
-	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	
 	SDL_FreeSurface(loadedSurface);
 }
 void bullet_motion() {

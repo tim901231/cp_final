@@ -70,8 +70,7 @@ void loadbottommedia() {
 	bottoms[6] = exitbottom;
 	surface = IMG_Load("pictures/Light_Gun_user.png");
 	option_bottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
-	surface = IMG_Load("pictures/red.png"); // new include
-	cancel = SDL_CreateTextureFromSurface(gRenderer, surface);
+	
 	SDL_FreeSurface(surface);
 }
 void show_option_list() {
