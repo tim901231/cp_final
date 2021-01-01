@@ -85,13 +85,12 @@ void upgrade_list_init() {
 }
 
 
-
-void upgrade_act() {
+void change_upgrade() {
 	switch (towers[tempx][tempy]->kind)
 	{
 	case 0://gun
 		putlist[0] = upgradeorsell[12];
-		putlist[1]= upgradeorsell[0];
+		putlist[1] = upgradeorsell[0];
 		putlist[2] = upgradeorsell[2];
 		break;
 	case 1://medium gun
@@ -131,7 +130,7 @@ void upgrade_act() {
 		break;
 	case 8: //artillery
 		putlist[0] = upgradeorsell[24];
-		putlist[1] = upgradeorsell[11]; 
+		putlist[1] = upgradeorsell[11];
 		putlist[2] = NULL;
 		break;
 	case 9: //mortar
@@ -165,7 +164,8 @@ void upgrade_act() {
 		putlist[2] = NULL;
 		break;
 	}
-
+}
+void upgrade_act() {
 	if (point_in_rect(mouse_position, upgradelist[0]) || point_in_rect(mouse_position, upgradelist[1]) || point_in_rect(mouse_position, upgradelist[2]))
 	{
 		if (point_in_rect(mouse_position, upgradelist[0]))  //sell

@@ -362,6 +362,7 @@ int main(int argc, char* args[])
 									tempx = p;
 									tempy = q;
 									status = upgrading;
+									change_upgrade();
 								}
 							}
 							else if (point_in_rect(mouse_position, option_bottom) == true) {
@@ -384,7 +385,7 @@ int main(int argc, char* args[])
 			if (StartButtonPressed) {
 				enemy_motion();
 			}
-
+			
 			show_building();
 			if (TotalMoney < 10) //Change font rectangle
 			{
