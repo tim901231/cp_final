@@ -327,6 +327,7 @@ void tower_motion() {
                             enemies[k]->nowy = enemies[k]->rect.y;
                             enemies[k]->PATH.clear();
                             enemies[k]->PATH.push_back({ 0,5 });
+                            enemies[k]->dir = RIGHT;
                             enemies[k]->FindPath(enemies[k]->CanFly);
                             upgrade(i, j, 13, loop);
                             break;
