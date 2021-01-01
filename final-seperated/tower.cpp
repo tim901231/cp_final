@@ -5,6 +5,7 @@
 #include"tower.h"
 #include"SDL_image.h"
 #include<vector>
+#include <iostream>
 #define PI 3.14159265
 
 tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70 + num_y * 90), theta(0)
@@ -316,7 +317,7 @@ void tower_motion() {
                     SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], NULL, &towers[i][j]->quad);
                 }
                 else if (towers[i][j]->kind == 14) {
-                    for (int k = 0; k < enemies.size(); k++) {
+                    for (int k = 0; k < enemies.size();k++) {
                         if (towers[i][j]->inrange(enemies[k]) == 1)
                         {
                             enemies[k]->pos = 0;
@@ -325,7 +326,7 @@ void tower_motion() {
                             enemies[k]->nowx = enemies[k]->rect.x;
                             enemies[k]->nowy = enemies[k]->rect.y;
                             enemies[k]->PATH.clear();
-                            enemies[k]->PATH.push_back({0,5});
+                            enemies[k]->PATH.push_back({ 0,5 });
                             enemies[k]->FindPath(enemies[k]->CanFly);
                             upgrade(i, j, 13, loop);
                             break;
