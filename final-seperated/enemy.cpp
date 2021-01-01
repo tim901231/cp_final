@@ -37,42 +37,42 @@ ENEMY::ENEMY(int type) {
 		break;
 	}
 	case 1: {  //Light_Soldier
-		hp = 30;
+		hp = MAX_HEALTH[TYPE] * rate;
 		speed = 1;
 		money = 1;
 		period = 12;
 		break;
 	}
 	case 2: {  //Heavy_Soldier
-		hp = 120;
+		hp = MAX_HEALTH[TYPE] * rate;
 		speed = 0.75;
 		money = 3;
 		period = 16;
 		break;
 	}
 	case 3: {  //Light_Tank
-		hp = 700;
+		hp = MAX_HEALTH[TYPE] * rate;
 		speed = 0.5;
 		money = 5;
 		period = 3;
 		break;
 	}
 	case 4: {  //Heavy_Tank
-		hp = 2000;
+		hp = MAX_HEALTH[TYPE] * rate;
 		speed = 0.25;
 		money = 10;
 		period = 10;
 		break;
 	}
 	case 5: {  //Titan
-		hp = 6000;
+		hp = MAX_HEALTH[TYPE] * rate;
 		speed = 0.5;
 		money = 50;
 		period = 10;
 		break;
 	}
 	case 6: {  //jet
-		hp = 500;
+		hp = MAX_HEALTH[TYPE] * rate;
 		speed = 1.5;
 		money = 10;
 		period = 1;
@@ -80,7 +80,7 @@ ENEMY::ENEMY(int type) {
 		break;
 	}
 	case 7: {  //Helicopter
-		hp = 1000;
+		hp = MAX_HEALTH[TYPE] * rate;
 		speed = 0.75;
 		money = 8;
 		period = 6;
@@ -88,14 +88,14 @@ ENEMY::ENEMY(int type) {
 		break;
 	}
 	case 8: {  //Runner
-		hp = 500;
+		hp = MAX_HEALTH[TYPE] * rate;
 		speed = 2;
 		money = 2;
 		period = 12;
 		break;
 	}
 	case 9: {  //MotherShip
-		hp = 4000;
+		hp = MAX_HEALTH[TYPE] * rate;
 		speed = 0.5;
 		money = 30;
 		period = 1;
@@ -106,7 +106,7 @@ ENEMY::ENEMY(int type) {
 	}
 }
 void ENEMY::calculate_hp() {
-	green.w = hp * 90 / MAX_HEALTH[TYPE];
+	green.w = hp * 90 / (MAX_HEALTH[TYPE] * rate);
 	green.h = 10;
 	red.w = 90 - green.w;
 	red.h = 10;
@@ -223,8 +223,9 @@ ENEMY* Generate_Enemy() {
 	if (num == waves[currentwave].size()) {
 		num = 0;
 		++currentwave;
+		if (currentwave == 65 || currentwave == 81)  rate *= 2;
 	}
-	ret->FindPath();
+	ret->FindPath(ret->CanFly);
 	return ret;
 }
 
@@ -237,17 +238,25 @@ ENEMY* Generate_Enemy(pii origin) {
 	ret->nowy = ret->rect.y;
 	ret->PATH.clear();
 	ret->PATH.push_back(origin);
-	ret->FindPath();
+	ret->FindPath(0);
 	return ret;
 }
 
-bool ENEMY::FindPath() {  //return false if there isn't any path
+bool ENEMY::FindPath(bool isair) {  //return false if there isn't any path
+	if (isair) {
+		PATH.clear();
+		pos = 0;
+		for (int i = 0; i < 18; i++) {
+			PATH.push_back({ i,5 });
+		}
+		return true;
+	}
 	queue<val> q;
-	bool visited[18][10] = {}, exist_path = false;
 	val start, path;
 	start.pos = PATH[pos];
 	start.shortest_path.push_back(start.pos);
 	q.push(start);
+	bool visited[18][10] = {}, exist_path = false;
 	visited[start.pos.X][start.pos.Y] = true;
 	while (!q.empty()) {
 		path = q.front();
@@ -261,14 +270,7 @@ bool ENEMY::FindPath() {  //return false if there isn't any path
 			break;
 		}
 		for (int i = 0; i < 4; i++) {
-			if (check(path.pos + DIR[i]) && CanFly && !visited[path.pos.X][path.pos.Y]) {
-				visited[path.pos.X + DIR[i].X][path.pos.Y + DIR[i].Y] = true;
-				val tmp = path;
-				tmp.pos = path.pos + DIR[i];
-				tmp.shortest_path.push_back(tmp.pos);
-				q.push(tmp);
-			}
-			else  if (check(path.pos + DIR[i]) && !visited[path.pos.X + DIR[i].X][path.pos.Y + DIR[i].Y] && !towers[path.pos.X + DIR[i].X][path.pos.Y + DIR[i].Y]) {
+			if (check(path.pos + DIR[i]) && !visited[path.pos.X + DIR[i].X][path.pos.Y + DIR[i].Y] && !towers[path.pos.X + DIR[i].X][path.pos.Y + DIR[i].Y]) {
 				visited[path.pos.X + DIR[i].X][path.pos.Y + DIR[i].Y] = true;
 				val tmp = path;
 				tmp.pos = path.pos + DIR[i];
@@ -292,6 +294,7 @@ void ENEMY::GoPath() {
 		}
 		if (PATH[pos + 1] - PATH[pos] == DIR[LEFT]) {
 			nowx -= speed * (1 - freeze / 100) * speedy;
+			if (nowx < 80)  nowx = 80; //this caused a bug
 			dir = LEFT;
 		}
 		if (PATH[pos + 1] - PATH[pos] == DIR[DOWN]) {
@@ -319,4 +322,43 @@ void ENEMY::GoPath() {
 	rect.x = int(nowx);
 	rect.y = int(nowy);
 	calculate_hp();
+//	cout << PATH.size() << ' ' << pos << ' ' << nowx << ' ' << nowy << '\n';
+}
+
+void enemy_motion(){
+	if (enemies.empty() && !cntdown) {
+		if (currentwave == 100) {
+			quit = true;
+			return ;
+		}
+		cntdown = (waves[currentwave].size() - 1) * 50 + 1;
+	}
+
+	if (cntdown) {
+		if ((--cntdown) % 50 == 0)  enemies.push_back(Generate_Enemy());
+		//	cout << cntdown << ' ' << enemies.size() << '\n';
+	}
+	vector<ENEMY*> eliminate_dead_enemy = enemies;
+	enemies.clear();
+	for (auto enemy : eliminate_dead_enemy) {
+		if (enemy->hp > 0) {
+			enemies.push_back(enemy);
+		}
+		else {
+			TotalMoney += enemy->money;  //earn money when an enemy is killed
+		}
+	}
+	eliminate_dead_enemy.clear();
+	for (auto enemy : enemies) {
+		enemy->GoPath();
+		if (enemy->freeze)  --enemy->freeze;
+		enemy->current_phase += 0.2;
+		SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + (int(enemy->current_phase) % enemy->period)], &enemy->rect);
+		SDL_RenderCopy(gRenderer, Green, NULL, &enemy->green);
+		SDL_RenderCopy(gRenderer, Red, NULL, &enemy->red);
+	}
+	if (add) {
+		enemies.push_back(add);
+		add = NULL;
+	}
 }

@@ -624,10 +624,11 @@ int main(int argc, char* args[])
 			
 			loop += 1;
 			//startime = SDL_GetTicks();
-			money = "$: " + to_string(TotalMoney);
-			life = "Life: " + to_string(TotalLife);
-			currmoney.changeword(money);
-			currlife.changeword(life);
+		//	money = "$: " + to_string(TotalMoney);
+		//	life = "Life: " + to_string(TotalLife);
+			currmoney.changeword("$: " + to_string(TotalMoney));
+			currlife.changeword("Life: " + to_string(TotalLife));
+			currwave.changeword("Wave: " + to_string(currentwave + 1));
 			SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
 			SDL_SetTextureBlendMode(slow, SDL_BLENDMODE_BLEND);
 			SDL_SetTextureBlendMode(rocket, SDL_BLENDMODE_BLEND);
@@ -655,14 +656,8 @@ int main(int argc, char* args[])
 			SDL_RenderCopy(gRenderer, slow, NULL, &initialslow);
 			SDL_RenderCopy(gRenderer, rocket, NULL, &initialrocket);
 			SDL_RenderCopy(gRenderer, cancel, NULL, &cancel_rect);
-			//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
-			if (enemies.empty() && !cntdown) {
-				cntdown = (waves[currentwave].size() - 1) * 50 + 1;
-			}
-
-			if (cntdown) {
-				if ((--cntdown) % 50 == 0)  enemies.push_back(Generate_Enemy());
-				//	cout << cntdown << ' ' << enemies.size() << '\n';
+			if (!StartButtonPressed) {
+				SDL_RenderCopy(gRenderer, startbottom_pic, NULL, &StartButton);
 			}
 
 			//Handle events on queue
@@ -737,6 +732,9 @@ int main(int argc, char* args[])
 				if (e.type == SDL_MOUSEBUTTONDOWN)
 				{
 					SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
+					if (!StartButtonPressed && abs(mouse_position.x - 125) <= 45 && abs(mouse_position.y - 565) <= 45) {
+						StartButtonPressed = true;
+					}
 					if (status == play)
 					{
 						if (mouse_position.x < 80) {
@@ -788,11 +786,12 @@ int main(int argc, char* args[])
 							if (check({p, q})) {//check
 								if (towers[p][q] == NULL) {
 									towers[p][q] = test;
-									canBuild = DEFAULT->FindPath();
+									canBuild = DEFAULT->FindPath(0);
 									for (auto enemy : enemies) {
-										if(!enemy->CanFly)  canBuild &= enemy->FindPath();
+										if(!enemy->CanFly)  canBuild &= enemy->FindPath(0);
 									}
 									towers[p][q] = NULL;
+									if (p == 0 && q == 5)  canBuild = false;
 								}
 								if (lightflag == true && canBuild) {
 									if (towers[p][q] == NULL)
@@ -1001,50 +1000,68 @@ int main(int argc, char* args[])
 			tower_motion();
 			//bullets motion
 			bullet_motion();
-			//for (int i = bullets.size() - 1; i >= 0; i--) {
-			//	bullets[i]->move();
-			//	if (bullets[i]->x > 1680 || bullets[i]->x < 40 || bullets[i]->y>1000 || bullets[i]->y < 0) {
-			//		delete bullets[i];
-			//		bullets[i] = NULL;
-			//		bullets.erase(bullets.begin() + i);
-			//		continue;
-			//	}
-			//	for (int j = 0; j < enemies.size(); j++) {
-			//		if (bullets[i]->touch(enemies[j])) {
-			//			enemies[j]->hp -= bullets[i]->atk;//
-			//			delete bullets[i];
-			//			bullets[i] = NULL;
-			//			bullets.erase(bullets.begin() + i);
-			//			break;
-			//		}
-			//	}
-
-			//}
-			/*for (int i = 0; i < bullets.size(); i++) {
-				SDL_RenderCopy(gRenderer, bullet_pic[bullets[i]->kind], NULL, &bullets[i]->quad);
-			}*/
-			//enemies motion
-			//time2 = SDL_GetTicks();
-			vector<ENEMY*> eliminate_dead_enemy = enemies;
-			enemies.clear();
-			for (auto enemy : eliminate_dead_enemy) {
-				if (enemy->hp > 0) {
-					enemies.push_back(enemy);
+			if (StartButtonPressed) {
+				/*If there is no enemy in vector, generate five everytime cntdown is divisible by 10
+				if (enemies.empty() && !cntdown) {
+					if (currentwave == 100) {
+						quit = true;
+						continue;
+					}
+					cntdown = (waves[currentwave].size() - 1) * 50 + 1;
 				}
-				else  TotalMoney += enemy->money;  //earn money when an enemy is killed
-			}
-			eliminate_dead_enemy.clear();
-			for (auto enemy : enemies) {
-				enemy->GoPath();
-				if (enemy->freeze)  --enemy->freeze;
-				enemy->current_phase += 0.2;
-				SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + (int(enemy->current_phase) % enemy->period)], &enemy->rect);
-				SDL_RenderCopy(gRenderer, Green, NULL, &enemy->green);
-				SDL_RenderCopy(gRenderer, Red, NULL, &enemy->red);
-			}
-			if (add) {
-				enemies.push_back(add);
-				add = NULL;
+
+				if (cntdown) {
+					if ((--cntdown) % 50 == 0)  enemies.push_back(Generate_Enemy());
+					//	cout << cntdown << ' ' << enemies.size() << '\n';
+				}
+				//for (int i = bullets.size() - 1; i >= 0; i--) {
+				//	bullets[i]->move();
+				//	if (bullets[i]->x > 1680 || bullets[i]->x < 40 || bullets[i]->y>1000 || bullets[i]->y < 0) {
+				//		delete bullets[i];
+				//		bullets[i] = NULL;
+				//		bullets.erase(bullets.begin() + i);
+				//		continue;
+				//	}
+				//	for (int j = 0; j < enemies.size(); j++) {
+				//		if (bullets[i]->touch(enemies[j])) {
+				//			enemies[j]->hp -= bullets[i]->atk;//
+				//			delete bullets[i];
+				//			bullets[i] = NULL;
+				//			bullets.erase(bullets.begin() + i);
+				//			break;
+				//		}
+				//	}
+
+				//}
+				/*for (int i = 0; i < bullets.size(); i++) {
+					SDL_RenderCopy(gRenderer, bullet_pic[bullets[i]->kind], NULL, &bullets[i]->quad);
+				}
+				//enemies motion
+				//time2 = SDL_GetTicks();
+				vector<ENEMY*> eliminate_dead_enemy = enemies;
+				enemies.clear();
+				for (auto enemy : eliminate_dead_enemy) {
+					if (enemy->hp > 0) {
+						enemies.push_back(enemy);
+					}
+					else {
+						TotalMoney += enemy->money;  //earn money when an enemy is killed
+					}
+				}
+				eliminate_dead_enemy.clear();
+				for (auto enemy : enemies) {
+					enemy->GoPath();
+					if (enemy->freeze)  --enemy->freeze;
+					enemy->current_phase += 0.2;
+					SDL_RenderCopy(gRenderer, enemy->pic, &enemyClips[enemy->TYPE][enemy->period * enemy->dir + (int(enemy->current_phase) % enemy->period)], &enemy->rect);
+					SDL_RenderCopy(gRenderer, Green, NULL, &enemy->green);
+					SDL_RenderCopy(gRenderer, Red, NULL, &enemy->red);
+				}
+				if (add) {
+					enemies.push_back(add);
+					add = NULL;
+				}*/
+				enemy_motion();
 			}
 			//time3 = SDL_GetTicks();
 			//render buttom
@@ -1104,6 +1121,7 @@ int main(int argc, char* args[])
 			}*/
 			currmoney.render();
 			currlife.render();
+			currwave.render();
 			SDL_RenderPresent(gRenderer);
 			endtime = SDL_GetTicks();
 			//double b = (time3 - time2) * 1.0 / (time4 - time1);
