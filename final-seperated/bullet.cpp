@@ -7,24 +7,32 @@
 
 bullet::bullet(tower* tower1, ENEMY* enemy1) {
 	quad = { 0,0,80,80 };
-	kind = tower1->kind % 3;
-	speed = 50;
-	atk = tower1->atk;
-	x = tower1->x;
-	y = tower1->y;
-	// modify the position of bullet
-	if (kind % 3 == 0) {
+	if (tower1->kind == 0 || tower1->kind == 5) {
+		kind = 1;
 		quad.x = x + 22;
 		quad.y = y + 22;
 		quad.w = 45;
 		quad.h = 45;
 	}
 	else {
+		if (tower1->kind == 1 || tower1->kind == 3 || tower1->kind == 6 || tower1->kind == 8) {
+			kind = 1;
+		}
+		else {
+			kind = 2;
+		}
 		quad.x = x;
 		quad.y = y;
 		quad.w = 90;
 		quad.h = 90;
 	}
+	
+	speed = 50;
+	atk = tower1->atk;
+	x = tower1->x;
+	y = tower1->y;
+	// modify the position of bullet
+
 	v_x = (enemy1->rect.x - tower1->x) * 1.0 / speed * speedy;
 	v_y = (enemy1->rect.y - tower1->y) * 1.0 / speed * speedy;
 	x_e = x;
@@ -92,6 +100,7 @@ void bullet_motion() {
 			}
 		}
 	}
+	
 	for (int i = 0; i < bullets.size(); i++) {
 		SDL_RenderCopy(gRenderer, bullet_pic[bullets[i]->kind], NULL, &bullets[i]->quad);
 	}

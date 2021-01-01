@@ -808,7 +808,7 @@ int main(int argc, char* args[])
 									if (towers[p][q] == NULL && canBuild)
 									{
 										TotalMoney -= 10;
-										towers[p][q] = new tower(p, q, 6, loop);
+										towers[p][q] = new tower(p, q, 10, loop);
 									}
 									slowflag = false;
 								}
@@ -816,7 +816,7 @@ int main(int argc, char* args[])
 									if (towers[p][q] == NULL)
 									{
 										TotalMoney -= 20;
-										towers[p][q] = new tower(p, q, 3, loop);
+										towers[p][q] = new tower(p, q, 5, loop);
 									}
 									rocketflag = false;
 								}
