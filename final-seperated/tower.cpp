@@ -41,7 +41,7 @@ tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70
         range = 150;
         sellprice = 6;
         break;
-    case 3: //roc
+    case 3: //aircanon
         atk = 100;
         cooltime = 200;
         range = 220;
@@ -54,59 +54,59 @@ tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70
         range = 220;
         sellprice = 24;
         break;
-    case 5:
-        atk = 60;
+    case 5://rocket
+        atk = 50;
         cooltime = 200;
         range = 220;
         sellprice = 10;
         can_upgrade.push_back(6);
         can_upgrade.push_back(8);
         break;
-    case 6: //slow
-        atk = 75;
+    case 6: 
+        atk = 65;
         cooltime = 200;
         range = 220;
         sellprice = 15;
         can_upgrade.push_back(7);
         break;
     case 7:
-        atk = 90;
+        atk = 80;
         cooltime = 200;
         range = 220;
         sellprice = 30;
         break;
-    case 8:
+    case 8://mortar
         atk = 70;
         cooltime = 200;
-        range = 220;
+        range = 400;
         sellprice = 28;
         can_upgrade.push_back(9);
         break;
     case 9:
         atk = 100;
         cooltime = 200;
-        range = 220;
+        range = 400;
         sellprice = 56;
         break;
-    case 10:
-        atk = 10;
+    case 10: //slow
+        atk = 30;
         range = 220;
         sellprice = 5;
         can_upgrade.push_back(11);
         can_upgrade.push_back(13);
         break;
     case 11:
-        atk = 20;
+        atk = 50;
         range = 220;
         sellprice = 10;
         can_upgrade.push_back(12);
         break;
     case 12:
-        atk = 30;
+        atk = 70;
         range = 220;
         sellprice = 20;
         break;
-    case 13:
+    case 13: //teleport
         range = 220;
         sellprice = 16;
         break;
@@ -124,9 +124,7 @@ bool tower::ableatk(int t_c) {
         t = t_c;
         return true;
     }
-    else {
-        false;
-    }
+    return false;
 }
 bool tower::inrange(ENEMY* monster)//check if enemy is in tower range
 {

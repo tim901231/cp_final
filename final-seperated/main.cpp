@@ -313,12 +313,27 @@ bool loadmedia()
 void close()
 {
 	//Free loaded images
-	for (int i = 0; i < 9; i++)
+	
+	for (int i = 0; i < 7;  i++) {
+		SDL_DestroyTexture(bottoms_pic[i]);
+		bullet_pic[i] = NULL;
+	}
+	SDL_DestroyTexture(option_bottom_pic);
+	option_bottom_pic = NULL;
+	for (int i = 0; i < 3; i++) {
+		SDL_DestroyTexture(bullet_pic[i]);
+		bullet_pic[i] = NULL;
+	}
+	for (int i = 0; i < 26; i++) {
+		SDL_DestroyTexture(upgradeorsell[i]);
+		upgradeorsell[i] = NULL;
+	}
+	for (int i = 0; i < 15; i++)
 	{
 		SDL_DestroyTexture(tower_pic[i]);
 		tower_pic[i] = NULL;
 	}
-	for (int i = 1; i <= 4; i++) {
+	for (int i = 1; i < 10; i++) {
 		SDL_DestroyTexture(EnemyTexture[i]);
 		EnemyTexture[i] = NULL;
 	}
@@ -331,7 +346,7 @@ void close()
 	SDL_DestroyTexture(startturning2);
 	startturning2 = NULL;
 	SDL_DestroyTexture(startturning3);
-	startturning2 = NULL;
+	startturning3 = NULL;
 	SDL_DestroyTexture(title);
 	title = NULL;
 	SDL_DestroyTexture(light);
@@ -340,9 +355,18 @@ void close()
 	slow = NULL;
 	SDL_DestroyTexture(rocket);
 	rocket = NULL;
+	SDL_DestroyTexture(user);
+	user = NULL;
+	SDL_DestroyTexture(cancel);
+	cancel = NULL;
+	SDL_DestroyTexture(Green);
+	Green = NULL;
+	SDL_DestroyTexture(Red);
+	Red = NULL;
 	SDL_DestroyTexture(background);
 	background = NULL;
-
+	TTF_CloseFont(gFont);
+	gFont = NULL;
 	//Destroy window	
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
@@ -351,6 +375,7 @@ void close()
 
 	//Quit SDL subsystems
 	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
 }
 //void upgrade(int x, int y, tower* old, int t)
@@ -411,6 +436,7 @@ int main(int argc, char* args[])
 		loadbulletmedia();
 		loadothermedia();
 		Enemy_Queue_INIT();
+		upgrade_list_init();
 		////Main loop flag
 		//int p=0, q=0, tempx, tempy;
 		//bool quit = false;
@@ -423,10 +449,11 @@ int main(int argc, char* args[])
 		//SDL_Event e;
 		//gamestatus status = menu;
 		//SDL_Color wordcolor = { 0000,0000,0000,0000 };
-		string money = "$: " + to_string(TotalMoney); //convert int to string
+		//string money = "$: " + to_string(TotalMoney); //convert int to string
 		string life = "Life: " + to_string(TotalLife);
 		string wave = "Wave: " + to_string(currentwave);
-		word currmoney(money, 18, wordcolor);
+		string money = "$: " + to_string(TotalMoney);
+		word* currmoney = new word(money, 18, wordcolor);
 		word currlife(life, 18, wordcolor);
 		word currwave(wave, 18, wordcolor);
 		currlife.quad.y = 60; currlife.quad.w = 120;
@@ -436,10 +463,10 @@ int main(int argc, char* args[])
 		int period=10;
 	/*	double degrees = 0;
 		SDL_RendererFlip flipType = SDL_FLIP_NONE;*/
-		for (int i = 0; i < 7; i++) {
+		/*for (int i = 0; i < 7; i++) {
 			SDL_SetTextureBlendMode(bottoms_pic[i], SDL_BLENDMODE_BLEND);
 			SDL_SetTextureAlphaMod(bottoms_pic[i], 128);
-		}
+		}*/
 		//While application is running
 		//int count = 0;
 		//int time1, time2, time3, time4;
@@ -454,10 +481,12 @@ int main(int argc, char* args[])
 					for (int j = 0; j < 10; j++) {
 						delete towers[i][j];
 						towers[i][j] = NULL;
-						enemies.clear();
-						//wave also need reset
+						
 					}
 				}
+				//wave also need reset
+				bullets.clear();
+				enemies.clear();
 			}
 			if (status == menu) menu_act();
 			//while (status == menu) {
@@ -511,7 +540,7 @@ int main(int argc, char* args[])
 			//startime = SDL_GetTicks();
 		//	money = "$: " + to_string(TotalMoney);
 		//	life = "Life: " + to_string(TotalLife);
-			currmoney.changeword("$: " + to_string(TotalMoney));
+			currmoney->changeword("$: " + to_string(TotalMoney));
 			currlife.changeword("Life: " + to_string(TotalLife));
 			currwave.changeword("Wave: " + to_string(currentwave));
 			SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
@@ -985,18 +1014,24 @@ int main(int argc, char* args[])
 			}*/
 			if (TotalMoney < 10) //Change font rectangle
 			{
-				currmoney.quad.w = 70;
+				currmoney->quad.w = 70;
 			}
 			else if (TotalMoney >= 100)
 			{
-				currmoney.quad.w = 130;
+				currmoney->quad.w = 130;
 			}
 			else if (TotalMoney >= 10 && TotalMoney < 100)
 			{
-				currmoney.quad.w = 100;
+				currmoney->quad.w = 100;
 			}
 			//render option things
-				
+			if (currentwave < 10)
+			{
+				currwave.quad.w = 120;
+			}
+			else {
+				currwave.quad.w = 150;
+			}
 			SDL_RenderCopy(gRenderer, option_bottom_pic, NULL, &option_bottom);
 			show_option_list();
 			/*if (status == option) {
@@ -1004,7 +1039,7 @@ int main(int argc, char* args[])
 					SDL_RenderCopy(gRenderer, bottoms_pic[i], NULL, &bottoms[i]);
 				}
 			}*/
-			currmoney.render();
+			currmoney->render();
 			currlife.render();
 			currwave.render();
 			SDL_RenderPresent(gRenderer);
@@ -1016,7 +1051,7 @@ int main(int argc, char* args[])
 			}
 		}
 	}
-	
+	close();
 	return 0;
 }
 
