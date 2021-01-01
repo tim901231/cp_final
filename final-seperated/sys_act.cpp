@@ -66,65 +66,290 @@ bool point_in_rect(SDL_Point p, const SDL_Rect r)
 		return false;
 	}
 }
+
+void upgrade_list_init() {
+	for (int i = 0; i < 3; i++) {
+		putlist[i] = NULL;
+	}
+	upgradelist[0].x = 361;
+	upgradelist[0].y = 193;
+	upgradelist[1].x = 910;
+	upgradelist[1].y = 193;
+	upgradelist[2].x = 361;
+	upgradelist[2].y = 505;
+	for (int i = 0; i < 3; i++) {
+		upgradelist[i].w = 529;
+		upgradelist[i].h = 302;
+	}
+	return;
+}
+
+
+
 void upgrade_act() {
-	if (point_in_rect(mouse_position, userrect))
+	switch (towers[tempx][tempy]->kind)
 	{
-		if (mouse_position.x < (userrect.x + 200)) //asking to upgrade
+	case 0://gun
+		putlist[0] = upgradeorsell[12];
+		putlist[1]= upgradeorsell[0];
+		putlist[2] = upgradeorsell[2];
+		break;
+	case 1://medium gun
+		putlist[0] = upgradeorsell[13];
+		putlist[1] = upgradeorsell[1];
+		putlist[2] = NULL;
+		break;
+	case 2: //heavy gun
+		putlist[0] = upgradeorsell[14];
+		putlist[1] = NULL;
+		putlist[2] = NULL;
+		break;
+	case 3: //aircanon
+		putlist[0] = upgradeorsell[21];
+		putlist[1] = upgradeorsell[3];
+		putlist[2] = NULL;
+		break;
+	case 4:
+		putlist[0] = upgradeorsell[22];
+		putlist[1] = NULL;
+		putlist[2] = NULL;
+		break;
+	case 5: //rocket
+		putlist[0] = upgradeorsell[18];
+		putlist[1] = upgradeorsell[8];
+		putlist[2] = upgradeorsell[10];
+		break;
+	case 6: //medium rocket
+		putlist[0] = upgradeorsell[19];
+		putlist[1] = upgradeorsell[9];
+		putlist[2] = NULL;
+		break;
+	case 7: //heavy rocket
+		putlist[0] = upgradeorsell[20];
+		putlist[1] = NULL;
+		putlist[2] = NULL;
+		break;
+	case 8: //artillery
+		putlist[0] = upgradeorsell[24];
+		putlist[1] = upgradeorsell[11]; 
+		putlist[2] = NULL;
+		break;
+	case 9: //mortar
+		putlist[0] = upgradeorsell[25];
+		putlist[1] = NULL;
+		putlist[2] = NULL;
+		break;
+	case 10: //slow
+		putlist[0] = upgradeorsell[15];
+		putlist[1] = upgradeorsell[4];
+		putlist[2] = upgradeorsell[6];
+		break;
+	case 11: //upgraded slow
+		putlist[0] = upgradeorsell[16];
+		putlist[1] = upgradeorsell[5];
+		putlist[2] = NULL;
+		break;
+	case 12: //advanced slow
+		putlist[0] = upgradeorsell[17];
+		putlist[1] = NULL;
+		putlist[2] = NULL;
+		break;
+	case 13: //teleport 
+		putlist[0] = upgradeorsell[23];
+		putlist[1] = upgradeorsell[7];
+		putlist[2] = NULL;
+		break;
+	case 14: //armed teleport
+		putlist[0] = upgradeorsell[23];
+		putlist[1] = NULL;
+		putlist[2] = NULL;
+		break;
+	}
+
+	if (point_in_rect(mouse_position, upgradelist[0]) || point_in_rect(mouse_position, upgradelist[1]) || point_in_rect(mouse_position, upgradelist[2]))
+	{
+		if (point_in_rect(mouse_position, upgradelist[0]))  //sell
 		{
-			if (towers[tempx][tempy]->kind == 0 || towers[tempx][tempy]->kind == 1) { //Lightgun upgrade
-				if (TotalMoney >= 4)
-				{
-					TotalMoney -= 4;
-					upgrade(tempx, tempy, 2, loop);
-					status = play;
-				}
-			}
-			else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun upgrade
-				if (TotalMoney > 15)
-				{
-					TotalMoney -= 15;
-					upgrade(tempx, tempy, 8, loop);
-					status = play;
-				}
-			}
-			else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket upgrade
-				if (TotalMoney > 30)
-				{
-					TotalMoney -= 30;
-					upgrade(tempx, tempy, 5, loop);
-					status = play;
-				}
-			}
-		}
-		else //sell
-		{
-			if (towers[tempx][tempy]->kind == 0 || towers[tempx][tempy]->kind == 1) { //Lightgun sell
+			switch (towers[tempx][tempy]->kind)
+			{
+			case 0: //gun
 				if (!StartButtonPressed)  TotalMoney += 5;
 				else  TotalMoney += 3;
-				for (auto enemy : enemies) {
-					if(!enemy->CanFly)  enemy->FindPath(0);
-				}
-			}
-			else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun sell
-				if (!StartButtonPressed)  TotalMoney += 10;
-				else  TotalMoney += 7;
-				for (auto enemy : enemies) {
-					if(!enemy->CanFly)  enemy->FindPath(0);
-				}
-			}
-			else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket sell
+				break;
+			case 1:
+				TotalMoney += 4;
+				break;
+			case 2:
+				TotalMoney += 6;
+				break;
+			case 3:
+				TotalMoney += 12;
+				break;
+			case 4:
+				TotalMoney += 24;
+				break;
+			case 5: //rocket
 				if (!StartButtonPressed)  TotalMoney += 20;
-				else  TotalMoney += 12;
-				for (auto enemy : enemies) {
-					if(!enemy->CanFly)  enemy->FindPath(0);
-				}
+				else  TotalMoney += 10;
+				break;
+			case 6:
+				TotalMoney += 15;
+				break;
+			case 7:
+				TotalMoney += 30;
+				break;
+			case 8:
+				TotalMoney += 28;
+				break;
+			case 9:
+				TotalMoney += 56;
+				break;
+			case 10: //slow
+				if (!StartButtonPressed)  TotalMoney += 10;
+				else  TotalMoney += 5;
+				break;
+			case 11:
+				TotalMoney += 10;
+				break;
+			case 12:
+				TotalMoney += 20;
+				break;
+			case 13:
+				TotalMoney += 16;
+				break;
+			case 14:
+				TotalMoney += 16;
+				break;
+			}
+			for (auto enemy : enemies) {
+				if (!enemy->CanFly)  enemy->FindPath(0);
 			}
 			delete towers[tempx][tempy];
 			towers[tempx][tempy] = NULL;
 			status = play;
 		}
+		else if (point_in_rect(mouse_position, upgradelist[1]))
+		{
+			if (putlist[1] != NULL) //there exists an upgrading option
+			{
+				switch (towers[tempx][tempy]->kind)
+				{
+				case 0:
+					if (TotalMoney >= 6)
+					{
+						TotalMoney -= 6;
+						upgrade(tempx, tempy, 1, loop);
+						status = play;
+					}
+					break;
+				case 1:
+					if (TotalMoney >= 8)
+					{
+						TotalMoney -= 8;
+						upgrade(tempx, tempy, 2, loop);
+						status = play;
+					}
+					break;
+				case 3:
+					if (TotalMoney >= 32)
+					{
+						TotalMoney -= 32;
+						upgrade(tempx, tempy, 4, loop);
+						status = play;
+					}
+					break;
+				case 5:
+					if (TotalMoney >= 30)
+					{
+						TotalMoney -= 30;
+						upgrade(tempx, tempy, 6, loop);
+						status = play;
+					}
+					break;
+				case 6:
+					if (TotalMoney >= 50)
+					{
+						TotalMoney -= 50;
+						upgrade(tempx, tempy, 7, loop);
+						status = play;
+					}
+					break;
+				case 8:
+					if (TotalMoney >= 70)
+					{
+						TotalMoney -= 70;
+						upgrade(tempx, tempy, 9, loop);
+						status = play;
+					}
+					break;
+				case 10:
+					if (TotalMoney >= 15)
+					{
+						TotalMoney -= 15;
+						upgrade(tempx, tempy, 11, loop);
+						status = play;
+					}
+					break;
+				case 11:
+					if (TotalMoney >= 20)
+					{
+						TotalMoney -= 20;
+						upgrade(tempx, tempy, 12, loop);
+						status = play;
+					}
+					break;
+				case 13:
+					if (TotalMoney >= 3)
+					{
+						TotalMoney -= 3;
+						upgrade(tempx, tempy, 14, loop);
+						status = play;
+					}
+					break;
+				}
+			}
+		}
+		else if (point_in_rect(mouse_position, upgradelist[2]))
+		{
+			if (putlist[2] != NULL) //there exists an upgrading option
+			{
+				switch (towers[tempx][tempy]->kind)
+				{
+				case 0:
+					if (TotalMoney >= 20)
+					{
+						TotalMoney -= 20;
+						upgrade(tempx, tempy, 3, loop);
+						status = play;
+					}
+					break;
+				case 5:
+					if (TotalMoney >= 50)
+					{
+						TotalMoney -= 50;
+						upgrade(tempx, tempy, 8, loop);
+						status = play;
+					}
+					break;
+				case 10:
+					if (TotalMoney >= 12)
+					{
+						TotalMoney -= 12;
+						upgrade(tempx, tempy, 13, loop);
+						status = play;
+					}
+					break;
+				}
+			}
+		}
+	}
+	else//if click not on the rect, quit otherwise.
+	{
+		status = play;
 	}
 }
+
+
 void show_building() {
 	if (lightflag == true)
 	{
@@ -153,10 +378,11 @@ void show_building() {
 		SDL_SetTextureAlphaMod(rocket, 192);
 		SDL_RenderCopy(gRenderer, rocket, NULL, &rocketrect);
 	}
-	if (status == upgrading) {
-		userrect.x = 90 * tempx + 35;
-		userrect.y = 90 * tempy + 25;
-		SDL_RenderCopy(gRenderer, user, NULL, &userrect);
+	for (int i = 0; i < 3; i++) {
+		if (putlist[i] != NULL)
+		{
+			SDL_RenderCopy(gRenderer, putlist[i], NULL, &upgradelist[i]);
+		}
 	}
 }
 void loadothermedia() {

@@ -33,6 +33,8 @@ SDL_Point mouse_position;
 
 //upgrade's thing
 SDL_Texture* upgradeorsell[26];
+SDL_Texture* putlist[3];
+SDL_Rect upgradelist[3];
 //upgrade
 
 //menu's thing

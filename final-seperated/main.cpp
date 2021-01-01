@@ -555,6 +555,7 @@ int main(int argc, char* args[])
 		loadbulletmedia();
 		loadothermedia();
 		Enemy_Queue_INIT();
+		upgrade_list_init();
 		////Main loop flag
 		//int p=0, q=0, tempx, tempy;
 		//bool quit = false;
@@ -1142,7 +1143,13 @@ int main(int argc, char* args[])
 				currmoney->quad.w = 100;
 			}
 			//render option things
-				
+			if (currentwave < 10)
+			{
+				currwave.quad.w = 120;
+			}
+			else {
+				currwave.quad.w = 150;
+			}
 			SDL_RenderCopy(gRenderer, option_bottom_pic, NULL, &option_bottom);
 			show_option_list();
 			/*if (status == option) {
