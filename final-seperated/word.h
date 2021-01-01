@@ -12,7 +12,7 @@ public:
 	SDL_Surface* textSurface = NULL;
 	SDL_Texture* mTexture = NULL;
 	SDL_Color color;
-	SDL_Rect quad = { 1650,80,60,80 };
+	SDL_Rect quad = { 1650,100,60,60 };
 	word() {};
 	word(string s, int size, SDL_Color color_);
 	void changeword(string s);

@@ -21,7 +21,7 @@ tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70
     t = time;
     switch (kind) {
     case 0: //gun
-        atk = 1;
+        atk = 5;
         cooltime = 50;
         range = 150;
         sellprice = 3;
@@ -29,14 +29,14 @@ tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70
         can_upgrade.push_back(3);
         break;
     case 1:
-        atk = 15;
+        atk = 10;
         cooltime = 50;
         range = 150;
         sellprice = 4;
         can_upgrade.push_back(2);
         break;
     case 2:
-        atk = 25;
+        atk = 15;
         cooltime = 50;
         range = 150;
         sellprice = 6;

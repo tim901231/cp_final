@@ -99,21 +99,24 @@ void upgrade_act() {
 		else //sell
 		{
 			if (towers[tempx][tempy]->kind == 0 || towers[tempx][tempy]->kind == 1) { //Lightgun sell
-				TotalMoney += 3;
+				if (!StartButtonPressed)  TotalMoney += 5;
+				else  TotalMoney += 3;
 				for (auto enemy : enemies) {
-					enemy->FindPath();
+					if(!enemy->CanFly)  enemy->FindPath(0);
 				}
 			}
 			else if (towers[tempx][tempy]->kind == 6 || towers[tempx][tempy]->kind == 7) { //Slowgun sell
-				TotalMoney += 7;
+				if (!StartButtonPressed)  TotalMoney += 10;
+				else  TotalMoney += 7;
 				for (auto enemy : enemies) {
-					enemy->FindPath();
+					if(!enemy->CanFly)  enemy->FindPath(0);
 				}
 			}
 			else if (towers[tempx][tempy]->kind == 3 || towers[tempx][tempy]->kind == 4) { //Rocket sell
-				TotalMoney += 12;
+				if (!StartButtonPressed)  TotalMoney += 20;
+				else  TotalMoney += 12;
 				for (auto enemy : enemies) {
-					enemy->FindPath();
+					if(!enemy->CanFly)  enemy->FindPath(0);
 				}
 			}
 			delete towers[tempx][tempy];
@@ -157,7 +160,12 @@ void show_building() {
 	}
 }
 void loadothermedia() {
-	SDL_Surface* loadedSurface = IMG_Load("pictures/test_user.png"); // new include
+	SDL_Surface* loadedSurface = IMG_Load("pictures/upgrade_medium_gun.png");
+	upgradeorsell[0] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+
+
+
+	loadedSurface = IMG_Load("pictures/test_user.png"); // upgrade page:4columns
 	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	loadedSurface = IMG_Load("pictures/red.png"); // new include
 	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);

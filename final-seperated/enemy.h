@@ -26,6 +26,7 @@ pii operator +(const pii& p1, const pii& p2);
 pii operator -(const pii& p1, const pii& p2);
 
 bool check(pii p);
+void enemy_motion();
 
 class val{
 	public:
@@ -42,7 +43,7 @@ public:
 	SDL_Texture *pic;
 	SDL_Rect rect, green, red;
 	ENEMY(int type);
-	bool FindPath();
+	bool FindPath(bool isair);
 	void GoPath();
 	void calculate_hp();
 };
