@@ -41,6 +41,8 @@ extern SDL_Point mouse_position;
 //map
 //upgrade
 extern SDL_Texture* upgradeorsell[];
+extern SDL_Texture* putlist[];
+extern SDL_Rect upgradelist[];
 //menu's thing
 extern SDL_Texture* startbutton;
 extern SDL_Texture* startpage;

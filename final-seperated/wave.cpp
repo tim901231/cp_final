@@ -7,17 +7,17 @@ void Enemy_Queue_INIT() {
 	waves.push_back("111");
 	waves.push_back("11111111");
 	waves.push_back("222");
-	waves.push_back("11111122");
-	waves.push_back("22222");  //6
-	waves.push_back("1113");
-	waves.push_back("1111111222222");
+	waves.push_back("22111111");
+	waves.push_back("222222");  //6
+	waves.push_back("31111");
+	waves.push_back("22222221111111");
 	waves.push_back("333");
-	waves.push_back("222233");
-	waves.push_back("1111113333");  //11 new
-	waves.push_back("11122222");
-	waves.push_back("11122222");
-	waves.push_back("333");
-	waves.push_back("11223");
+	waves.push_back("332222");
+	waves.push_back("3333111111");  //11 new
+	waves.push_back("222233111111111");
+	waves.push_back("44");
+	waves.push_back("3333333");
+	waves.push_back("333333222222222");
 	waves.push_back("11222333");  //16
 	waves.push_back("22233333");
 	waves.push_back("33333333");
