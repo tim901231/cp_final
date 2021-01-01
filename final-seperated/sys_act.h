@@ -7,4 +7,5 @@ void upgrade_list_init();
 void upgrade_act();
 void show_building();
 void loadothermedia();
+void change_upgrade();
 #endif

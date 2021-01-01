@@ -26,94 +26,109 @@ tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70
         cooltime = 50;
         range = 150;
         sellprice = 3;
-        can_upgrade.push_back(1);
-        can_upgrade.push_back(3);
+        a_g = 0;
+        //can_upgrade.push_back(1);
+        //can_upgrade.push_back(3);
         break;
     case 1:
         atk = 10;
         cooltime = 50;
         range = 150;
         sellprice = 4;
-        can_upgrade.push_back(2);
+        a_g = 0;
+        //can_upgrade.push_back(2);
         break;
     case 2:
         atk = 15;
         cooltime = 50;
         range = 150;
         sellprice = 6;
+        a_g = 0;
         break;
     case 3: //aircanon
         atk = 100;
         cooltime = 200;
         range = 220;
         sellprice = 12;
-        can_upgrade.push_back(4);
+        a_g = 1;
+        //can_upgrade.push_back(4);
         break;
     case 4:
         atk = 120;
         cooltime = 200;
         range = 220;
         sellprice = 24;
+        a_g = 1;
         break;
     case 5://rocket
         atk = 50;
         cooltime = 200;
         range = 220;
         sellprice = 10;
-        can_upgrade.push_back(6);
-        can_upgrade.push_back(8);
+        a_g = 2;
+        //can_upgrade.push_back(6);
+        //can_upgrade.push_back(8);
         break;
     case 6: 
         atk = 65;
         cooltime = 200;
         range = 220;
         sellprice = 15;
-        can_upgrade.push_back(7);
+        a_g = 2;
+        //can_upgrade.push_back(7);
         break;
     case 7:
         atk = 80;
         cooltime = 200;
         range = 220;
         sellprice = 30;
+        a_g = 2;
         break;
     case 8://mortar
         atk = 70;
         cooltime = 200;
         range = 400;
         sellprice = 28;
-        can_upgrade.push_back(9);
+        a_g = 0;
+        //can_upgrade.push_back(9);
         break;
     case 9:
         atk = 100;
         cooltime = 200;
         range = 400;
         sellprice = 56;
+        a_g = 0;
         break;
     case 10: //slow
         atk = 30;
         range = 220;
         sellprice = 5;
-        can_upgrade.push_back(11);
-        can_upgrade.push_back(13);
+        a_g = 2;
+        //can_upgrade.push_back(11);
+        //can_upgrade.push_back(13);
         break;
     case 11:
         atk = 50;
         range = 220;
         sellprice = 10;
-        can_upgrade.push_back(12);
+        a_g = 2;
+        //can_upgrade.push_back(12);
         break;
     case 12:
         atk = 70;
         range = 220;
         sellprice = 20;
+        a_g = 2;
         break;
     case 13: //teleport
         range = 220;
         sellprice = 16;
+        a_g = 2;
         break;
     case 14:
         range = 220;
         sellprice = 16;
+        a_g = 2;
         break;
     default:
         break;
@@ -129,6 +144,16 @@ bool tower::ableatk(int t_c) {
 }
 bool tower::inrange(ENEMY* monster)//check if enemy is in tower range
 {
+    if (a_g == 0) {
+        if (monster->CanFly == true) {
+            return false;
+        }
+    }
+    if (a_g == 1) {
+        if (monster->CanFly == false) {
+            return false;
+        }
+    }
     if (pow((monster->rect.x - x), 2) + pow((monster->rect.y - y), 2) < pow(range, 2))
     {
         return true;
@@ -272,9 +297,9 @@ void tower_motion() {
                 }
                 else if (towers[i][j]->kind == 8 || towers[i][j]->kind == 9) {
                     SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][0], &towers[i][j]->quad);
-                    towers[i][j]->y -= 30;
-                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][0], &towers[i][j]->quad);
-                    towers[i][j]->y += 30;
+                    towers[i][j]->quad.y -= 35;
+                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][1], &towers[i][j]->quad);
+                    towers[i][j]->quad.y += 35;
                 }
                 else if (towers[i][j]->kind >= 10 && towers[i][j]->kind <= 12) {//slow tower
                     for (int k = 0; k < enemies.size(); k++) {
