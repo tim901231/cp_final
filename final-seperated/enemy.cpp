@@ -315,6 +315,7 @@ void ENEMY::GoPath() {
 		if (rect.x < 1800)  nowx += speed * (1 - freeze / 100) * speedy;
 		else {
 			TotalLife -= 1;
+			if (TotalLife <= 0)  quit = true;
 			money = 0;
 			hp = 0;
 		}

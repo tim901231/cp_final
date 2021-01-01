@@ -419,6 +419,17 @@ int main(int argc, char* args[])
 				SDL_Delay(period + startime - endtime);
 			}
 		}
+		if (currentwave == 100 && TotalLife > 0)  background = SDL_CreateTextureFromSurface(gRenderer, IMG_Load("pictures/victory.jpg"));
+		else  background = SDL_CreateTextureFromSurface(gRenderer, IMG_Load("pictures/GameOver.png"));
+		while (quit)
+		{
+			while (SDL_PollEvent(&e) != 0) {
+				if (e.type == SDL_QUIT)  quit = false;
+				else  if (e.type = SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)  quit = false;
+			}
+			SDL_RenderCopy(gRenderer, background, NULL, NULL);
+			SDL_RenderPresent(gRenderer);
+		}
 	}
 	close();
 	return 0;

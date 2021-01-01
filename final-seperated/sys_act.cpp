@@ -447,6 +447,7 @@ void loadothermedia() {
 
 	loadedSurface = IMG_Load("pictures/test_user.png"); // upgrade page:4columns
 	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/red.png"); // new include
+	loadedSurface = IMG_Load("pictures/red.png");
 	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	SDL_FreeSurface(loadedSurface);
 }
