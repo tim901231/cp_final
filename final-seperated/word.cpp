@@ -16,3 +16,4 @@ void word::render() {
 	SDL_RenderCopy(gRenderer, this->mTexture, NULL, &quad);
 	return;
 }
+

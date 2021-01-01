@@ -56,9 +56,6 @@
     <ClInclude Include="menu.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
-    <ClInclude Include="new_tower.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
     <ClInclude Include="option_list.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
@@ -72,6 +69,9 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="word.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="wave.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>

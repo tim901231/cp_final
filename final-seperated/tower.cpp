@@ -124,9 +124,7 @@ bool tower::ableatk(int t_c) {
         t = t_c;
         return true;
     }
-    else {
-        false;
-    }
+    return false;
 }
 bool tower::inrange(ENEMY* monster)//check if enemy is in tower range
 {

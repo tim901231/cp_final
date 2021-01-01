@@ -70,7 +70,10 @@ void loadbottommedia() {
 	bottoms[6] = exitbottom;
 	surface = IMG_Load("pictures/option_bottom_pic.png");
 	option_bottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
-	
+	for (int i = 0; i < 7; i++) {
+		SDL_SetTextureBlendMode(bottoms_pic[i], SDL_BLENDMODE_BLEND);
+		SDL_SetTextureAlphaMod(bottoms_pic[i], 128);
+	}
 	SDL_FreeSurface(surface);
 }
 void show_option_list() {

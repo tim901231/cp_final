@@ -1,5 +1,5 @@
 #include"variable.h"
-
+//using namespace std;
 //windows setting
 SDL_Window* gWindow=NULL;
 SDL_Renderer* gRenderer=NULL;
@@ -119,3 +119,5 @@ SDL_Texture* fastbottom_pic = NULL;
 SDL_Texture* mutebottom_pic = NULL;
 SDL_Texture* leavebottom_pic = NULL; // back to menu
 SDL_Texture* exitbottom_pic = NULL; //red x
+//words
+//word* currmoney = new word("$: 25", 18, wordcolor);

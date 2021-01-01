@@ -10,6 +10,7 @@
 #include"enemy.h"
 #include"word.h"
 #include<string>
+using namespace std;
 //windows setting
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
@@ -116,4 +117,6 @@ extern SDL_Texture* fastbottom_pic;
 extern SDL_Texture* mutebottom_pic;
 extern SDL_Texture* leavebottom_pic; // back to menu
 extern SDL_Texture* exitbottom_pic; //red x
+//WORDS
+//extern word* currmoney;
 #endif
