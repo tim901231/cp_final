@@ -39,6 +39,8 @@ extern SDL_Rect slowrect;
 extern SDL_Rect rocketrect;
 extern SDL_Point mouse_position;
 //map
+//upgrade
+extern SDL_Texture* upgradeorsell[];
 //menu's thing
 extern SDL_Texture* startbutton;
 extern SDL_Texture* startpage;

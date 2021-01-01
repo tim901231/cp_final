@@ -157,7 +157,12 @@ void show_building() {
 	}
 }
 void loadothermedia() {
-	SDL_Surface* loadedSurface = IMG_Load("pictures/test_user.png"); // new include
+	SDL_Surface* loadedSurface = IMG_Load("pictures/upgrade_medium_gun.png");
+	upgradeorsell[0] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+
+
+
+	loadedSurface = IMG_Load("pictures/test_user.png"); // upgrade page:4columns
 	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	loadedSurface = IMG_Load("pictures/red.png"); // new include
 	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);

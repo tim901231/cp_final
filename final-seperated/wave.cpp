@@ -3,17 +3,17 @@
 vector<string> waves;
 
 void Enemy_Queue_INIT() {
-	waves.push_back("111");  //1
+	waves.push_back("11");  //1
 	waves.push_back("111");
-	waves.push_back("11111");
-	waves.push_back("11111");
-	waves.push_back("11111");
-	waves.push_back("11112");  //6
-	waves.push_back("11112");
-	waves.push_back("11122");
-	waves.push_back("11122");
-	waves.push_back("11122");
-	waves.push_back("11122222");  //11
+	waves.push_back("11111111");
+	waves.push_back("222");
+	waves.push_back("11111122");
+	waves.push_back("22222");  //6
+	waves.push_back("1113");
+	waves.push_back("1111111222222");
+	waves.push_back("333");
+	waves.push_back("222233");
+	waves.push_back("1111113333");  //11 new
 	waves.push_back("11122222");
 	waves.push_back("11122222");
 	waves.push_back("333");

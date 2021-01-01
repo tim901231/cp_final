@@ -657,7 +657,7 @@ int main(int argc, char* args[])
 			SDL_RenderCopy(gRenderer, cancel, NULL, &cancel_rect);
 			//If there is no enemy in vector, generate five everytime cntdown is divisible by 10
 			if (enemies.empty() && !cntdown) {
-				cntdown = (waves[num].size() - 1) * 50 + 1;
+				cntdown = (waves[currentwave].size() - 1) * 50 + 1;
 			}
 
 			if (cntdown) {
