@@ -544,9 +544,12 @@ int main(int argc, char* args[])
 		//SDL_Color wordcolor = { 0000,0000,0000,0000 };
 		string money = "$: " + to_string(TotalMoney); //convert int to string
 		string life = "Life: " + to_string(TotalLife);
+		string wave = "Wave: " + to_string(currentwave);
 		word currmoney(money, 18, wordcolor);
 		word currlife(life, 18, wordcolor);
-		currlife.quad.y = 30; currlife.quad.w = 140;
+		word currwave(wave, 18, wordcolor);
+		currlife.quad.y = 60; currlife.quad.w = 120;
+		currwave.quad.y = 20; currwave.quad.w = 120;
 		int startime;
 		int endtime;
 		int period=10;
