@@ -160,10 +160,61 @@ void show_building() {
 	}
 }
 void loadothermedia() {
+	//buy pic
 	SDL_Surface* loadedSurface = IMG_Load("pictures/upgrade_medium_gun.png");
 	upgradeorsell[0] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_heavy_gun.png");
+	upgradeorsell[1] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_light_antiair.png");
+	upgradeorsell[2] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_heavy_antiair.png");
+	upgradeorsell[3] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_upgraded_slow.png");
+	upgradeorsell[4] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_heavy_slow.png");
+	upgradeorsell[5] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_unarmed_teleport.png");
+	upgradeorsell[6] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_armed_teleport.png");
+	upgradeorsell[7] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_medium_rocket.png");
+	upgradeorsell[8] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_heavy_rocket.png");
+	upgradeorsell[9] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_artillery.png");
+	upgradeorsell[10] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/upgrade_mortar.png");
+	upgradeorsell[11] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 
-
+	//sell pic
+	loadedSurface = IMG_Load("pictures/sell_light_gun.png");
+	upgradeorsell[12] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_medium_gun.png");
+	upgradeorsell[13] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_heavy_gun.png");
+	upgradeorsell[14] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_light_slow.png");
+	upgradeorsell[15] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_medium_slow.png");
+	upgradeorsell[16] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_heavy_slow.png");
+	upgradeorsell[17] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_light_rocket.png");
+	upgradeorsell[18] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_medium_rocket.png");
+	upgradeorsell[19] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_heavy_rocket.png");
+	upgradeorsell[20] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_light_antiair.png");
+	upgradeorsell[21] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_heavy_antiair.png");
+	upgradeorsell[22] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_teleport.png");
+	upgradeorsell[23] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_artillery.png");
+	upgradeorsell[24] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	loadedSurface = IMG_Load("pictures/sell_mortar.png");
+	upgradeorsell[25] = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 
 	loadedSurface = IMG_Load("pictures/test_user.png"); // upgrade page:4columns
 	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);

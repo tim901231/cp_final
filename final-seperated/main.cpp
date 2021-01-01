@@ -631,7 +631,7 @@ int main(int argc, char* args[])
 		//	life = "Life: " + to_string(TotalLife);
 			currmoney.changeword("$: " + to_string(TotalMoney));
 			currlife.changeword("Life: " + to_string(TotalLife));
-			currwave.changeword("Wave: " + to_string(currentwave + 1));
+			currwave.changeword("Wave: " + to_string(currentwave));
 			SDL_SetTextureBlendMode(light, SDL_BLENDMODE_BLEND);
 			SDL_SetTextureBlendMode(slow, SDL_BLENDMODE_BLEND);
 			SDL_SetTextureBlendMode(rocket, SDL_BLENDMODE_BLEND);
