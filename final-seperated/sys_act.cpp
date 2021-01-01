@@ -378,13 +378,16 @@ void show_building() {
 		SDL_SetTextureAlphaMod(rocket, 192);
 		SDL_RenderCopy(gRenderer, rocket, NULL, &rocketrect);
 	}
-	for (int i = 0; i < 3; i++) {
-		if (putlist[i] != NULL)
-		{
-			SDL_RenderCopy(gRenderer, putlist[i], NULL, &upgradelist[i]);
+	if (status == upgrading) {
+		for (int i = 0; i < 3; i++) {
+			if (putlist[i] != NULL)
+			{
+				SDL_RenderCopy(gRenderer, putlist[i], NULL, &upgradelist[i]);
+			}
 		}
 	}
 }
+	
 void loadothermedia() {
 	//buy pic
 	SDL_Surface* loadedSurface = IMG_Load("pictures/upgrade_medium_gun.png");
