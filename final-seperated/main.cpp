@@ -123,6 +123,7 @@ int main(int argc, char* args[])
 			startime = SDL_GetTicks();
 			if (status == menu) {
 				loop = 0;
+				currentwave = 0;
 				TotalMoney = 30;
 				TotalLife = 24;
 				for (int i = 0; i < 18; i++) {
