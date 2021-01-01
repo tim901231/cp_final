@@ -319,17 +319,24 @@ void tower_motion() {
                     for (int k = 0; k < enemies.size(); k++) {
                         if (towers[i][j]->inrange(enemies[k]) == 1)
                         {
-                            towers[i][j]->rotate(enemies[k]);
-                            if (towers[i][j]->ableatk(loop) == 1) {
-                                //teleport
-                                break;
-                            }
+                            enemies[k]->pos = 0;
+                            enemies[k]->rect.x = 0;
+                            enemies[k]->rect.y = 520;
+                            enemies[k]->nowx = enemies[k]->rect.x;
+                            enemies[k]->nowy = enemies[k]->rect.y;
+                            enemies[k]->PATH.clear();
+                            enemies[k]->PATH.push_back({0,5});
+                            enemies[k]->FindPath(enemies[k]->CanFly);
+                            upgrade(i, j, 13, loop);
+                            break;
                         }
                     }
                     towers[i][j]->theta += 1;
                     if (towers[i][j]->theta > 15) towers[i][j]->theta -= 16;
-                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
-                    SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
+                    if (towers[i][j]->kind == 14) {
+                        SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerbases, &towers[i][j]->bquad);
+                        SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
+                    }
                 }
             }
         }
