@@ -9,6 +9,7 @@ class tower {
 public:
     friend class ENEMY;
     tower(int num_x, int num_y, int type, int time);
+    int a_g; // 0 for ground, 1 for air, 2 for both;
     bool ableatk(int t_c);
     bool inrange(ENEMY* monster);
     void rotate(ENEMY* locked_enemy);
@@ -24,7 +25,7 @@ public:
     int sellprice;
     double calculated_theta;
     int cooltime;
-    vector<int> can_upgrade;
+    //vector<int> can_upgrade;
 };
 void loadtowermedia();
 void tower_init();

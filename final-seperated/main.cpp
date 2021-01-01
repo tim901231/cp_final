@@ -124,7 +124,7 @@ int main(int argc, char* args[])
 			if (status == menu) {
 				loop = 0;
 				currentwave = 0;
-				TotalMoney = 30;
+				TotalMoney = 100;
 				TotalLife = 24;
 				for (int i = 0; i < 18; i++) {
 					for (int j = 0; j < 10; j++) {
