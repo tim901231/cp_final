@@ -191,26 +191,31 @@ int main(int argc, char* args[])
 							option_bottom.y = 940;
 							option_bottom.w = 70;
 							option_bottom.h = 70;
+							//setrect(option_bottom, 0, 940, 70, 70);
 						}
 						else {
 							option_bottom.x = 10;
 							option_bottom.y = 950;
 							option_bottom.w = 50;
 							option_bottom.h = 50;
+							//setrect(option_bottom, 10, 950, 50, 50);
 						}
 					}
-					else if (status == option) {
+					else if (status == option) 
+					{
 						if (point_in_rect(mouse_position, bottoms[1]) == true) { //pause
 							bottoms[1].x = 680;
 							bottoms[1].y = 380;
 							bottoms[1].w = 120;
-							bottoms[1].h = 120;
+							bottoms[1].h = 120;																			 
+							//setrect(bottoms[1], 680, 380, 120, 120);
 						}
 						else {
 							bottoms[1].x = 690;
 							bottoms[1].y = 390;
 							bottoms[1].w = 100;
 							bottoms[1].h = 100;
+							//setrect(bottoms[1], 690, 390, 100, 100);
 						}
 
 						if (point_in_rect(mouse_position, bottoms[2]) == true) { //start
@@ -218,29 +223,75 @@ int main(int argc, char* args[])
 							bottoms[2].y = 380;
 							bottoms[2].w = 120;
 							bottoms[2].h = 120;
+							//setrect(bottoms[2], 850, 380, 120, 120);
 						}
 						else {
 							bottoms[2].x = 860;
 							bottoms[2].y = 390;
 							bottoms[2].w = 100;
 							bottoms[2].h = 100;
+							//setrect(bottoms[2], 860, 390, 100, 100);
 						}
+
 						if (point_in_rect(mouse_position, bottoms[3]) == true) {
 							bottoms[3].x = 1020;
 							bottoms[3].y = 380;
 							bottoms[3].w = 120;
 							bottoms[3].h = 120;
+							//setrect(bottoms[3], 1020, 380, 120, 120);
 						}
 						else {
 							bottoms[3].x = 1030;
 							bottoms[3].y = 390;
 							bottoms[3].w = 100;
 							bottoms[3].h = 100;
+							//setrect(bottoms[3], 1030, 390, 100, 100);
 						}
-						//mute=4
-						//back5
-						//exit 6
 
+						if (point_in_rect(mouse_position, bottoms[4]) == true) {
+							bottoms[4].x = 790;
+							bottoms[4].y = 540;
+							bottoms[4].w = 100;
+							bottoms[4].h = 100;
+							//setrect(bottoms[4],790, 540, 100, 100);
+						}
+						else{
+							bottoms[4].x = 800;
+							bottoms[4].y = 550;
+							bottoms[4].w = 80;
+							bottoms[4].h = 80;
+							//setrect(bottoms[4], 800, 550, 80, 80);
+						}
+
+						if (point_in_rect(mouse_position, bottoms[5]) == true) {
+							bottoms[5].x = 910;
+							bottoms[5].y = 540;
+							bottoms[5].w = 100;
+							bottoms[5].h = 100;
+							//setrect(bottoms[5], 910, 540, 100, 100);
+						}
+						else{
+							bottoms[5].x = 920;
+							bottoms[5].y = 550;
+							bottoms[5].w = 80;
+							bottoms[5].h = 80;
+							//setrect(bottoms[5], 920, 550, 80, 80);
+						}
+
+						if (point_in_rect(mouse_position, bottoms[6]) == true) {					
+							bottoms[6].x = 1140;
+							bottoms[6].y = 300;
+							bottoms[6].w = 65;
+							bottoms[6].h = 65;
+							//setrect(bottoms[6], 1140, 300, 65, 65);
+						}
+						else{
+							bottoms[6].x = 1150;
+							bottoms[6].y = 310;
+							bottoms[6].w = 45;
+							bottoms[6].h = 45;
+							//setrect(bottoms[6], 1150, 310, 45, 45);
+						}
 					}
 				}
 				if (e.type == SDL_MOUSEBUTTONDOWN)

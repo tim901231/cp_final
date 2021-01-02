@@ -67,6 +67,15 @@ bool point_in_rect(SDL_Point p, const SDL_Rect r)
 	}
 }
 
+void setrect(SDL_Rect r, int a, int b, int c, int d) 
+{
+	r.x = a;
+	r.y = b;
+	r.w = c;
+	r.h = d;
+	return;
+}
+
 void upgrade_list_init() {
 	for (int i = 0; i < 3; i++) {
 		putlist[i] = NULL;
