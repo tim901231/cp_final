@@ -4,53 +4,53 @@ vector<string> waves;
 
 void Enemy_Queue_INIT() {
 	waves.push_back("11");  //1
-	waves.push_back("111");
-	waves.push_back("11111111");
-	waves.push_back("222");
-	waves.push_back("22111111");
+	waves.push_back("11111");
+	waves.push_back("1111111");
+	waves.push_back("2222");
+	waves.push_back("221111");
 	waves.push_back("222222");  //6
 	waves.push_back("31111");
-	waves.push_back("22222221111111");
-	waves.push_back("333");
-	waves.push_back("332222");
-	waves.push_back("3333111111");  //11 new
-	waves.push_back("222233111111111");
-	waves.push_back("44");
+	waves.push_back("222222111111");
+	waves.push_back("33");
+	waves.push_back("2222222222");
+	waves.push_back("331111111");  //11 new
+	waves.push_back("3333");
+	waves.push_back("332222222");
+	waves.push_back("8888");
+	waves.push_back("222111188");
+	waves.push_back("311111388");  //16
+	waves.push_back("111177");
+	waves.push_back("11118888222222");
 	waves.push_back("3333333");
-	waves.push_back("333333222222222");
-	waves.push_back("11222333");  //16
-	waves.push_back("22233333");
-	waves.push_back("33333333");
 	waves.push_back("44");
-	waves.push_back("44441112");
-	waves.push_back("44444444");  //21
+	waves.push_back("33337711111111");  //21
+	waves.push_back("33442222228888");
 	waves.push_back("5");
-	waves.push_back("33488");
-	waves.push_back("443322118");
-	waves.push_back("444888888");
-	waves.push_back("11166");  //26
-	waves.push_back("77777");
-	waves.push_back("2211677");
-	waves.push_back("4411886");
-	waves.push_back("8888888");
-	waves.push_back("4321432188");  //31
-	waves.push_back("6462613877");
-	waves.push_back("512");
-	waves.push_back("66776677");
-	waves.push_back("12346781234678");
+	waves.push_back("2228887777");
+	waves.push_back("4444");
+	waves.push_back("33333338888888");  //26
+	waves.push_back("777777");
+	waves.push_back("11111333333322222288888888");
+	waves.push_back("666");
+	waves.push_back("44433333333");
+	waves.push_back("544");  //31
+	waves.push_back("3333777766");
+	waves.push_back("57722228888");
+	waves.push_back("11117777666");
+	waves.push_back("44444111111888888888");
 	waves.push_back("9");  //36
-	waves.push_back("911");
-	waves.push_back("44332211667788");
-	waves.push_back("416528");
+	waves.push_back("922222222222");
+	waves.push_back("888888777766");
+	waves.push_back("6666666");
 	waves.push_back("7779");
-	waves.push_back("4988");  //41
-	waves.push_back("94661");
-	waves.push_back("55111");
-	waves.push_back("455321667");
-	waves.push_back("777788889");
-	waves.push_back("99");  //46
-	waves.push_back("99222");
-	waves.push_back("987654321");
+	waves.push_back("4444444222222225");  //41
+	waves.push_back("95");
+	waves.push_back("6666688888");
+	waves.push_back("444444443333");
+	waves.push_back("6669111111111117777");
+	waves.push_back("999");  //46
+	waves.push_back("997777776");
+	waves.push_back("987654321");//
 	waves.push_back("496988211");
 	waves.push_back("123434599");
 	waves.push_back("92345439");  //51

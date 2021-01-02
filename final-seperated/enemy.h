@@ -18,7 +18,7 @@ const int DOWN = 3;
 #define Y second
 
 //extern int health;
-const int MAX_HEALTH[10] = {1000000, 30, 120, 700, 2000, 6000, 500, 1000, 500, 4000};
+const int MAX_HEALTH[10] = {1000000, 30, 120, 700, 2000, 6000, 800, 500, 180, 5200};
 const pii DIR[4] = {{1,0}, {0, -1}, {-1, 0}, {0, 1}};
 
 pii operator +(const pii& p1, const pii& p2);

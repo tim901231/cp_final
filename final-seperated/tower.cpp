@@ -46,7 +46,7 @@ tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70
         a_g = 0;
         break;
     case 3: //aircanon
-        atk = 100;
+        atk = 40;
         cooltime = 200;
         range = 220;
         sellprice = 12;
@@ -54,7 +54,7 @@ tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70
         //can_upgrade.push_back(4);
         break;
     case 4:
-        atk = 120;
+        atk = 70;
         cooltime = 200;
         range = 220;
         sellprice = 24;
@@ -100,7 +100,7 @@ tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70
         a_g = 0;
         break;
     case 10: //slow
-        atk = 30;
+        atk = 15;
         range = 220;
         sellprice = 5;
         a_g = 2;
@@ -108,14 +108,14 @@ tower::tower(int num_x, int num_y, int type, int time) :x(80 + num_x * 90), y(70
         //can_upgrade.push_back(13);
         break;
     case 11:
-        atk = 50;
+        atk = 30;
         range = 220;
         sellprice = 10;
         a_g = 2;
         //can_upgrade.push_back(12);
         break;
     case 12:
-        atk = 70;
+        atk = 45;
         range = 220;
         sellprice = 20;
         a_g = 2;
