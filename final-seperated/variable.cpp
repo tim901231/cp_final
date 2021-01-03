@@ -12,7 +12,7 @@ const int TOWER_WIDTH = 90;
 int TotalMoney = 30;
 int TotalLife = 24;
 int speedy=1;
-
+int currentscore = 0;
 //map's things
 SDL_Texture* background;
 SDL_Texture* light;
@@ -123,3 +123,5 @@ SDL_Texture* leavebottom_pic = NULL; // back to menu
 SDL_Texture* exitbottom_pic = NULL; //red x
 //words
 //word* currmoney = new word("$: 25", 18, wordcolor);
+string id[5];
+int scores[5];

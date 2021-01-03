@@ -8,6 +8,8 @@ word::word(string s, int size, SDL_Color color_) {
 	SDL_FreeSurface(textSurface);
 }
 void word::changeword(string s) {
+	SDL_DestroyTexture(mTexture);
+	mTexture = NULL;
 	textSurface = TTF_RenderText_Solid(gFont, s.c_str(), color);
 	mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
 	SDL_FreeSurface(textSurface);

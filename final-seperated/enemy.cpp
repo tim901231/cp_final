@@ -347,6 +347,7 @@ void enemy_motion(){
 		}
 		else {
 			TotalMoney += enemy->money;  //earn money when an enemy is killed
+			currentscore += enemy->money;
 		}
 	}
 	eliminate_dead_enemy.clear();

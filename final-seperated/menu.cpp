@@ -64,3 +64,20 @@ void loadmenumedia()
 	SDL_FreeSurface(loadedSurface);
 	//return true;
 }
+void set_everything_zero() {
+	loop = 0;
+	currentwave = 0;
+	TotalMoney = 30; //
+	TotalLife = 24;
+	currentscore = 0;
+	for (int i = 0; i < 18; i++) {
+		for (int j = 0; j < 10; j++) {
+			delete towers[i][j];
+			towers[i][j] = NULL;
+
+		}
+	}
+	//wave also need reset
+	bullets.clear();
+	enemies.clear();
+}

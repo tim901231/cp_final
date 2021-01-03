@@ -22,6 +22,7 @@ extern const int TOWER_WIDTH;
 extern int TotalMoney;
 extern int TotalLife;
 extern int speedy;
+extern int currentscore;
 //map's things
 enum gamestatus { play, upgrading, option, menu };
 extern SDL_Texture* background;
@@ -121,4 +122,6 @@ extern SDL_Texture* leavebottom_pic; // back to menu
 extern SDL_Texture* exitbottom_pic; //red x
 //WORDS
 //extern word* currmoney;
+extern string id[];
+extern int scores[];
 #endif
