@@ -126,4 +126,13 @@ extern string id[];
 extern int scores[];
 extern SDL_Texture* ranking;
 extern SDL_Rect rank_rect;
+
+//extern words** rank_id;
+//extern word** rank_score;
+//data
+extern string life;
+extern string wave;
+extern string money;
+extern string score;
+extern SDL_Texture* white;
 #endif

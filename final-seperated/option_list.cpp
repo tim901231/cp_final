@@ -77,6 +77,7 @@ void loadbottommedia() {
 	SDL_FreeSurface(surface);
 }
 void show_option_list() {
+	SDL_RenderCopy(gRenderer, option_bottom_pic, NULL, &option_bottom);
 	if (status == option) {
 		for (int i = 0; i < 7; i++) {
 			SDL_RenderCopy(gRenderer, bottoms_pic[i], NULL, &bottoms[i]);

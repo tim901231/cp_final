@@ -761,10 +761,262 @@ int loadLeaderboard() {
 	}
 	SDL_Surface* loadedSurface = IMG_Load("pictures/green.png");
 	ranking = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	rank_rect.x = 605;
-	rank_rect.y = 350;
-	rank_rect.w = 560;
-	rank_rect.h = 400;
+	loadedSurface = IMG_Load("pictures/white.png");
+	white = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	SDL_SetTextureBlendMode(ranking, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureAlphaMod(ranking, 180);
+	SDL_SetTextureBlendMode(white, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureAlphaMod(white, 180);
+	rank_rect.x = 620;
+	rank_rect.y = 260;
+	rank_rect.w = 530;
+	rank_rect.h = 450;
+	for (int i = 0; i < 5; i++) {
+		rank_id[i] = new words(id[i], 18, wordcolor);
+		rank_id[i]->quad.y = 390 + i * 50;
+		rank_id[i]->quad.w = id[i].length() * 30;
+		rank_id[i]->quad.x = 870 - rank_id[i]->quad.w;
+	}
+	for (int i = 0; i < 5; i++) {
+		rank_score[i] = new words(to_string(scores[i]), 18, wordcolor);
+
+		rank_score[i]->quad.y = 390 + i * 50;
+		rank_score[i]->quad.w = digit(scores[i]) * 30;
+		rank_score[i]->quad.x = 1100 - rank_score[i]->quad.w;
+	}
+	me = new words("you", 18, wordcolor);
+	my_score = new words(to_string(currentscore), 18, wordcolor);
+	tip = new words("enter your name", 18, wordcolor);
+	if (n == -1) {
+		me->quad.y = 640;
+		me->quad.w = 3 * 30;
+		me->quad.x = 870 - me->quad.w;
+		my_score->quad.y = 640;
+		my_score->quad.w = digit(currentscore) * 30;
+		my_score->quad.x = 1100 - my_score->quad.w;
+	}
+	else {
+		tip->quad.y = 640;
+		tip->quad.w = 15 * 30;
+		tip->quad.x = 885 - tip->quad.w/2;
+	}
+	rank_title = new words("R A N K", 50, wordcolor);
+	rank_title->quad.x = 750;
+	rank_title->quad.y = 280;
+	rank_title->quad.w = 300;
+	rank_title->quad.h = 100;
+	
+	file.close();
 	SDL_FreeSurface(loadedSurface);
 	return n;
+}
+void save_leaderboard() {
+	fstream file;
+	printf("hi");
+	file.open("rank.txt", ios::trunc|ios::out);
+	for (int i = 0; i < 5; i++) {
+		file << id[i] << " " << scores[i] << "\n";
+	}
+	file.close();
+}
+int digit(int a) {
+	if (a == 0) return 1;
+	int c = 0;
+	while (a > 0) {
+		a = a / 10;
+		c += 1;
+	}
+	return c;
+}
+void data_init() {
+	currmoney = new words(money, 18, wordcolor);
+	currlife = new words(life, 18, wordcolor);
+	currwave = new words(wave, 18, wordcolor);
+	SCORE = new words(score, 18, wordcolor);
+	currlife->quad.y = 60; currlife->quad.w = 120;
+	currwave->quad.y = 20; currwave->quad.w = 120;
+	SCORE->quad.x = 10, SCORE->quad.y = 10; SCORE->quad.w = 140;
+}
+void change_data_size() {
+	currmoney->changeword("$: " + to_string(TotalMoney));
+	currlife->changeword("Life: " + to_string(TotalLife));
+	currwave->changeword("Wave: " + to_string(currentwave));
+	SCORE->changeword("Score: " + to_string(currentscore));
+	if (TotalMoney < 10) //Change font rectangle
+	{
+		currmoney->quad.w = 70;
+	}
+	else if (TotalMoney >= 100)
+	{
+		currmoney->quad.w = 130;
+	}
+	else if (TotalMoney >= 10 && TotalMoney < 100)
+	{
+		currmoney->quad.w = 100;
+	}
+	//render option things
+	if (currentwave < 10)
+	{
+		currwave->quad.w = 120;
+	}
+	else {
+		currwave->quad.w = 150;
+	}
+	if (currentscore < 10) {
+		SCORE->quad.w = 120;
+	}
+	else if (currentscore < 100) {
+		SCORE->quad.w = 150;
+	}
+	else if (currentscore < 1000) {
+		SCORE->quad.w = 180;
+	}
+	else {
+		SCORE->quad.w = 210;
+	}
+	currmoney->render();
+	currlife->render();
+	currwave->render();
+	SCORE->render();
+}
+void close()
+{
+	//Free loaded images
+
+	for (int i = 0; i < 7; i++) {
+		SDL_DestroyTexture(bottoms_pic[i]);
+		bullet_pic[i] = NULL;
+	}
+	SDL_DestroyTexture(option_bottom_pic);
+	option_bottom_pic = NULL;
+	for (int i = 0; i < 3; i++) {
+		SDL_DestroyTexture(bullet_pic[i]);
+		bullet_pic[i] = NULL;
+	}
+	for (int i = 0; i < 26; i++) {
+		SDL_DestroyTexture(upgradeorsell[i]);
+		upgradeorsell[i] = NULL;
+	}
+	for (int i = 0; i < 15; i++)
+	{
+		SDL_DestroyTexture(tower_pic[i]);
+		tower_pic[i] = NULL;
+	}
+	for (int i = 1; i < 10; i++) {
+		SDL_DestroyTexture(EnemyTexture[i]);
+		EnemyTexture[i] = NULL;
+	}
+	SDL_DestroyTexture(startbutton);
+	startbutton = NULL;
+	SDL_DestroyTexture(startpage);
+	startpage = NULL;
+	SDL_DestroyTexture(startturning1);
+	startturning1 = NULL;
+	SDL_DestroyTexture(startturning2);
+	startturning2 = NULL;
+	SDL_DestroyTexture(startturning3);
+	startturning3 = NULL;
+	SDL_DestroyTexture(title);
+	title = NULL;
+	SDL_DestroyTexture(light);
+	light = NULL;
+	SDL_DestroyTexture(slow);
+	slow = NULL;
+	SDL_DestroyTexture(rocket);
+	rocket = NULL;
+	SDL_DestroyTexture(user);
+	user = NULL;
+	SDL_DestroyTexture(cancel);
+	cancel = NULL;
+	SDL_DestroyTexture(Green);
+	Green = NULL;
+	SDL_DestroyTexture(Red);
+	Red = NULL;
+	SDL_DestroyTexture(background);
+	background = NULL;
+	TTF_CloseFont(gFont);
+	gFont = NULL;
+	//Destroy window	
+	SDL_DestroyRenderer(gRenderer);
+	SDL_DestroyWindow(gWindow);
+	gWindow = NULL;
+	gRenderer = NULL;
+
+	//Quit SDL subsystems
+	IMG_Quit();
+	TTF_Quit();
+	SDL_Quit();
+}
+void end_motion() {
+	if (currentwave == 100 && TotalLife > 0)  background = SDL_CreateTextureFromSurface(gRenderer, IMG_Load("pictures/victory.jpg"));
+	else  background = SDL_CreateTextureFromSurface(gRenderer, IMG_Load("pictures/GameOver.png"));
+	int num = loadLeaderboard();
+	int time0 = SDL_GetTicks();
+	int time1;
+	SDL_StartTextInput();
+	bool input_flag = false;
+	bool sure = false;
+	SDL_Rect anime = { 0,0,0,0 };
+	while (quit)
+	{
+		time1 = SDL_GetTicks();
+		while (SDL_PollEvent(&e) != 0) {
+			if (e.type == SDL_QUIT)  quit = false;
+			else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)  quit = false;
+			if (num != -1 && sure == false) {
+				if (e.type == SDL_TEXTINPUT) {
+					if (!input_flag) {
+						input_flag = true;
+						id[num] = "";
+					}
+					if (id[num].size() <= 7) {
+						id[num] = id[num] + e.text.text;
+						rank_id[num]->changeword(id[num]);
+						rank_id[num]->quad.w = id[num].length() * 30;
+						rank_id[num]->quad.x = 870 - rank_id[num]->quad.w;
+					}
+				}
+				else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_BACKSPACE && id[num].size()) {
+					id[num].pop_back();
+					rank_id[num]->changeword(id[num]);
+					rank_id[num]->quad.w = id[num].length() * 30;
+					rank_id[num]->quad.x = 870 - rank_id[num]->quad.w;
+				}
+				else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN)
+				{
+					sure = true;
+					save_leaderboard();
+				}
+			}
+		}
+		SDL_RenderCopy(gRenderer, background, NULL, NULL);
+		if (time1 - time0 > 2000) {
+			if (time1 - time0 < 2500) {
+				int u = time1 - time0 - 2000;
+				anime.w = 4 * u;
+				anime.h = 2 * u;
+				anime.x = 900 - anime.w / 2;
+				anime.y = 500 - anime.h / 2;
+				SDL_RenderCopy(gRenderer, white, NULL, &anime);
+			}
+			else {
+				SDL_RenderCopy(gRenderer, white, NULL, NULL);
+				SDL_RenderCopy(gRenderer, ranking, NULL, &rank_rect);
+				rank_title->render();
+				for (int i = 0; i < 5; i++) {
+					rank_id[i]->render();
+					rank_score[i]->render();
+				}
+				if (num == -1) {
+					me->render();
+					my_score->render();
+				}
+				else {
+					tip->render();
+				}
+			}	
+			
+		}
+		SDL_RenderPresent(gRenderer);
+	}
 }

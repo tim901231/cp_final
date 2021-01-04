@@ -129,3 +129,11 @@ string id[5];
 int scores[5];
 SDL_Texture* ranking = NULL;
 SDL_Rect rank_rect = { 0,0,0,0 };
+//word** rank_id = new word * [5];
+//word** rank_score = new word * [5];
+//data
+string life = "Life: " + to_string(TotalLife);
+string wave = "Wave: " + to_string(currentwave);
+string money = "$: " + to_string(TotalMoney);
+string score = "Score: " + to_string(currentscore);
+SDL_Texture* white = NULL;

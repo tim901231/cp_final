@@ -15,4 +15,10 @@ void animation();
 void click_motion();
 void render_botton();
 int loadLeaderboard();
+void save_leaderboard();
+int digit(int);
+void data_init();
+void change_data_size();
+void close();
+void end_motion();
 #endif
