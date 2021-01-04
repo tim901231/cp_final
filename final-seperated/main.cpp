@@ -18,7 +18,7 @@
 #include"menu.h"
 #include"option_list.h"
 using namespace std;
-
+int digit(int);
 void close()
 {
 	//Free loaded images
@@ -206,15 +206,47 @@ int main(int argc, char* args[])
 		}
 		if (currentwave == 100 && TotalLife > 0)  background = SDL_CreateTextureFromSurface(gRenderer, IMG_Load("pictures/victory.jpg"));
 		else  background = SDL_CreateTextureFromSurface(gRenderer, IMG_Load("pictures/GameOver.png"));
+		int num = loadLeaderboard();
+		word** rank_id = new word*[5];
+		for (int i = 0; i < 5; i++) {
+			rank_id[i] = new word(id[i],18,wordcolor);
+			rank_id[i]->quad.y = 490 + i * 50;
+			rank_id[i]->quad.w = id[i].length() * 30;
+			rank_id[i]->quad.x = 870- rank_id[i]->quad.w;
+		}
+		word** rank_score = new word * [5];
+		for (int i = 0; i < 5; i++) {
+			rank_score[i] = new word(to_string(scores[i]), 18, wordcolor);
+			
+			rank_score[i]->quad.y = 490 + i * 50;
+			rank_score[i]->quad.w = digit(scores[i]) * 30;
+			rank_score[i]->quad.x = 1100-rank_score[i]->quad.w;
+		}
+		word rank_title("R A N K", 50, wordcolor);
+		rank_title.quad.x = 750;
+		rank_title.quad.y = 380;
+		rank_title.quad.w = 300;
+		rank_title.quad.h = 100;
+		int time0 = SDL_GetTicks();
+		int time1;
 		while (quit)
 		{
+			time1 = SDL_GetTicks();
 			while (SDL_PollEvent(&e) != 0) {
 				if (e.type == SDL_QUIT)  quit = false;
 				else  if (e.type = SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)  quit = false;
 			}
 			SDL_RenderCopy(gRenderer, background, NULL, NULL);
+			if (time1 - time0 > 3000) {
+				SDL_RenderCopy(gRenderer, ranking, NULL, &rank_rect);
+				rank_title.render();
+				for (int i = 0; i < 5; i++) {
+					rank_id[i]->render();
+					rank_score[i]->render();
+				}
+			}
+			
 			SDL_RenderPresent(gRenderer);
-			//Leaderboard();
 			//cout << id[0] << " " << scores[0] << endl;
 		}
 	}
@@ -222,3 +254,12 @@ int main(int argc, char* args[])
 	return 0;
 }
 
+int digit(int a) {
+	if (a == 0) return 1;
+	int c = 0;
+	while (a > 0) {
+		a = a / 10;
+		c += 1;
+	}
+	return c;
+}

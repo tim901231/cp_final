@@ -124,4 +124,6 @@ extern SDL_Texture* exitbottom_pic; //red x
 //extern word* currmoney;
 extern string id[];
 extern int scores[];
+extern SDL_Texture* ranking;
+extern SDL_Rect rank_rect;
 #endif

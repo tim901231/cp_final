@@ -4,6 +4,7 @@
 SDL_Window* gWindow=NULL;
 SDL_Renderer* gRenderer=NULL;
 TTF_Font* gFont=NULL;
+
 const int SCREEN_WIDTH = 1800;
 const int SCREEN_HEIGHT = 1000;
 const int TOWER_WIDTH = 90;
@@ -80,6 +81,7 @@ gamestatus status = menu;
 
 //words
 SDL_Color wordcolor = { 0000,0000,0000,0000 };
+SDL_Color wordcolor2 = { 0xff,0xff,0xff,0xff };
 //words
 
 //menu
@@ -125,3 +127,5 @@ SDL_Texture* exitbottom_pic = NULL; //red x
 //word* currmoney = new word("$: 25", 18, wordcolor);
 string id[5];
 int scores[5];
+SDL_Texture* ranking = NULL;
+SDL_Rect rank_rect = { 0,0,0,0 };

@@ -740,7 +740,8 @@ void render_botton() {
 		SDL_RenderCopy(gRenderer, startbottom_pic, NULL, &StartButton);
 	}
 }
-void Leaderboard() {
+int loadLeaderboard() {
+	int n = -1;
 	fstream file;
 	file.open("rank.txt", ios::in);
 	for (int i = 0; i < 5; i++) {
@@ -753,7 +754,17 @@ void Leaderboard() {
 				id[j] = id[j - 1];
 			}
 			scores[i] = currentscore;
+			id[i] = "Yourname";
+			n = i;
+			break;
 		}
 	}
-	
+	SDL_Surface* loadedSurface = IMG_Load("pictures/green.png");
+	ranking = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	rank_rect.x = 605;
+	rank_rect.y = 350;
+	rank_rect.w = 560;
+	rank_rect.h = 400;
+	SDL_FreeSurface(loadedSurface);
+	return n;
 }

@@ -14,5 +14,5 @@ void change_upgrade();
 void animation();
 void click_motion();
 void render_botton();
-void Leaderboard();
+int loadLeaderboard();
 #endif

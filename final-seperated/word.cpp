@@ -1,4 +1,7 @@
 #include"word.h"
+word::word() {
+	
+}
 word::word(string s, int size, SDL_Color color_) {
 	n = size;
 	color = color_;
