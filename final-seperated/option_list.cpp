@@ -60,7 +60,7 @@ void loadbottommedia() {
 	mutebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[4] = mutebottom_pic;
 	bottoms[4] = mutebottom;
-	surface = IMG_Load("pictures/yellow.png");
+	surface = IMG_Load("pictures/back_menu.png");
 	leavebottom_pic = SDL_CreateTextureFromSurface(gRenderer, surface);
 	bottoms_pic[5] = leavebottom_pic;
 	bottoms[5] = leavebottom;
