@@ -187,13 +187,16 @@ void upgrade_act() {
 				else  TotalMoney += 3;
 				break;
 			case 1:
-				TotalMoney += 4;
+				if (!StartButtonPressed)  TotalMoney += 11;
+				else  TotalMoney += 4;
 				break;
 			case 2:
-				TotalMoney += 6;
+				if (!StartButtonPressed)  TotalMoney += 19;
+				else  TotalMoney += 6;
 				break;
 			case 3:
-				TotalMoney += 12;
+				if (!StartButtonPressed)  TotalMoney += 25;
+				else  TotalMoney += 12;
 				break;
 			case 4:
 				TotalMoney += 24;
@@ -219,23 +222,26 @@ void upgrade_act() {
 				else  TotalMoney += 5;
 				break;
 			case 11:
-				TotalMoney += 10;
+				if (!StartButtonPressed)  TotalMoney += 25;
+				else  TotalMoney += 10;
 				break;
 			case 12:
 				TotalMoney += 20;
 				break;
 			case 13:
-				TotalMoney += 16;
+				if (!StartButtonPressed)  TotalMoney += 22;
+				else  TotalMoney += 16;
 				break;
 			case 14:
-				TotalMoney += 16;
+				if (!StartButtonPressed)  TotalMoney += 25;
+				else  TotalMoney += 16;
 				break;
-			}
-			for (auto enemy : enemies) {
-				if (!enemy->CanFly)  enemy->FindPath(0);
 			}
 			delete towers[tempx][tempy];
 			towers[tempx][tempy] = NULL;
+			for (auto enemy : enemies) {
+				if (!enemy->CanFly)  enemy->FindPath(0);
+			}
 			status = play;
 		}
 		else if (point_in_rect(mouse_position, upgradelist[1]))
@@ -457,7 +463,7 @@ void loadothermedia() {
 
 	loadedSurface = IMG_Load("pictures/test_user.png"); // upgrade page:4columns
 	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/red.png");
+	loadedSurface = IMG_Load("pictures/exit_bottom.png");
 	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	SDL_FreeSurface(loadedSurface);
 }
