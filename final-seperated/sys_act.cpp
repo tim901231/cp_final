@@ -101,23 +101,59 @@ void change_upgrade() {
 	case 0://gun
 		putlist[0] = upgradeorsell[12];
 		putlist[1] = upgradeorsell[0];
+		if (TotalMoney < 6) {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 128); //3/4 transparent
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 255); 
+		}
 		putlist[2] = upgradeorsell[2];
+		if (TotalMoney < 20) {
+			SDL_SetTextureBlendMode(putlist[2], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[2], 128); //3/4 transparent
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[2], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[2], 255);
+		}
 		break;
+
 	case 1://medium gun
 		putlist[0] = upgradeorsell[13];
 		putlist[1] = upgradeorsell[1];
+		if (TotalMoney < 8) {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 128); //3/4 transparent
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 255);
+		}
 		putlist[2] = NULL;
 		break;
+
 	case 2: //heavy gun
 		putlist[0] = upgradeorsell[14];
 		putlist[1] = NULL;
 		putlist[2] = NULL;
 		break;
+
 	case 3: //aircanon
 		putlist[0] = upgradeorsell[21];
 		putlist[1] = upgradeorsell[3];
+		if (TotalMoney < 32) {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 128); //3/4 transparent
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 255);
+		}
 		putlist[2] = NULL;
 		break;
+
 	case 4:
 		putlist[0] = upgradeorsell[22];
 		putlist[1] = NULL;
@@ -126,11 +162,36 @@ void change_upgrade() {
 	case 5: //rocket
 		putlist[0] = upgradeorsell[18];
 		putlist[1] = upgradeorsell[8];
+		if (TotalMoney < 30) {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 128); //3/4 transparent
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 255);
+		}
 		putlist[2] = upgradeorsell[10];
+		if (TotalMoney < 50) {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 128); //3/4 transparent
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 255);
+		}
 		break;
+
 	case 6: //medium rocket
 		putlist[0] = upgradeorsell[19];
 		putlist[1] = upgradeorsell[9];
+		if (TotalMoney < 50) {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 128); //3/4 transparent
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 255);
+		}
 		putlist[2] = NULL;
 		break;
 	case 7: //heavy rocket
@@ -395,9 +456,11 @@ void show_building() {
 		SDL_RenderCopy(gRenderer, rocket, NULL, &rocketrect);
 	}
 	if (status == upgrading) {
+
 		for (int i = 0; i < 3; i++) {
 			if (putlist[i] != NULL)
 			{
+				SDL_RenderCopy(gRenderer, white, NULL, &upgradelist[i]);
 				SDL_RenderCopy(gRenderer, putlist[i], NULL, &upgradelist[i]);
 			}
 		}
@@ -465,9 +528,14 @@ void loadothermedia() {
 	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	loadedSurface = IMG_Load("pictures/exit_bottom.png");
 	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+
+	loadedSurface = IMG_Load("pictures/white.png");
+	white = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	SDL_SetTextureBlendMode(white, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureAlphaMod(white, 180);
+
 	SDL_SetTextureBlendMode(cancel, SDL_BLENDMODE_BLEND);
 	SDL_SetTextureAlphaMod(cancel, 128);
-
 	
 	SDL_FreeSurface(loadedSurface);
 }
@@ -771,12 +839,8 @@ int loadLeaderboard() {
 	}
 	SDL_Surface* loadedSurface = IMG_Load("pictures/green.png");
 	ranking = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	loadedSurface = IMG_Load("pictures/white.png");
-	white = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	SDL_SetTextureBlendMode(ranking, SDL_BLENDMODE_BLEND);
 	SDL_SetTextureAlphaMod(ranking, 180);
-	SDL_SetTextureBlendMode(white, SDL_BLENDMODE_BLEND);
-	SDL_SetTextureAlphaMod(white, 180);
 	rank_rect.x = 620;
 	rank_rect.y = 260;
 	rank_rect.w = 530;
