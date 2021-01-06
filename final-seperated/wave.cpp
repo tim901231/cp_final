@@ -4,16 +4,16 @@ vector<string> waves;
 
 void Enemy_Queue_INIT() {
 	waves.push_back("11");  //1
-	waves.push_back("11111");
-	waves.push_back("1111111");
-	waves.push_back("2222");
-	waves.push_back("221111");
+	waves.push_back("11111"); 
+	waves.push_back("1111111"); 
+	waves.push_back("2222"); 
+	waves.push_back("221111"); 
 	waves.push_back("222222");  //6
-	waves.push_back("31111");
+	waves.push_back("31111"); 
 	waves.push_back("222222111111");
-	waves.push_back("33");
+	waves.push_back("33");  
 	waves.push_back("2222222222");
-	waves.push_back("331111111");  //11 new
+	waves.push_back("331111111");  //11
 	waves.push_back("3333");
 	waves.push_back("332222222");
 	waves.push_back("8888");

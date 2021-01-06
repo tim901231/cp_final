@@ -10,7 +10,7 @@ const int SCREEN_HEIGHT = 1000;
 const int TOWER_WIDTH = 90;
 
 //variable
-int TotalMoney = 30;
+int TotalMoney = 500;
 int TotalLife = 24;
 int speedy=1;
 int currentscore = 0;

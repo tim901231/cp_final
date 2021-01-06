@@ -67,7 +67,7 @@ void loadmenumedia()
 void set_everything_zero() {
 	loop = 0;
 	currentwave = 0;
-	TotalMoney = 30; //
+	TotalMoney = 500; //
 	TotalLife = 24;
 	currentscore = 0;
 	StartButtonPressed = false;

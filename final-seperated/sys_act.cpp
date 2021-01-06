@@ -172,12 +172,12 @@ void change_upgrade() {
 		}
 		putlist[2] = upgradeorsell[10];
 		if (TotalMoney < 50) {
-			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
-			SDL_SetTextureAlphaMod(putlist[1], 128); //3/4 transparent
+			SDL_SetTextureBlendMode(putlist[2], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[2], 128); //3/4 transparent
 		}
 		else {
-			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
-			SDL_SetTextureAlphaMod(putlist[1], 255);
+			SDL_SetTextureBlendMode(putlist[2], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[2], 255);
 		}
 		break;
 

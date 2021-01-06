@@ -296,6 +296,18 @@ void tower_motion() {
                     SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][towers[i][j]->theta], &towers[i][j]->quad);
                 }
                 else if (towers[i][j]->kind == 8 || towers[i][j]->kind == 9) {
+                    for (int k = 0; k < enemies.size(); k++) {
+                        if (towers[i][j]->inrange(enemies[k]) == 1)
+                        {
+                            towers[i][j]->rotate(enemies[k]);
+                            if (towers[i][j]->ableatk(loop) == 1) {
+                                //make a bullet
+                                bullet* x = new bullet(towers[i][j], enemies[k]);
+                                bullets.push_back(x);
+                                break;
+                            }
+                        }
+                    }
                     SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][0], &towers[i][j]->quad);
                     towers[i][j]->quad.y -= 35;
                     SDL_RenderCopy(gRenderer, tower_pic[towers[i][j]->kind], &towerClips[towers[i][j]->kind][1], &towers[i][j]->quad);
