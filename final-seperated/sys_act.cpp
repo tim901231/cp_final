@@ -465,6 +465,10 @@ void loadothermedia() {
 	user = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 	loadedSurface = IMG_Load("pictures/exit_bottom.png");
 	cancel = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	SDL_SetTextureBlendMode(cancel, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureAlphaMod(cancel, 128);
+
+	
 	SDL_FreeSurface(loadedSurface);
 }
 void animation() {
