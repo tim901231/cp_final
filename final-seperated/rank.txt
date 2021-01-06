@@ -1,5 +1,5 @@
 Yourname 950
 Yourname 644
 hi 4
+njn 3
 test 1
-god 1
