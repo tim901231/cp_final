@@ -36,6 +36,7 @@ SDL_Point mouse_position;
 SDL_Texture* upgradeorsell[26];
 SDL_Texture* putlist[3];
 SDL_Rect upgradelist[3];
+SDL_Texture* white = NULL;
 //upgrade
 
 //menu's thing
@@ -136,4 +137,3 @@ string life = "Life: " + to_string(TotalLife);
 string wave = "Wave: " + to_string(currentwave);
 string money = "$: " + to_string(TotalMoney);
 string score = "Score: " + to_string(currentscore);
-SDL_Texture* white = NULL;
