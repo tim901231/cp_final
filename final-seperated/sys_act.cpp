@@ -140,7 +140,16 @@ void change_upgrade() {
 		break;
 	case 8: //artillery
 		putlist[0] = upgradeorsell[24];
+		if (TotalMoney < 70) {
+			SDL_SetTextureBlendMode(upgradeorsell[11], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(upgradeorsell[11], 128);
+		}
+		else {
+			SDL_SetTextureBlendMode(upgradeorsell[11], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(upgradeorsell[11], 255);
+		}
 		putlist[1] = upgradeorsell[11];
+
 		putlist[2] = NULL;
 		break;
 	case 9: //mortar
@@ -151,11 +160,35 @@ void change_upgrade() {
 	case 10: //slow
 		putlist[0] = upgradeorsell[15];
 		putlist[1] = upgradeorsell[4];
+		if (TotalMoney < 15) {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 128);
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 255);
+		}
 		putlist[2] = upgradeorsell[6];
+		if (TotalMoney < 12) {
+			SDL_SetTextureBlendMode(putlist[2], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[2], 128);
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[2], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[2], 255);
+		}
 		break;
 	case 11: //upgraded slow
 		putlist[0] = upgradeorsell[16];
 		putlist[1] = upgradeorsell[5];
+		if (TotalMoney < 15) {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 128);
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 255);
+		}
 		putlist[2] = NULL;
 		break;
 	case 12: //advanced slow
@@ -166,6 +199,14 @@ void change_upgrade() {
 	case 13: //teleport 
 		putlist[0] = upgradeorsell[23];
 		putlist[1] = upgradeorsell[7];
+		if (TotalMoney < 3) {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 128);
+		}
+		else {
+			SDL_SetTextureBlendMode(putlist[1], SDL_BLENDMODE_BLEND);
+			SDL_SetTextureAlphaMod(putlist[1], 255);
+		}
 		putlist[2] = NULL;
 		break;
 	case 14: //armed teleport
